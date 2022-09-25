@@ -2,14 +2,14 @@
 #define SRC_S21_MAP_H
 
 template<typename Key, typename T>
-class s21_map {
+class S21Map {
     public:
-        map();
-        map(std::initializer_list<value_type> const &items);
-        map(const map &m);
-        map(map &&m);
-        ~map();
-        operator=(map &&m);
+        S21Map();
+        S21Map(std::initializer_list<value_type> const &items);
+        S21Map(const S21Map &m);
+        S21Map(S21Map &&m);
+        ~S21Map();
+        operator=(S21Map &&m);
 
         T& at(const Key& key);
         T& operator[](const Key& key);
@@ -26,15 +26,15 @@ class s21_map {
         std::pair<iterator, bool> insert(const Key& key, const T& obj);
         std::pair<iterator, bool> insert_or_assign(const Key& key, const T& obj);;
         void erase(iterator pos);
-        void swap(map& other);
-        void merge(map& other);
+        void swap(S21Map& other);
+        void merge(S21Map& other);
 
         bool contains(const Key& key);
 
     private:
-        Key key_type;
+        key_type = Key;
         T  mapped_type;
-        std::pair<const key_type,mapped_type> value_type;
+        std::pair<const key_type, mapped_type> value_type;
         value_type& reference;
         const value_type& const_reference;
         MapIterator<Key, T> iterator;
