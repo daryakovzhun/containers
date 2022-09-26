@@ -1,6 +1,8 @@
 #ifndef SRC_S21_MAP_H
 #define SRC_S21_MAP_H
 
+
+
 template<typename Key, typename T>
 class S21Map {
     public:
@@ -32,14 +34,19 @@ class S21Map {
         bool contains(const Key& key);
 
     private:
-        key_type = Key;
-        T  mapped_type;
-        std::pair<const key_type, mapped_type> value_type;
-        value_type& reference;
-        const value_type& const_reference;
-        MapIterator<Key, T> iterator;
-        MapConstIterator<Key, T> const_iterator;
-        size_t size_type;
+        using key_type = Key;
+        using mapped_type = T;
+        using value_type = std::pair<const key_type, mapped_type>;
+        using reference = value_type&;
+        using const_reference = const value_type&;
+        using iterator = MapIterator<Key, T>;
+        using const_iterator = MapConstIterator<Key, T>;
+        using size_type = size_t;
+
+        // key_type key;
+        // mapped_type mapped;
+
+        mapped_type& operator[key_type&];
 };
 
 #endif //  SRC_S21_MAP_H
