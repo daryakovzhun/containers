@@ -29,9 +29,10 @@ class S21Queue {
         void swap(S21Queue& other);
 
     private:
-
+        value_type *queue_;
+        int head_;
+        int tail_;
+        
 };
-
-
 
 #endif //  SRC_S21_QUEUE_H
