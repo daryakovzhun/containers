@@ -5,6 +5,7 @@
 #include <string.h>
 
 #include <iostream>
+#include <stdexcept>
 
 template<typename T>
 class S21Queue {
@@ -24,7 +25,11 @@ class S21Queue {
         // operator=(S21Queue &&q);
 
         const_reference front() const { return queue_[head_];}
-        const_reference back() const { return queue_[tail_];}  // std::cout << "tail = " << tail_ << "\n";
+        const_reference back() const {
+            // if (tail_ == -1) {
+            //     throw std::out_of_range("Queue is empty");
+            // }
+            return queue_[tail_];}  // std::cout << "tail = " << tail_ << "\n";
 
         bool empty();
         size_type size() const { return size_;}
