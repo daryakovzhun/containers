@@ -1,38 +1,43 @@
-#ifndef SRC_S21_QUEUE_H
-#define SRC_S21_QUEUE_H
+// #ifndef SRC_S21_QUEUE_H
+// #define SRC_S21_QUEUE_H
 
-#include <initializer_list>
+// // #include <initializer_list>
+// // #include <string.h>
 
-template<typename T>
-class S21Queue {
-    public:
-        using value_type = T;
-        using reference = T&;
-        using const_reference = const T&;
-        using size_type = size_t ;
+// // template<typename T>
+// // class S21Queue {
+// //     // friend void AllocateMemory(S21Queue<T> &q, size_t size);
 
-        S21Queue();
-        S21Queue(std::initializer_list<value_type> const &items);
-        S21Queue(const S21Queue &q);
-        S21Queue(S21Queue &&q);
-        ~S21Queue();
-        operator=(S21Queue &&q);
+// //     public:
+// //         using value_type = T;
+// //         using reference = T&;
+// //         using const_reference = const T&;
+// //         using size_type = size_t ;
 
-        const_reference front();
-        const_reference back();
+// //         S21Queue();
+// //         S21Queue(std::initializer_list<value_type> const &items);
+// //         S21Queue(const S21Queue &q);
+// //         S21Queue(S21Queue &&q);
+// //         ~S21Queue();
+// //         // operator=(S21Queue &&q);
 
-        bool empty();
-        size_type size();
+// //         const_reference front() const { return head_;}
+// //         const_reference back() const { return tail_;}
 
-        void push(const_reference value);
-        void pop();
-        void swap(S21Queue& other);
+// //         bool empty();
+// //         size_type size() const { return size_;}
 
-    private:
-        value_type *queue_;
-        int head_;
-        int tail_;
-        
-};
+// //         void push(const_reference value);
+// //         void pop();
+// //         void swap(S21Queue& other);
 
-#endif //  SRC_S21_QUEUE_H
+// //         void AllocateMemory(S21Queue<T> &q, size_t size);
+
+// //     private:
+// //         value_type *queue_;
+// //         int head_;
+// //         int tail_;
+// //         size_type size_;
+// // };
+
+// #endif //  SRC_S21_QUEUE_H
