@@ -17,45 +17,53 @@ template <typename T>
 class list{
 
     public:
-        iterator begin();
-        iterator end();
-        // list modifiers
-        void clear();
-        // iterator insert(iterator pos, const T value);
-        //  void erase(iterator pos);
-        void push_back(const_reference  value);
-        void pop_back();
-        void push_front(const_reference  value);
-        void pop_front();
-        // void swap(list& other);
-        // void merge(list& other);
-        // void splice(const_iterator pos, list& other);
-        // void reverse();
-        // void unique();
-        // void sort();
+        // using value_type = T;
+        // using reference = T&;
+        // using const_reference = const T&;
+        // using size_type = size_t;
+        // using iterator = ListIterator<T>;
+        // using const_iterator = ListConstIterator<T>;
 
-        void Print_list(list<T>& list); // for me
-
-        // List functions
+         // List functions
         list();
         list(size_type n);
         list(std::initializer_list<value_type> const &items);
         list(const list &l);
         list(list &&l);
         ~list();
+        // operator=(list &&l);
 
         // List element access 
         const_reference front();
         const_reference back();
 
         // List iterators
-        // iterator begin();
-        // iterator end();
+        iterator begin();
+        iterator end();
 
         // List Capacity
         bool empty();
         size_type size();
         size_type max_size();
+
+        // list modifiers
+        void clear();
+        iterator insert(iterator pos, const T value);
+        void erase(iterator pos);
+        void push_back(const_reference  value);
+        void pop_back();
+        void push_front(const_reference  value);
+        void pop_front();
+        void swap(list& other);
+        void merge(list& other);
+        // void splice(const_iterator pos, list& other);
+        void reverse();
+        void unique();
+        void sort();
+
+        void Print_list(list<T>& list); // for me
+
+
 
         T& operator[](int num); // for me
 
