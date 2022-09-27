@@ -2,26 +2,29 @@
 #define SRC_S21_LIST_H
 
 #include <iostream>
-#include <string>
 #include <initializer_list>
 #include "list_iterator.h"
+#include <utility>
+
 using namespace std;
 
-#define value_type  T
-#define reference  T&
-#define const_reference  const T&
-#define size_type  size_t
-#define iterator ListIterator<T>
-#define const_iterator ListConstIterator<T>
+
+// #define value_type  T
+// #define reference  T&
+// #define const_reference  const T&
+// #define size_type  size_t
+// #define iterator ListIterator<T>
+// #define const_iterator ListConstIterator<T>
+
 template <typename T>
 class list{
-
+    
     public:
-        // using value_type = T;
-        // using reference = T&;
-        // using const_reference = const T&;
-        // using size_type = size_t;
-        // using iterator = ListIterator<T>;
+        using value_type = T;
+        using reference = T&;
+        using const_reference = const T&;
+        using size_type = size_t;
+        using iterator = ListIterator<T>;
         // using const_iterator = ListConstIterator<T>;
 
          // List functions
@@ -38,17 +41,18 @@ class list{
         const_reference back();
 
         // List iterators
-        iterator begin();
+        iterator begin() {return iterator(head);}
         iterator end();
 
         // List Capacity
         bool empty();
-        size_type size();
-        size_type max_size();
+        size_t size(); // size_type
+        size_t max_size(); // size_type
 
         // list modifiers
         void clear();
         iterator insert(iterator pos, const T value);
+        
         void erase(iterator pos);
         void push_back(const_reference  value);
         void pop_back();
@@ -63,26 +67,16 @@ class list{
 
         void Print_list(list<T>& list); // for me
 
-
-
         T& operator[](int num); // for me
 
     private:
-        class Node{
-            public:
-                Node *pnext;
-                Node *prev;
-                T data;
-                Node (T data = T(), Node *pnext = nullptr, Node *prev = nullptr) {
-                    this->pnext = pnext;
-                    this->prev = prev;
-                    this->data = data;
-                }
-        };
 
-        Node *head;
-        Node *tail;
+        Node<T> *head;
+        Node<T> *tail;
         size_type count;
 };
 
-#endif //  SRC_S21_LIST_H
+
+
+
+#endif // SRC_S21_LIST_H
