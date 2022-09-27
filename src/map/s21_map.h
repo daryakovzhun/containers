@@ -1,11 +1,21 @@
 #ifndef SRC_S21_MAP_H
 #define SRC_S21_MAP_H
 
-
+#include <initializer_list>
+#include <utility>
 
 template<typename Key, typename T>
 class S21Map {
     public:
+        using key_type = Key;
+        using mapped_type = T;
+        using value_type = std::pair<const key_type, mapped_type>;
+        using reference = value_type&;
+        using const_reference = const value_type&;
+        using iterator = MapIterator<Key, T>;
+        using const_iterator = MapConstIterator<Key, T>;
+        using size_type = size_t;
+
         S21Map();
         S21Map(std::initializer_list<value_type> const &items);
         S21Map(const S21Map &m);
@@ -34,19 +44,16 @@ class S21Map {
         bool contains(const Key& key);
 
     private:
-        using key_type = Key;
-        using mapped_type = T;
-        using value_type = std::pair<const key_type, mapped_type>;
-        using reference = value_type&;
-        using const_reference = const value_type&;
-        using iterator = MapIterator<Key, T>;
-        using const_iterator = MapConstIterator<Key, T>;
-        using size_type = size_t;
+        class Node {
+            public:
+                Node* parent;
+                Node * left;
+                Node* right;
+                std::pair<const Key, T> data;
+        };
 
-        // key_type key;
-        // mapped_type mapped;
-
-        mapped_type& operator[key_type&];
+        Node* root_;
+        size_type size_;
 };
 
 #endif //  SRC_S21_MAP_H

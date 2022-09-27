@@ -1,7 +1,10 @@
 #include "s21_map.h"
 
 template<typename Key, typename T>
-S21Map<Key, T>::S21Map();
+S21Map<Key, T>::S21Map() {
+    root_ = 0;
+    size_ = 0;
+}
 
 // template<typename Key, typename T>
 // S21Map<Key, T>::S21Map(std::initializer_list<value_type> const &items);
@@ -42,11 +45,11 @@ S21Map<Key, T>::S21Map();
 // template<typename Key, typename T>
 // void S21Map<Key, T>::clear();
 
-// // template<typename Key, typename T>
-// // std::pair<iterator, bool> insert(const value_type& value);
+// template<typename Key, typename T>
+// std::pair<iterator, bool> insert(const value_type& value);
 
 // // template<typename Key, typename T>
-// // std::pair<iterator, bool> insert(const Key& key, const T& obj);
+// // std::pair<iterator, bool> insert(cons t Key& key, const T& obj);
 
 // // template<typename Key, typename T>
 // // std::pair<iterator, bool> insert_or_assign(const Key& key, const T& obj);;
