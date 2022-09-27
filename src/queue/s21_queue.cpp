@@ -46,9 +46,17 @@ S21Queue<T>::~S21Queue() {
     }
 }
 
-// template<typename T>
-// S21Queue<T>::operator=(S21Queue &&q);
-
+template<typename T>
+void S21Queue<T>::operator=(S21Queue &&q) {
+    this->~S21Queue();
+    AllocateMemory(*this, q.size());
+    for (int i = q.head_; i < q.tail_; i++) {
+        queue_[i] = q.queue_[i];
+    }
+    head_ = q.head_;
+    tail_ = q.tail_;
+    size_ = q.size_;
+}
 
 template<typename T>
 bool S21Queue<T>::empty() {
@@ -77,7 +85,6 @@ void S21Queue<T>::pop() {
     for (int i = 0; i < buffer.size_ - 1; i++) {
         queue_[i] = buffer.queue_[i + 1];
     }
-        // memcpy(queue_, buffer.queue_ + 1, buffer.size_ - 1 * sizeof(value_type));
 
     if (size_ > 0)  size_--;
     if (tail_ > 0) tail_--;
@@ -85,29 +92,8 @@ void S21Queue<T>::pop() {
 
 template<typename T>
 void S21Queue<T>::swap(S21Queue& other) {
-
+    S21Queue buffer(*this);
+    *this = other;
+    other = buffer;
 }
 
-
-int main () {
-    std::queue<int> check;
-    S21Queue<int> q;
-
-    for (int i = 0; i < 10; i++) {
-        
-        check.push(i);
-        std::cout << "front " << check.front() << " ";
-        q.push(i);
-        std::cout << "front my " << check.front() << "\n";
-
-        if (i % 3 == 0) {
-            check.pop();
-            q.pop();
-        }
-
-        std::cout << "back = " << check.back() << "\n";
-        std::cout << "back my = " << q.back() << "\n\n";
-    }
-
-  return 0;
-}

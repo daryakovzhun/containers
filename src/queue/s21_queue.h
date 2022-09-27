@@ -3,14 +3,10 @@
 
 #include <initializer_list>
 #include <string.h>
-
-#include <iostream>
-#include <stdexcept>
+// #include <stdexcept>
 
 template<typename T>
 class S21Queue {
-    // friend void AllocateMemory(S21Queue<T> &q, size_t size);
-
     public:
         using value_type = T;
         using reference = T&;
@@ -22,14 +18,10 @@ class S21Queue {
         S21Queue(const S21Queue &q);
         S21Queue(S21Queue &&q);
         ~S21Queue();
-        // operator=(S21Queue &&q);
+        void operator=(S21Queue &&q);
 
         const_reference front() const { return queue_[head_];}
-        const_reference back() const {
-            // if (tail_ == -1) {
-            //     throw std::out_of_range("Queue is empty");
-            // }
-            return queue_[tail_];}  // std::cout << "tail = " << tail_ << "\n";
+        const_reference back() const {return queue_[tail_];}
 
         bool empty();
         size_type size() const { return size_;}

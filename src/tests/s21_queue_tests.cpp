@@ -6,11 +6,11 @@
 
 using namespace std;
 
-TEST(TestGroupName, constructor) {
+TEST(TestGroupName, front) {
     queue<int> check;
     S21Queue<int> q;
 
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < 50; i++) {
         check.push(i);
         q.push(i);
 
@@ -20,8 +20,27 @@ TEST(TestGroupName, constructor) {
         }
     }
 
-    ASSERT_TRUE( check.front() == q.front());
+    ASSERT_TRUE(check.front() == q.front());
 }
+
+TEST(TestGroupName, back) {
+    queue<int> check;
+    S21Queue<int> q;
+
+    for (int i = 0; i < 50; i++) {
+        check.push(i);
+        q.push(i);
+
+        if (i % 3 == 0) {
+            check.pop();
+            q.pop();
+        }
+    }
+
+    ASSERT_TRUE(check.back() == q.back());
+}
+
+
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);
