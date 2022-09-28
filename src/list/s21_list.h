@@ -42,7 +42,7 @@ class list{
 
         // List iterators
         iterator begin() {return iterator(head);}
-        iterator end() {return iterator(tail);};
+        iterator end() {return iterator(nullptr);};
 
         // List Capacity
         bool empty();
@@ -65,7 +65,7 @@ class list{
         void unique();
         void sort();
 
-        void Print_list(list<T>& list); // for me
+        void Print_list(); // for me
 
         T& operator[](int num); // for me
 

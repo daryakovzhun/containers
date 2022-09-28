@@ -39,23 +39,36 @@ list<T>::~list() {
 }
 
 template <typename T>
+ListIterator<T> list<T>::insert(iterator pos, const T value) {;
+    // if (pos == this->begin()) {
+    //     push_front(value);
+    //     // cout << *this->begin()<< endl;
+    //     res = head;
+       
+    // } else {
+    //     --pos;
+    //     pos._currentNode = head;
+    //     // current->pnext  = new Node<T>(value, current->pnext, current);
+    //     // return ListIterator<T>(current->pnext);
+    // }
+    // count++;
+    // return ListIterator<T>(this->begin());
 
-ListIterator<T> list<T>::insert(iterator pos, const T value) {
-    // ListIterator<T> begin(head);
-    Node<T> *current = head;
-    if (pos == 0) {
-        push_front(value);
-    } else {
-        for(int i = 0; i < pos - 1; i++) {
-            current = current->pnext;
-        }
-        current->pnext  = new Node<T>(value, current->pnext);
-        ListIterator<T>(current->pnext);
-        count++;
-    }
+
+    // Node<T> *current = head;
+    // if (pos == 0) {
+    //     push_front(value);
+    // } else {
+    //     for(int i = 0; i < pos - 1; i++) {
+    //         current = current->pnext;
+    //     }
+    //     current->pnext  = new Node<T>(value, current->pnext);
+    //     ListIterator<T>(current->pnext);
+    //     count++;
+    // }
 }
 
-// void erase(int pos) { // int iterator
+// void erase(int pos) { // int  change to iterator
 //    Node<T> *current = head;
 //     if (pos == 0) {
 //         pop_front();
@@ -147,9 +160,10 @@ T& list<T>::operator[](const int num) {
 // }
 
 template <typename T>
-void Print_list(list<T>& list) {
-    for (int i = 0 ; i < list.size(); i++) {
-        cout << list[i] << endl;
+void list<T>::Print_list() {
+    iterator it = this->begin();
+    for (; it != this->end(); ++it) {
+        cout << *it << endl;
     }
 }
 
@@ -177,15 +191,13 @@ int main() {
     
     list <string> a;
     a.pop_back();
-    // a.push_back("hello");
-    // a.push_back("fggf");
-    // a.push_back("ss");
-    // a.push_back("dfgdf");
-    // list <string> ::iterator it;
-    // it = a.begin();
-    // for (it; it != ++a.end(); ++it) {
-    //     cout << *it << endl;
-    // }
+    a.push_back("hello");
+    a.push_back("fggf");
+    a.push_back("ss");
+    a.push_back("dfgdf");
+    ListIterator<string> it;
+    it = a.begin();
+    // Print_list(a);
     // while (i < 4) {
     //     cout << *it;
     //     list <string> ::it++;
