@@ -42,7 +42,7 @@ class list{
 
         // List iterators
         iterator begin() {return iterator(head);}
-        iterator end();
+        iterator end() {return iterator(tail);};
 
         // List Capacity
         bool empty();

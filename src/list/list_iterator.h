@@ -9,17 +9,17 @@ class Node{
         Node *prev;
         T data;
         Node (T data = T(), Node *pnext = nullptr, Node *prev = nullptr) {
-            this->pnext = pnext;
+            this->pnext =  pnext;
             this->prev = prev;
             this->data = data;
         }
 };
 
-
 template<typename T>
 class ListIterator
 {
 public:
+    ListIterator();
     ListIterator(Node<T>* node);
 
     const Node<T>* node() const;
@@ -31,6 +31,12 @@ public:
 private:
     Node<T>* _currentNode;
 };
+
+template<class T>
+ListIterator<T>::ListIterator()
+{ }
+
+
 
 template<class T>
 ListIterator<T>::ListIterator(Node<T>* node)
@@ -46,7 +52,7 @@ const Node<T>* ListIterator<T>::node() const
 template<class T>
 ListIterator<T>& ListIterator<T>::operator++()
 {
-    _currentNode = _currentNode->next;
+    _currentNode = _currentNode->pnext;
     return *this;
 }
 

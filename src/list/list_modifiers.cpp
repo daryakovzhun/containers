@@ -180,6 +180,18 @@ int main() {
     a.push_back("fggf");
     a.push_back("ss");
     a.push_back("dfgdf");
+    list <string> ::iterator it;
+    it = a.begin();
+    for (it; it != a.end(); ++it) {
+        cout << *it;
+        cout << endl;
+    }
+    // while (i < 4) {
+    //     cout << *it;
+    //     list <string> ::it++;
+    //     i++;
+    // }
+    
     // cout << a[1] << endl;
     // a.push_back(154);
     // a.push_back(4);
