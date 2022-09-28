@@ -1,4 +1,4 @@
-#include "S21_list.h"
+#include "s21_list.h"
 #include <string.h>
 
 // List functions
@@ -182,7 +182,7 @@ int main() {
     a.push_back("dfgdf");
     list <string> ::iterator it;
     it = a.begin();
-    for (it; it != a.end(); ++it) {
+    for (it; it != ++a.end(); ++it) {
         cout << *it << endl;
     }
     // while (i < 4) {
