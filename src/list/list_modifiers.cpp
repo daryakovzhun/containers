@@ -183,8 +183,7 @@ int main() {
     list <string> ::iterator it;
     it = a.begin();
     for (it; it != a.end(); ++it) {
-        cout << *it;
-        cout << endl;
+        cout << *it << endl;
     }
     // while (i < 4) {
     //     cout << *it;
