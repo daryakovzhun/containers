@@ -3,8 +3,11 @@
 
 #include <initializer_list>
 #include <utility>
+#include "s21_map_iterator.h"
 
-template<typename Key, typename T>
+// #define MapIterator<Key, T> iterator
+
+template<typename Key, typename T> 
 class S21Map {
     public:
         using key_type = Key;
@@ -44,15 +47,7 @@ class S21Map {
         bool contains(const Key& key);
 
     private:
-        class Node {
-            public:
-                Node* parent;
-                Node * left;
-                Node* right;
-                std::pair<const Key, T> data;
-        };
-
-        Node* root_;
+        Node<Key, T>* root_;
         size_type size_;
 };
 
