@@ -2,6 +2,7 @@
 #define SRC_S21_MAP_ITERATOR_H
 
 #include <utility>
+#include <cstddef>
 
 template<typename Key, typename T>
 class Node {
@@ -9,10 +10,11 @@ class Node {
         Node* parent;
         Node* left;
         Node* right;
-        std::pair<const Key, T> data;
+        std::pair< Key, T> data; // const
 
-        Node(const std::pair<const Key, T>& data = 0, Node* parent = NULL, Node* left = NULL, Node* right = NULL) {
-            data = data;
+        Node(const std::pair<const Key, T>& value = 0, Node* parent = NULL, Node* left = NULL, Node* right = NULL) {
+            data.first = value.first;
+            data.second = value.second;
             parent = parent;
             left = left;
             right = right;
@@ -33,7 +35,7 @@ class Node {
 
         ~Node() {}
 
-        Node* next() const {
+        Node* next() {
             Node* next = this;
             if (next->right) {
                 next = next->right;
@@ -43,9 +45,10 @@ class Node {
             } else {
                 next = next->parent;  //  ??            
             }
+            return next;
         }
 
-        Node* prev() const {
+        Node* prev() {
             Node* prev = this;
             if (prev->left) {
                 prev = prev->left;
@@ -55,6 +58,7 @@ class Node {
             } else {
                 prev = prev->parent;  //  ??
             }
+            return prev;
         }
 
 };
@@ -80,16 +84,16 @@ class MapIterator {
             return *this;
         }
 
-        reference operator*(const MapIterator& other) {
+        reference operator*() {
             return it->data;
         }
 
-        MapIterator& operator++(const MapIterator& other) {
+        MapIterator& operator++() {
             it = it->next();
             return *this;
         }
 
-        MapIterator& operator--(const MapIterator& other) {
+        MapIterator& operator--() {
             it = it->prev();
             return *this;
         }

@@ -5,6 +5,10 @@
 #include <utility>
 #include "s21_map_iterator.h"
 
+#include <string>
+#include <iostream>
+using namespace std;
+
 template<typename Key, typename T> 
 class S21Map {
     public:
@@ -14,7 +18,7 @@ class S21Map {
         using reference = value_type&;
         using const_reference = const value_type&;
         using iterator = MapIterator<Key, T>;
-        using const_iterator = MapConstIterator<Key, T>;
+        // using const_iterator = MapConstIterator<Key, T>; 
         using size_type = size_t;
 
         S21Map();
@@ -22,27 +26,27 @@ class S21Map {
         S21Map(const S21Map &m);
         S21Map(S21Map &&m);
         ~S21Map();
-        operator=(S21Map &&m);
+        // operator=(S21Map &&m);
 
-        T& at(const Key& key);
-        T& operator[](const Key& key);
+        mapped_type& at(const Key& key);
+        mapped_type& operator[](const Key& key);
 
         iterator begin();
         iterator end();
 
         bool empty();
-        size_type size();
-        size_type max_size();
+        // size_type size();
+        // size_type max_size();
 
-        void clear();
+        // void clear();
         std::pair<iterator, bool> insert(const value_type& value);
-        std::pair<iterator, bool> insert(const Key& key, const T& obj);
-        std::pair<iterator, bool> insert_or_assign(const Key& key, const T& obj);;
-        void erase(iterator pos);
-        void swap(S21Map& other);
-        void merge(S21Map& other);
+        // std::pair<iterator, bool> insert(const Key& key, const T& obj);
+        // std::pair<iterator, bool> insert_or_assign(const Key& key, const T& obj);;
+        // void erase(iterator pos);
+        // void swap(S21Map& other);
+        // void merge(S21Map& other);
 
-        bool contains(const Key& key);
+        // bool contains(const Key& key);
 
     private:
         Node<Key, T>* root_;
@@ -52,9 +56,40 @@ class S21Map {
 
         void connect_node (Node<Key, T>* parent, Node<Key, T>** childptr, Node<Key, T>* child) {
             if (child) {child->parent = parent;}
-            if (!((child == head_ || child == tail_) && (parent == head_ || parent == tail_)) && childptr) {
+            // if (!((child == head_ || child == tail_) && (parent == head_ || parent == tail_)) && childptr) {
+            //     *childptr = child;
+            // }
+
+            if ((child == head_ || child == tail_) && (parent == head_ || parent == tail_)) {
+                return;
+            }
+
+            if (childptr) {
                 *childptr = child;
             }
+        }
+
+        // std::pair<iterator, bool> find_by_key(const key_type& key) {
+        iterator find_by_key(const key_type& key) {
+            if (empty()) {
+                return end();
+            }
+            Node<Key, T>* it = root_;
+            iterator result = NULL;
+            // Node<Key, T>* parent = NULL;
+            while (it && it != head_ && it != tail_) {
+                // parent = it;
+
+                cout << "key = " << it->data.first << " data = ";
+                if (key < it->data.first) {
+                    it = it->left;
+                } else if (key > it->data.first) {
+                    it = it->right;
+                } else {
+                    return result = it;
+                }
+            }
+            return end();
         }
 };
 
