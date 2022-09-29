@@ -5,8 +5,13 @@
 template<typename Key, typename T>
 S21Map<Key, T>::S21Map() {
     root_ = NULL;
-    head_ = NULL;
-    tail_ = NULL;
+    // head_ = NULL;
+    // tail_ = NULL;
+    head_ = new Node<Key, T>();
+    tail_ = new Node<Key, T>();
+    // head_->parent = tail_;
+    // tail_->parent = head_;
+
     size_ = 0;
 }
 
@@ -44,7 +49,7 @@ T& S21Map<Key, T>::operator[](const Key& key) {
 
 template<typename Key, typename T>
 MapIterator<Key, T> S21Map<Key, T>::begin() {
-    return MapIterator<Key, T>(head_->prev());
+    return MapIterator<Key, T>(head_->parent);
 }
 
 template<typename Key, typename T>
@@ -144,7 +149,7 @@ int main() {
 
     int i = 0;
     for (auto it = m.begin(); it != m.end(); ++it) {
-        cout << "i = " << i << " map[i] = " << m[i];
+        cout << "i = " << i << " map[i] = " << m[i] << "\n";
         i++;
     }
 

@@ -12,7 +12,7 @@ class Node {
         Node* right;
         std::pair< Key, T> data; // const
 
-        Node(const std::pair<const Key, T>& value = 0, Node* parent = NULL, Node* left = NULL, Node* right = NULL) {
+        Node(const std::pair<const Key, T>& value = std::pair<const Key, T>(), Node* parent = NULL, Node* left = NULL, Node* right = NULL) {
             data.first = value.first;
             data.second = value.second;
             parent = parent;

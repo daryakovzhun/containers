@@ -56,6 +56,7 @@ class S21Map {
 
         void connect_node (Node<Key, T>* parent, Node<Key, T>** childptr, Node<Key, T>* child) {
             if (child) {child->parent = parent;}
+
             // if (!((child == head_ || child == tail_) && (parent == head_ || parent == tail_)) && childptr) {
             //     *childptr = child;
             // }
@@ -79,8 +80,6 @@ class S21Map {
             // Node<Key, T>* parent = NULL;
             while (it && it != head_ && it != tail_) {
                 // parent = it;
-
-                cout << "key = " << it->data.first << " data = ";
                 if (key < it->data.first) {
                     it = it->left;
                 } else if (key > it->data.first) {
