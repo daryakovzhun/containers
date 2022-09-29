@@ -11,82 +11,95 @@ class Node {
         Node* right;
         std::pair<const Key, T> data;
 
-        void add(Node *&obj, std::pair<const Key, T> data) {
-            if (obj == NULL) {
-                obj = new Node;
-                obj->data = data;
-            }
-            else if (obj->data.first < data) {
-                add(obj->right, data);
-            }
-            else if (obj->data.first > data) {
-                add(obj->left, data);
-            }
+        Node(const std::pair<const Key, T>& data = 0, Node* parent = NULL, Node* left = NULL, Node* right = NULL) {
+            data = data;
+            parent = parent;
+            left = left;
+            right = right;
         }
- 
-        void CopyTree(Node *p, Node *copy) {
-            if (p == NULL) {
-                copy = NULL;
-                return;
-            }
-            copy->data = p->data;
-            CopyTree(p->left, (copy->left));
-            CopyTree(p->right, (copy->right));
+        Node(const Node& other) {
+            *this = other;
         }
 
-        int sizeT(Node *tree, int count = 0) {
-            if (tree == NULL)
-                return count;
-            count++;
-            count = sizeT(tree->left, count);
-            count = sizeT(tree->right, count);
-            return count;
+        Node& operator=(const Node& other) {
+            if (*this != &other) {
+                parent = other.parent;
+                left = other.left;
+                right = other.right;
+                data = other.data;
+            }
+            return *this;
         }
+
+        ~Node() {}
+
+        Node* next() const {
+            Node* next = this;
+            if (next->right) {
+                next = next->right;
+                while (next->left) {
+                    next = next->left;
+                }
+            } else {
+                next = next->parent;  //  ??            
+            }
+        }
+
+        Node* prev() const {
+            Node* prev = this;
+            if (prev->left) {
+                prev = prev->left;
+                while (prev->right) {
+                    prev = prev->right;
+                }
+            } else {
+                prev = prev->parent;  //  ??
+            }
+        }
+
 };
 
-template<typename Key, typename T>
-class MapIterator {
-    private:
-        Node<Key, T> next;
-
+template< typename Key, typename T>
+class MapIterator {   
     public:
-        MapIterator(Node<Key, T> root) {
-            next = root;
-            if(next == null)
-                return;
+        using key_type = Key;
+        using mapped_type = T;
+        using value_type = std::pair<const key_type, mapped_type>;
+        using reference = value_type&;
 
-            while (next.left != null)
-            next = next.left;
+        Node<Key, T>* it;
+
+        MapIterator(Node<Key, T>* root = NULL) : it(root) {}
+        MapIterator(const MapIterator& other) {
+            *this = other;
+        }
+        ~MapIterator() {}
+
+        MapIterator& operator=(const MapIterator& other) {
+            it = other.it;
+            return *this;
         }
 
-        boolean hasNext(){
-            return next != null;
+        reference operator*(const MapIterator& other) {
+            return it->data;
         }
 
-        Node<Key, T> next(){
-            if(!hasNext()) throw new NoSuchElementException();
-            Node<Key, T> r = next;
+        MapIterator& operator++(const MapIterator& other) {
+            it = it->next();
+            return *this;
+        }
 
-            // If you can walk right, walk right, then fully left.
-            // otherwise, walk up until you come from left.
-            if(next.right != nullptr) {
-                next = next.right;
-                while (next.left != nullptr)
-                    next = next.left;
-                return r;
-            }
+        MapIterator& operator--(const MapIterator& other) {
+            it = it->prev();
+            return *this;
+        }
 
-            while(true) {
-                if(next.parent == nullptr) {
-                    next = nullptr;
-                    return r;
-                }
-                if(next.left == next) {
-                    next = next.parent;
-                return r;
-                }
-                next = next.parent;
-            }
+        bool operator==(const MapIterator& other) {
+            return it == other.it;
+        }
+
+        bool operator!=(const MapIterator& other) {
+            return it != other.it;
         }
 };
 

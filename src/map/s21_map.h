@@ -5,8 +5,6 @@
 #include <utility>
 #include "s21_map_iterator.h"
 
-// #define MapIterator<Key, T> iterator
-
 template<typename Key, typename T> 
 class S21Map {
     public:
@@ -48,7 +46,16 @@ class S21Map {
 
     private:
         Node<Key, T>* root_;
+        Node<Key, T>* head_;
+        Node<Key, T>* tail_;
         size_type size_;
+
+        void connect_node (Node<Key, T>* parent, Node<Key, T>** childptr, Node<Key, T>* child) {
+            if (child) {child->parent = parent;}
+            if (!((child == head_ || child == tail_) && (parent == head_ || parent == tail_)) && childptr) {
+                *childptr = child;
+            }
+        }
 };
 
 #endif //  SRC_S21_MAP_H
