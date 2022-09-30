@@ -39,49 +39,14 @@ list<T>::~list() {
 }
 
 template <typename T>
-ListIterator<T> list<T>::insert(iterator pos, const T value) {;
-    // if (pos == this->begin()) {
-    //     push_front(value);
-    //     // cout << *this->begin()<< endl;
-    //     res = head;
-       
-    // } else {
-    //     --pos;
-    //     pos._currentNode = head;
-    //     // current->pnext  = new Node<T>(value, current->pnext, current);
-    //     // return ListIterator<T>(current->pnext);
-    // }
-    // count++;
-    // return ListIterator<T>(this->begin());
+ListIterator<T> list<T>::insert(iterator pos, const T value) {
 
-
-    // Node<T> *current = head;
-    // if (pos == 0) {
-    //     push_front(value);
-    // } else {
-    //     for(int i = 0; i < pos - 1; i++) {
-    //         current = current->pnext;
-    //     }
-    //     current->pnext  = new Node<T>(value, current->pnext);
-    //     ListIterator<T>(current->pnext);
-    //     count++;
-    // }
 }
 
-// void erase(int pos) { // int  change to iterator
-//    Node<T> *current = head;
-//     if (pos == 0) {
-//         pop_front();
-//     } else {
-//         for(int i = 0; i < pos - 1; i++) {
-//             current = current->pnext;
-//         }
-//         Node<T> *del_Node<T> = current->pnext;
-//         current->pnext = del->pnext;
-//         delete new_ins;
-//         count--;
-//     }
-// }
+template <typename T>
+void list<T>::erase(iterator pos) {
+
+}
 
 template <typename T>
 void list<T>::push_back(const_reference  value) {
@@ -119,15 +84,16 @@ void list<T>::push_front(const_reference value) {
 }
 
 template <typename T>
-void list<T>::pop_front() { // исправить и проверить пустой список
+void list<T>::pop_front() {
+
     Node<T> *current = head;
-    head = head->pnext;
-    delete current;
+    if (head != tail) {
+        current->pnext->prev = nullptr;
+        head = current->pnext;
+    }
     count--;
-
+    delete current;
 }
-
-
 
 // перегрузка с конца
 template <typename T>
@@ -143,21 +109,6 @@ T& list<T>::operator[](const int num) {
     }
     return current->data;
 }
-
-// перегрузка с начала
-// template <typename T>
-// T& list<T>::operator[](const int num) {
-//     int count = 0;
-//     Node<T> *current = tail;
-//     while (current != nullptr) { // sega !!!
-//         if (count == num) {
-//             break;
-//         }
-//         current = current->prev;
-//         count++;
-//     }
-//     return current->data;
-// }
 
 template <typename T>
 void list<T>::Print_list() {
@@ -197,6 +148,8 @@ int main() {
     a.push_back("dfgdf");
     ListIterator<string> it;
     it = a.begin();
+    a.advance(it, 3);
+    cout << *it << endl;
     // Print_list(a);
     // while (i < 4) {
     //     cout << *it;
