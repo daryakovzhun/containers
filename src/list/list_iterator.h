@@ -26,7 +26,8 @@ public:
     const T& operator*() const;
     bool operator!=(const ListIterator<T>& it) const;
     bool operator==(const ListIterator<T>& it) const;
-    ListIterator<T>& shift(int n);
+
+    ListIterator<T>& shift(int n); // my
 
 private:
     Node<T>* _currentNode;
