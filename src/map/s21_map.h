@@ -28,17 +28,17 @@ class S21Map {
         ~S21Map();
         // operator=(S21Map &&m);
 
-        mapped_type& at(const Key& key);
+        // mapped_type& at(const Key& key);
         mapped_type& operator[](const Key& key);
 
-        iterator begin();
-        iterator end();
+        iterator begin() const;
+        iterator end() const;
 
         bool empty();
-        // size_type size();
+        size_type size() const;
         // size_type max_size();
 
-        // void clear();
+        void clear();
         std::pair<iterator, bool> insert(const value_type& value);
         // std::pair<iterator, bool> insert(const Key& key, const T& obj);
         // std::pair<iterator, bool> insert_or_assign(const Key& key, const T& obj);;
@@ -55,19 +55,21 @@ class S21Map {
         size_type size_;
 
         void connect_node (Node<Key, T>* parent, Node<Key, T>** childptr, Node<Key, T>* child) {
-            if (child) {child->parent = parent;}
-
+            if (child) {
+                child->parent = parent;
+            }
+            
             // if (!((child == head_ || child == tail_) && (parent == head_ || parent == tail_)) && childptr) {
             //     *childptr = child;
             // }
 
-            if ((child == head_ || child == tail_) && (parent == head_ || parent == tail_)) {
-                return;
-            }
+            // if ((child == head_ || child == tail_) && (parent == head_ || parent == tail_)) {
+            //     return;
+            // }
 
-            if (childptr) {
+            // if (childptr) {
                 *childptr = child;
-            }
+            // }
         }
 
         // std::pair<iterator, bool> find_by_key(const key_type& key) {

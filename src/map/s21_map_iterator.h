@@ -14,12 +14,12 @@ class Node {
         Node* right;
         std::pair< Key, T> data; // const
 
-        Node(const std::pair<const Key, T>& value = std::pair<const Key, T>(), Node* parent = NULL, Node* left = NULL, Node* right = NULL) {
+        Node(const std::pair<const Key, T>& value = std::pair<const Key, T>(), Node* p = NULL, Node* l = NULL, Node* r = NULL) {
             data.first = value.first;
             data.second = value.second;
-            parent = parent;
-            left = left;
-            right = right;
+            parent = p;
+            left = l;
+            right = r;
         }
         Node(const Node& other) {
             *this = other;
@@ -40,13 +40,13 @@ class Node {
         Node* next() {
             Node* next = this;
             if (next->right) {
-                // std::cout << "next = " << next->right->data.first << "\n";
+                std::cout << "right = " << next->right->data.first << "\n";
+                
                 next = next->right;
                 while (next->left) {
                     next = next->left;
                 }
             } else {
-                std::cout << "parent = " << next->parent->right->data.first << "\n";
                 while (next->parent && next->parent->right == next) {
                     next = next->parent;
                 }
@@ -71,6 +71,11 @@ class Node {
             return prev;
         }
 
+        void free_node(Node* tree) {
+            if (tree->left) free_node(tree->left); 
+            if (tree->right) free_node(tree->right); 
+            delete tree;
+        }
 };
 
 template< typename Key, typename T>
@@ -121,6 +126,8 @@ class MapIterator {
         bool operator!=(const MapIterator& other) {
             return it != other.it;
         }
+
+
 };
 
 

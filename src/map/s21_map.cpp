@@ -5,8 +5,6 @@
 template<typename Key, typename T>
 S21Map<Key, T>::S21Map() {
     root_ = NULL;
-    // head_ = NULL;
-    // tail_ = NULL;
     head_ = new Node<Key, T>();
     tail_ = new Node<Key, T>();
 
@@ -30,7 +28,7 @@ S21Map<Key, T>::S21Map() {
 
 template<typename Key, typename T>
 S21Map<Key, T>::~S21Map() {
-    //  
+    clear(); 
 }
 
 // template<typename Key, typename T>
@@ -43,18 +41,18 @@ template<typename Key, typename T>
 T& S21Map<Key, T>::operator[](const Key& key) {
     MapIterator<Key, T> it = find_by_key(key);
     if (it == end() || it == MapIterator<Key, T>(head_)) {
-        it = insert(std::pair<Key, T>(key, T())).first;
+        it = insert(std::pair<const Key, T>(key, T())).first;
     }
     return it.it->data.second;
 }
 
 template<typename Key, typename T>
-MapIterator<Key, T> S21Map<Key, T>::begin() {
+MapIterator<Key, T> S21Map<Key, T>::begin() const {
     return MapIterator<Key, T>(head_->parent);
 }
 
 template<typename Key, typename T>
-MapIterator<Key, T> S21Map<Key, T>::end() {
+MapIterator<Key, T> S21Map<Key, T>::end() const {
     return MapIterator<Key, T>(tail_);
 }
 
@@ -63,14 +61,20 @@ bool S21Map<Key, T>::empty() {
     return size_ == 0;
 }
 
-// template<typename Key, typename T>
-// size_type S21Map<Key, T>::size();
+template<typename Key, typename T>
+size_t S21Map<Key, T>::size() const {
+    return size_;
+}
 
 // template<typename Key, typename T>
 // size_type S21Map<Key, T>::max_size();
 
-// template<typename Key, typename T>
-// void S21Map<Key, T>::clear();
+
+
+template<typename Key, typename T>
+void S21Map<Key, T>::clear() {
+    root_->free_node(root_);
+}
 
 template<typename Key, typename T>
 std::pair<MapIterator<Key, T>, bool> S21Map<Key, T>::insert(const std::pair<const Key, T>& value) {
@@ -95,13 +99,14 @@ std::pair<MapIterator<Key, T>, bool> S21Map<Key, T>::insert(const std::pair<cons
         }
     }
 
-    Node<Key, T>* result = new Node<Key, T>(value, parent, NULL, NULL);
+    Node<Key, T>* result = new Node<Key, T>(value, parent);
+   
     if (value.first < parent->data.first) {
         connect_node(parent, &parent->left, result);
         connect_node(result, &result->left, it);
         connect_node(result, &result->right, NULL);
-    } else if (value.first > parent->data.first) {  //  it == tail_ || 
-        if (it == tail_) it = NULL;
+
+    } else if (value.first > parent->data.first) {
         connect_node(parent, &parent->right, result);
         connect_node(result, &result->right, it);
         connect_node(result, &result->left, NULL);
@@ -116,8 +121,10 @@ std::pair<MapIterator<Key, T>, bool> S21Map<Key, T>::insert(const std::pair<cons
 // // template<typename Key, typename T>
 // // std::pair<iterator, bool> insert_or_assign(const Key& key, const T& obj);;
 
-// // template<typename Key, typename T>
-// // void erase(iterator pos);
+// template<typename Key, typename T>
+// void erase(iterator pos) {
+
+// }
 
 // template<typename Key, typename T>
 // void swap(S21Map<Key, T>& other);
@@ -148,16 +155,25 @@ int main() {
     m.insert(pair<int, int>(4, 4));
     m.insert(pair<int, int>(1, 1));
     m.insert(pair<int, int>(2, 2));
+    m.insert(pair<int, int>(8, 8));
 
     int i = 1;
-    for (auto it = m.begin(); it != m.end(); it++) {
+    // for (auto it = m.begin(); it != m.end(); ++it) {
+    //     cout << "i = " << i << " map[i] = ";
+    //     cout << m[i] << "\n";
+    //     i++;
+    // }
+
+    auto it = m.begin();
+    do {
         cout << "i = " << i << " map[i] = ";
         cout << m[i] << "\n";
+
         i++;
-        if ( it == m.end()) {
-            break;
-        }
-    }
+        it++;
+    } while (it != m.end());
+
+    
 
     // for (int j = 1; j < 24; j++) {
     //     cout << "j = " << j << " map[j] = " << m[j] << "\n";
