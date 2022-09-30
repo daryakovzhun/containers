@@ -58,10 +58,6 @@ class S21Map {
             if (child) {
                 child->parent = parent;
             }
-            
-            // if (!((child == head_ || child == tail_) && (parent == head_ || parent == tail_)) && childptr) {
-            //     *childptr = child;
-            // }
 
             // if ((child == head_ || child == tail_) && (parent == head_ || parent == tail_)) {
             //     return;
@@ -72,15 +68,12 @@ class S21Map {
             // }
         }
 
-        // std::pair<iterator, bool> find_by_key(const key_type& key) {
         std::pair<iterator, bool> find_by_key(const key_type& key) {
             if (empty()) {
                 return std::pair<iterator, bool>(end(), false);
             }
             Node<Key, T>* it = root_;
-            // Node<Key, T>* parent = NULL;
             while (it && it != head_ && it != tail_) {
-                // parent = it;
                 if (key < it->data.first) {
                     it = it->left;
                 } else if (key > it->data.first) {

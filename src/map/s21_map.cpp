@@ -1,6 +1,6 @@
 #include "s21_map.h"
 
-
+#include <map>
 
 template<typename Key, typename T>
 S21Map<Key, T>::S21Map() {
@@ -186,19 +186,46 @@ int main() {
     m.insert(pair<int, int>(1, 1));
     m.insert(pair<int, int>(2, 2));
     m.insert(pair<int, int>(8, 8));
-    m.insert_or_assign(3, 33);
+    // m.insert_or_assign(3, 33);
 
 
-    int i = 0;
+    // int i = 0;
     m[0] = 12345;
     m.at(5) = 555;
     auto it = m.begin();
-    do {
-        cout << "i = " << i << " map[i] = ";
-        cout << m[i] << "\n";
+    // do {
+    //     cout << "i = " << i << " map[i] = ";
+    //     cout << m[i] << "\n";
 
-        i++;
-        it++;
-    } while (it != m.end());
+    //     i++;
+    //     it++;
+    // } while (it != m.end());
+
+    for (int i = 0; i < 9; i++) {
+        cout << "i = " << i << " check[i] = ";
+        cout << m[i] << "\n";
+    }
+
+    // cout << "\n\n\n\n";
+
+    // map<int, int> check;
+    // check.insert(pair<int, int>(5, 5));
+    // check.insert(pair<int, int>(6, 6));
+    // check.insert(pair<int, int>(3, 3));
+    // check.insert(pair<int, int>(4, 4));
+    // check.insert(pair<int, int>(1, 1));
+    // check.insert(pair<int, int>(2, 2));
+    // check.insert(pair<int, int>(8, 8));
+    // // check.insert_or_assign(3, 33);
+
+
+    // int i = 0;
+    // check[0] = 12345;
+    // check.at(5) = 555;
+    // // auto it = check.begin();
+    // for (int i = 0; i < 9; i++) {
+    //     cout << "i = " << i << " check[i] = ";
+    //     cout << check[i] << "\n";
+    // }
 } 
 
