@@ -101,6 +101,7 @@ std::pair<MapIterator<Key, T>, bool> S21Map<Key, T>::insert(const std::pair<cons
         connect_node(result, &result->left, it);
         connect_node(result, &result->right, NULL);
     } else if (value.first > parent->data.first) {  //  it == tail_ || 
+        if (it == tail_) it = NULL;
         connect_node(parent, &parent->right, result);
         connect_node(result, &result->right, it);
         connect_node(result, &result->left, NULL);
@@ -149,7 +150,7 @@ int main() {
     m.insert(pair<int, int>(2, 2));
 
     int i = 1;
-    for (auto it = m.begin(); it != m.end(); ++it) {
+    for (auto it = m.begin(); it != m.end(); it++) {
         cout << "i = " << i << " map[i] = ";
         cout << m[i] << "\n";
         i++;

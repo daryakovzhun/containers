@@ -40,12 +40,13 @@ class Node {
         Node* next() {
             Node* next = this;
             if (next->right) {
-                std::cout << "next = " << next->right->data.first << "\n";
+                // std::cout << "next = " << next->right->data.first << "\n";
                 next = next->right;
                 while (next->left) {
                     next = next->left;
                 }
             } else {
+                std::cout << "parent = " << next->parent->right->data.first << "\n";
                 while (next->parent && next->parent->right == next) {
                     next = next->parent;
                 }
