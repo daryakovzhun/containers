@@ -9,8 +9,9 @@ S21Map<Key, T>::S21Map() {
     // tail_ = NULL;
     head_ = new Node<Key, T>();
     tail_ = new Node<Key, T>();
-    // head_->parent = tail_;
-    // tail_->parent = head_;
+
+    head_->parent = tail_;
+    tail_->parent = head_;
 
     size_ = 0;
 }
@@ -147,10 +148,14 @@ int main() {
     m.insert(pair<int, int>(1, 1));
     m.insert(pair<int, int>(2, 2));
 
-    int i = 0;
+    int i = 1;
     for (auto it = m.begin(); it != m.end(); ++it) {
-        cout << "i = " << i << " map[i] = " << m[i] << "\n";
+        cout << "i = " << i << " map[i] = ";
+        cout << m[i] << "\n";
         i++;
+        if ( it == m.end()) {
+            break;
+        }
     }
 
     // for (int j = 1; j < 24; j++) {

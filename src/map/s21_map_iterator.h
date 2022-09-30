@@ -4,6 +4,8 @@
 #include <utility>
 #include <cstddef>
 
+#include <iostream>
+
 template<typename Key, typename T>
 class Node {
     public:
@@ -38,11 +40,15 @@ class Node {
         Node* next() {
             Node* next = this;
             if (next->right) {
+                std::cout << "next = " << next->right->data.first << "\n";
                 next = next->right;
                 while (next->left) {
                     next = next->left;
                 }
             } else {
+                while (next->parent && next->parent->right == next) {
+                    next = next->parent;
+                }
                 next = next->parent;  //  ??            
             }
             return next;
@@ -56,6 +62,9 @@ class Node {
                     prev = prev->right;
                 }
             } else {
+                while (prev->parent && prev->parent->right == prev) {
+                    prev = prev->parent;
+                }
                 prev = prev->parent;  //  ??
             }
             return prev;
@@ -91,6 +100,12 @@ class MapIterator {
         MapIterator& operator++() {
             it = it->next();
             return *this;
+        }
+
+        MapIterator operator++(int value) {  // for me
+            MapIterator buffer(*this);
+            it = it->next();
+            return buffer;
         }
 
         MapIterator& operator--() {
