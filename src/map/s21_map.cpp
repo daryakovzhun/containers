@@ -7,24 +7,30 @@ S21Map<Key, T>::S21Map() {
     root_ = NULL;
     head_ = new Node<Key, T>();
     tail_ = new Node<Key, T>();
-
     head_->parent = tail_;
     tail_->parent = head_;
-
     size_ = 0;
 }
 
 // template<typename Key, typename T>
 // S21Map<Key, T>::S21Map(std::initializer_list<value_type> const &items);
 
-// template<typename Key, typename T>
-// S21Map<Key, T>::S21Map(const S21Map &m) {
-//     root_->CopyTree(m.root_, root_);
-//     size_ = m.root_->sizeT(m.root_);
-// }
+template<typename Key, typename T>
+S21Map<Key, T>::S21Map(const S21Map &m) {
+    root_ = new Node<Key, T>();  // ??
+    head_ = new Node<Key, T>();
+    tail_ = new Node<Key, T>();
+    *this = m;
+}
 
-// template<typename Key, typename T>
-// S21Map<Key, T>::S21Map(S21Map &&m);
+template<typename Key, typename T>
+S21Map<Key, T>::S21Map(S21Map &&m) {
+    root_ = m.root_;
+    head_ = m.head_;
+    tail_ = m.tail_;
+    size_ = m.size_;
+    m.root_ = nullptr;
+}
 
 template<typename Key, typename T>
 S21Map<Key, T>::~S21Map() {
@@ -32,15 +38,29 @@ S21Map<Key, T>::~S21Map() {
 }
 
 // template<typename Key, typename T>
-// S21Map<Key, T>::operator=(S21Map &&m);
+// S21Map<Key, T>& S21Map<Key, T>::operator=(S21Map &&m) {
+//     if (*this != m) {
+//         clear();
+//         // insert(m.begin(), m.end());
+//     }
+//     return *this;
+// }
 
-// template<typename Key, typename T>
-// T& S21Map<Key, T>::at(const Key& key);
+
+template<typename Key, typename T>
+T& S21Map<Key, T>::at(const Key& key) {
+    auto buffer = find_by_key(key);
+    if (buffer.second == false) {
+        throw std::out_of_range("Key not found");
+    }
+    return buffer.first.it->data.second;
+}
 
 template<typename Key, typename T>
 T& S21Map<Key, T>::operator[](const Key& key) {
-    MapIterator<Key, T> it = find_by_key(key);
-    if (it == end() || it == MapIterator<Key, T>(head_)) {
+    auto buffer = find_by_key(key);
+    MapIterator<Key, T> it = buffer.first;
+    if (buffer.second == false) {
         it = insert(std::pair<const Key, T>(key, T())).first;
     }
     return it.it->data.second;
@@ -115,11 +135,19 @@ std::pair<MapIterator<Key, T>, bool> S21Map<Key, T>::insert(const std::pair<cons
     return std::pair<MapIterator<Key, T>, bool>(MapIterator<Key, T>(result), true);
 }
 
-// // template<typename Key, typename T>
-// // std::pair<iterator, bool> insert(cons t Key& key, const T& obj);
+template<typename Key, typename T>
+std::pair<MapIterator<Key, T>, bool> S21Map<Key, T>::insert(const Key& key, const T& obj) {
+    return insert(std::pair<Key, T>(key, obj));
+}
 
-// // template<typename Key, typename T>
-// // std::pair<iterator, bool> insert_or_assign(const Key& key, const T& obj);;
+template<typename Key, typename T>
+std::pair<MapIterator<Key, T>, bool> S21Map<Key, T>::insert_or_assign(const Key& key, const T& obj) {
+    std::pair<MapIterator<Key, T>, bool> reuslt = insert(std::pair<Key, T>(key, obj));
+    if (reuslt.second == false) {
+        reuslt.first.it->data.second = obj;
+    }
+    return reuslt;
+}
 
 // template<typename Key, typename T>
 // void erase(iterator pos) {
@@ -134,6 +162,8 @@ std::pair<MapIterator<Key, T>, bool> S21Map<Key, T>::insert(const std::pair<cons
 
 // template<typename Key, typename T>
 // bool contains(const Key& key);
+
+
 
 int main() {
     // S21Map<int, string> m;
@@ -156,14 +186,12 @@ int main() {
     m.insert(pair<int, int>(1, 1));
     m.insert(pair<int, int>(2, 2));
     m.insert(pair<int, int>(8, 8));
+    m.insert_or_assign(3, 33);
 
-    int i = 1;
-    // for (auto it = m.begin(); it != m.end(); ++it) {
-    //     cout << "i = " << i << " map[i] = ";
-    //     cout << m[i] << "\n";
-    //     i++;
-    // }
 
+    int i = 0;
+    m[0] = 12345;
+    m.at(5) = 555;
     auto it = m.begin();
     do {
         cout << "i = " << i << " map[i] = ";
@@ -172,11 +200,5 @@ int main() {
         i++;
         it++;
     } while (it != m.end());
-
-    
-
-    // for (int j = 1; j < 24; j++) {
-    //     cout << "j = " << j << " map[j] = " << m[j] << "\n";
-    // }
 } 
 

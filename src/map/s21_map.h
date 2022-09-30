@@ -26,9 +26,9 @@ class S21Map {
         S21Map(const S21Map &m);
         S21Map(S21Map &&m);
         ~S21Map();
-        // operator=(S21Map &&m);
+        S21Map& operator=(S21Map &&m);
 
-        // mapped_type& at(const Key& key);
+        mapped_type& at(const Key& key);
         mapped_type& operator[](const Key& key);
 
         iterator begin() const;
@@ -40,8 +40,8 @@ class S21Map {
 
         void clear();
         std::pair<iterator, bool> insert(const value_type& value);
-        // std::pair<iterator, bool> insert(const Key& key, const T& obj);
-        // std::pair<iterator, bool> insert_or_assign(const Key& key, const T& obj);;
+        std::pair<iterator, bool> insert(const Key& key, const T& obj);
+        std::pair<iterator, bool> insert_or_assign(const Key& key, const T& obj);
         // void erase(iterator pos);
         // void swap(S21Map& other);
         // void merge(S21Map& other);
@@ -73,12 +73,11 @@ class S21Map {
         }
 
         // std::pair<iterator, bool> find_by_key(const key_type& key) {
-        iterator find_by_key(const key_type& key) {
+        std::pair<iterator, bool> find_by_key(const key_type& key) {
             if (empty()) {
-                return end();
+                return std::pair<iterator, bool>(end(), false);
             }
             Node<Key, T>* it = root_;
-            iterator result = NULL;
             // Node<Key, T>* parent = NULL;
             while (it && it != head_ && it != tail_) {
                 // parent = it;
@@ -87,10 +86,10 @@ class S21Map {
                 } else if (key > it->data.first) {
                     it = it->right;
                 } else {
-                    return result = it;
+                    return std::pair<iterator, bool>(it, true);
                 }
             }
-            return end();
+            return std::pair<iterator, bool>(end(), false);
         }
 };
 

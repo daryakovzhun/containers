@@ -17,6 +17,7 @@ class Node {
         Node(const std::pair<const Key, T>& value = std::pair<const Key, T>(), Node* p = NULL, Node* l = NULL, Node* r = NULL) {
             data.first = value.first;
             data.second = value.second;
+            // data = value;
             parent = p;
             left = l;
             right = r;
