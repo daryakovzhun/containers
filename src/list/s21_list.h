@@ -50,9 +50,10 @@ class list{
         size_t max_size(); // size_type
 
         // list modifiers
+        void deleteNode(size_type pos);
+        Node<T>* addNode(const T& value, size_type pos);
         void clear();
         iterator insert(iterator pos, const T value);
-        
         void erase(iterator pos);
         void push_back(const_reference  value);
         void pop_back();
@@ -65,9 +66,29 @@ class list{
         void unique();
         void sort();
 
+
+
+
+
+        // functions for me 
+
         void Print_list(); // for me
 
         T& operator[](int num); // for me
+
+        size_t	distance(iterator it) {
+            ListIterator<T> start = this->begin();
+            size_t n = 0;
+            while(start != it) {
+                n++;
+                ++start;
+            }
+            return (n);
+        }   
+
+        
+
+
 
     private:
 

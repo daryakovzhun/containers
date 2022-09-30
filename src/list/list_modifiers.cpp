@@ -39,49 +39,16 @@ list<T>::~list() {
 }
 
 template <typename T>
-ListIterator<T> list<T>::insert(iterator pos, const T value) {;
-    // if (pos == this->begin()) {
-    //     push_front(value);
-    //     // cout << *this->begin()<< endl;
-    //     res = head;
-       
-    // } else {
-    //     --pos;
-    //     pos._currentNode = head;
-    //     // current->pnext  = new Node<T>(value, current->pnext, current);
-    //     // return ListIterator<T>(current->pnext);
-    // }
-    // count++;
-    // return ListIterator<T>(this->begin());
-
-
-    // Node<T> *current = head;
-    // if (pos == 0) {
-    //     push_front(value);
-    // } else {
-    //     for(int i = 0; i < pos - 1; i++) {
-    //         current = current->pnext;
-    //     }
-    //     current->pnext  = new Node<T>(value, current->pnext);
-    //     ListIterator<T>(current->pnext);
-    //     count++;
-    // }
+ListIterator<T> list<T>::insert(iterator pos, const T value) {
+    size_t n = distance(pos);
+    ListIterator<T> it(addNode(value, n));
+    return it;
 }
 
-// void erase(int pos) { // int  change to iterator
-//    Node<T> *current = head;
-//     if (pos == 0) {
-//         pop_front();
-//     } else {
-//         for(int i = 0; i < pos - 1; i++) {
-//             current = current->pnext;
-//         }
-//         Node<T> *del_Node<T> = current->pnext;
-//         current->pnext = del->pnext;
-//         delete new_ins;
-//         count--;
-//     }
-// }
+template <typename T>
+void list<T>::erase(iterator pos) {
+
+}
 
 template <typename T>
 void list<T>::push_back(const_reference  value) {
@@ -97,13 +64,14 @@ void list<T>::push_back(const_reference  value) {
 
 template <typename T> // проверить пустой список 
 void list<T>::pop_back() {
-    Node<T> *current = tail;
-    if (head != tail) {
-        current->prev->pnext = nullptr;
-        tail = current->prev;
-    }
-    count--;
-    delete current;
+    deleteNode(this->count - 1);
+    // Node<T> *current = tail;
+    // if (head != tail) {
+    //     current->prev->pnext = nullptr;
+    //     tail = current->prev;
+    // }
+    // count--;
+    // delete current;
 }
 
 template <typename T> 
@@ -119,14 +87,61 @@ void list<T>::push_front(const_reference value) {
 }
 
 template <typename T>
-void list<T>::pop_front() { // исправить и проверить пустой список
-    Node<T> *current = head;
-    head = head->pnext;
-    delete current;
-    count--;
-
+void list<T>::pop_front() {
+    deleteNode(0);
+    // Node<T> *current = head;
+    // if (head != tail) {
+    //     current->pnext->prev = nullptr;
+    //     head = current->pnext;
+    // }
+    // count--;
+    // delete current;
 }
 
+
+template<typename T>
+Node<T>* list<T>::addNode(const T& value, size_type pos) {
+    Node <T> *res;
+    if (pos == 0) {
+        push_front(value);
+        res = head;
+    } else {
+        Node<T> *current = head;
+        for(int i = 0; i < pos - 1; i++) {
+            current = current->pnext;
+        }
+        current->pnext  = new Node<T>(value, current->pnext, current);
+        res = current->pnext;
+    }
+    return res;
+}
+
+template<typename T>
+void list<T>::deleteNode(size_type pos) {
+    if (!count) {
+        return;
+    }
+
+    Node <T> *current = head;
+    if (head != tail) {
+        if (pos == 0) {
+            current->pnext->prev = nullptr;
+            head = current->pnext;
+        } else if (pos == count - 1) {
+            current = tail;
+            current->prev->pnext = nullptr;
+            tail = current->prev;
+        } else {
+            for (size_type i = 0; i < pos; i++) {
+                current = current->pnext;
+                current->prev->pnext = current->pnext;
+                current->pnext->prev = current->prev;
+            } 
+        }
+    } 
+    count--;
+    delete current;
+}
 
 
 // перегрузка с конца
@@ -143,21 +158,6 @@ T& list<T>::operator[](const int num) {
     }
     return current->data;
 }
-
-// перегрузка с начала
-// template <typename T>
-// T& list<T>::operator[](const int num) {
-//     int count = 0;
-//     Node<T> *current = tail;
-//     while (current != nullptr) { // sega !!!
-//         if (count == num) {
-//             break;
-//         }
-//         current = current->prev;
-//         count++;
-//     }
-//     return current->data;
-// }
 
 template <typename T>
 void list<T>::Print_list() {
@@ -185,37 +185,37 @@ size_t list<T>::max_size() {
 
 }
 
-
+template <typename T>
+ListIterator<T>& ListIterator<T>::shift(int n) {
+    while (n > 0) {
+        ++(*this);
+        n--;
+    }
+    return *this;
+}
 
 int main() {
     
     list <string> a;
-    a.pop_back();
-    a.push_back("hello");
-    a.push_back("fggf");
-    a.push_back("ss");
-    a.push_back("dfgdf");
-    ListIterator<string> it;
-    it = a.begin();
-    // Print_list(a);
+    a.push_back("fff");
+    // a.push_back("fggf");
+    // a.push_back("ss");
+    // a.push_back("dfgdf");
+    a.pop_front();
+    a.Print_list();
+
+
+    // ListIterator<string> it;
+    // it = a.begin();
+    // it.shift(3);
+    // a.insert(it, "Helloworld");
+    // a.Print_list();
+    // shift(it, 3);
+    // a.insert(it, "Helloworld");
     // while (i < 4) {
     //     cout << *it;
     //     list <string> ::it++;
     //     i++;
     // }
-    
-    // cout << a[1] << endl;
-    // a.push_back(154);
-    // a.push_back(4);
-    // a.push_back(5);
-    // a.pop_back();
-    // a.pop_back();
-    // a.pop_back();
-    // for (int i = 0 ; i < a.size(); i++) {
-    //     cout << a[i] << endl;
-    // }
-    // a.pop_front();
-    // a.pop_front();
-    // a.pop_front();
     return 0;
 }
