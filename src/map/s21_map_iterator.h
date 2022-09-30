@@ -120,6 +120,12 @@ class MapIterator {
             return *this;
         }
 
+        MapIterator operator--(int value) {  //  for me
+            MapIterator buffer(*this);
+            it = it->prev();
+            return buffer;
+        }
+
         bool operator==(const MapIterator& other) {
             return it == other.it;
         }

@@ -149,19 +149,37 @@ std::pair<MapIterator<Key, T>, bool> S21Map<Key, T>::insert_or_assign(const Key&
     return reuslt;
 }
 
-// template<typename Key, typename T>
-// void erase(iterator pos) {
+template<typename Key, typename T>
+void S21Map<Key, T>::erase(MapIterator<Key, T> pos) {
+    if (!pos.it->left && !pos.it->right) {     //  является листом
+        if (pos.it->parent->left == pos.it) {
+            pos.it->parent->left = NULL;
+        } else {
+            pos.it->parent->right = NULL;
+        }
+        delete pos.it;
+    } else if (!pos.it->left) {  //  только правое поддерево левого ребенка нет
+        if (pos.it->parent->left == pos.it) {
+            pos.it->parent->left = pos.it->right;
+        } else {
+            pos.it->parent->right = pos.it->right;
+        }
+        delete pos.it;
+    // } else if () {  //  самый левый из правого поддерева лист
 
-// }
+    // } else if () {  //  самый левый из правого поддерева имеет одно поддерево
+
+    }
+}
 
 // template<typename Key, typename T>
-// void swap(S21Map<Key, T>& other);
+// void S21Map<Key, T>::swap(S21Map<Key, T>& other);
 
 // template<typename Key, typename T>
-// void merge(S21Map<Key, T>& other);
+// void S21Map<Key, T>::merge(S21Map<Key, T>& other);
 
 // template<typename Key, typename T>
-// bool contains(const Key& key);
+// bool S21Map<Key, T>::contains(const Key& key);
 
 
 
@@ -189,22 +207,32 @@ int main() {
     // m.insert_or_assign(3, 33);
 
 
-    // int i = 0;
+    int i = 0;
     m[0] = 12345;
     m.at(5) = 555;
     auto it = m.begin();
-    // do {
-    //     cout << "i = " << i << " map[i] = ";
-    //     cout << m[i] << "\n";
+    ++it;
+    ++it;
+    ++it;
+    ++it;
+    // if (i == 4) {
+        m.erase(it);
+        i++;
+    // }
 
-    //     i++;
-    //     it++;
-    // } while (it != m.end());
-
-    for (int i = 0; i < 9; i++) {
-        cout << "i = " << i << " check[i] = ";
+    do {
+        cout << "i = " << i << " map[i] = ";
         cout << m[i] << "\n";
-    }
+        i++;
+        // it++;
+
+        
+    } while (i < 8);
+
+    // for (int i = 0; i < 9; i++) {
+    //     cout << "i = " << i << " check[i] = ";
+    //     cout << m[i] << "\n";
+    // }
 
     // cout << "\n\n\n\n";
 

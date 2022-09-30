@@ -42,7 +42,7 @@ class S21Map {
         std::pair<iterator, bool> insert(const value_type& value);
         std::pair<iterator, bool> insert(const Key& key, const T& obj);
         std::pair<iterator, bool> insert_or_assign(const Key& key, const T& obj);
-        // void erase(iterator pos);
+        void erase(iterator pos);
         // void swap(S21Map& other);
         // void merge(S21Map& other);
 
