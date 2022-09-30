@@ -13,6 +13,7 @@ class Node{
             this->prev = prev;
             this->data = data;
         }
+
 };
 
 template<typename T>
@@ -27,7 +28,7 @@ public:
     bool operator!=(const ListIterator<T>& it) const;
     bool operator==(const ListIterator<T>& it) const;
 
-    ListIterator<T>& shift(int n); // my
+    ListIterator<T>& shift(int n); // for me 
 
 private:
     Node<T>* _currentNode;

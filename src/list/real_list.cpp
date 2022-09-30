@@ -5,9 +5,7 @@
 
 // int main() {
 //     list<int> a;
-//      a.pop_back();
-//     list<int>::iterator it = a.begin();
-//     a.insert(it, 15);
+//     a.pop_back();
 //     // list<int>::iterator it = a.begin();
    
 //     // cout << *it << endl;

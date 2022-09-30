@@ -64,13 +64,14 @@ void list<T>::push_back(const_reference  value) {
 
 template <typename T> // проверить пустой список 
 void list<T>::pop_back() {
-    Node<T> *current = tail;
-    if (head != tail) {
-        current->prev->pnext = nullptr;
-        tail = current->prev;
-    }
-    count--;
-    delete current;
+    deleteNode(this->count - 1);
+    // Node<T> *current = tail;
+    // if (head != tail) {
+    //     current->prev->pnext = nullptr;
+    //     tail = current->prev;
+    // }
+    // count--;
+    // delete current;
 }
 
 template <typename T> 
@@ -87,14 +88,14 @@ void list<T>::push_front(const_reference value) {
 
 template <typename T>
 void list<T>::pop_front() {
-
-    Node<T> *current = head;
-    if (head != tail) {
-        current->pnext->prev = nullptr;
-        head = current->pnext;
-    }
-    count--;
-    delete current;
+    deleteNode(0);
+    // Node<T> *current = head;
+    // if (head != tail) {
+    //     current->pnext->prev = nullptr;
+    //     head = current->pnext;
+    // }
+    // count--;
+    // delete current;
 }
 
 
@@ -113,6 +114,33 @@ Node<T>* list<T>::addNode(const T& value, size_type pos) {
         res = current->pnext;
     }
     return res;
+}
+
+template<typename T>
+void list<T>::deleteNode(size_type pos) {
+    if (!count) {
+        return;
+    }
+
+    Node <T> *current = head;
+    if (head != tail) {
+        if (pos == 0) {
+            current->pnext->prev = nullptr;
+            head = current->pnext;
+        } else if (pos == count - 1) {
+            current = tail;
+            current->prev->pnext = nullptr;
+            tail = current->prev;
+        } else {
+            for (size_type i = 0; i < pos; i++) {
+                current = current->pnext;
+                current->prev->pnext = current->pnext;
+                current->pnext->prev = current->prev;
+            } 
+        }
+    } 
+    count--;
+    delete current;
 }
 
 
@@ -169,16 +197,19 @@ ListIterator<T>& ListIterator<T>::shift(int n) {
 int main() {
     
     list <string> a;
-    a.pop_back();
-    a.push_back("hello");
-    a.push_back("fggf");
-    a.push_back("ss");
-    a.push_back("dfgdf");
-    ListIterator<string> it;
-    it = a.begin();
-    it.shift(3);
-    a.insert(it, "Helloworld");
+    a.push_back("fff");
+    // a.push_back("fggf");
+    // a.push_back("ss");
+    // a.push_back("dfgdf");
+    a.pop_front();
     a.Print_list();
+
+
+    // ListIterator<string> it;
+    // it = a.begin();
+    // it.shift(3);
+    // a.insert(it, "Helloworld");
+    // a.Print_list();
     // shift(it, 3);
     // a.insert(it, "Helloworld");
     // while (i < 4) {
