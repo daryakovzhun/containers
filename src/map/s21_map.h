@@ -86,11 +86,11 @@ class S21Map {
             return std::pair<iterator, bool>(end(), false);
         }
 
-        void rebuild_node(iterator pos, Node<Key, T>* child) {
-            if (pos.it->parent->left == pos.it) {
-                pos.it->parent->left = child;
+        void rebuild_node(iterator* pos, Node<Key, T>* child) {
+            if (pos->it->parent->left == pos->it) {
+                pos->it->parent->left = child;
             } else {
-                pos.it->parent->right = child;
+                pos->it->parent->right = child;
             }
         }
 };

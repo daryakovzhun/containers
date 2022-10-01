@@ -32,6 +32,7 @@ class Node {
                 left = other.left;
                 right = other.right;
                 data = other.data;
+                // *this = copy_node(other);
             }
             return *this;
         }
@@ -79,11 +80,9 @@ class Node {
         }
 
         Node* copy_node(Node* root){
-            Node* node;
-            node = root;
+            Node* node = root;
             if (node) {
-                // node = new Node(root->data);
-
+                node = new Node(root->data);
                 node->left = copy_node(root->left);
                 node->right = copy_node(root->right);
             }
