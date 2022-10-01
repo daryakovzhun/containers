@@ -79,11 +79,13 @@ class Node {
         }
 
         Node* copy_node(Node* root){
-            Node* node = root;
+            Node* node;
+            node = root;
             if (node) {
-                node = new Node(root->_data);
-                node->_left = copy_node(root->_left);
-                node->_right = copy_node(root->_right);
+                // node = new Node(root->data);
+
+                node->left = copy_node(root->left);
+                node->right = copy_node(root->right);
             }
             return node;
         }

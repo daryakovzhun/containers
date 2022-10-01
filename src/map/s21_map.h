@@ -27,6 +27,7 @@ class S21Map {
         S21Map(S21Map &&m);
         ~S21Map();
         S21Map& operator=(S21Map &&m);
+        S21Map& operator=(S21Map &m);  //  for me
 
         mapped_type& at(const Key& key);
         mapped_type& operator[](const Key& key);

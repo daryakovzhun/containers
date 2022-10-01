@@ -31,6 +31,9 @@ S21Map<Key, T>::S21Map(S21Map &&m) {
     tail_ = m.tail_;
     size_ = m.size_;
     m.root_ = nullptr;
+    m.head_ = nullptr;
+    m.tail_ = nullptr;
+    m.size_ = 0;
 }
 
 template<typename Key, typename T>
@@ -52,6 +55,17 @@ S21Map<Key, T>& S21Map<Key, T>::operator=(S21Map &&m) {
     return *this;
 }
 
+template<typename Key, typename T>
+S21Map<Key, T>& S21Map<Key, T>::operator=(S21Map &m) {
+    // if (*this != m) {
+        clear();
+        root_->copy_node(m.root_);
+        // head_->copy_node(m.head_);
+        // tail_->copy_node(m.tail_);
+        size_ = m.size_;
+    // }
+    return *this;
+}
 
 template<typename Key, typename T>
 T& S21Map<Key, T>::at(const Key& key) {
@@ -258,8 +272,9 @@ int main() {
     cout << "\n\n\n\n";
 
     S21Map<int, int> copy;
-    copy = move(m);
+    copy = m;
     cout << "size m = " << m.size() << "\n";
+    cout << "size copy = " << copy.size() << "\n";
     for (int k : i) {
         cout << "i = " << k << " map[i] = ";
         cout << copy[k] << "\n";
