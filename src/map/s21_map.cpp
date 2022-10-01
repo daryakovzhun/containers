@@ -38,14 +38,19 @@ S21Map<Key, T>::~S21Map() {
     clear(); 
 }
 
-// template<typename Key, typename T>
-// S21Map<Key, T>& S21Map<Key, T>::operator=(S21Map &&m) {
-//     if (*this != m) {
-//         clear();
-//         // insert(m.begin(), m.end());
-//     }
-//     return *this;
-// }
+template<typename Key, typename T>
+S21Map<Key, T>& S21Map<Key, T>::operator=(S21Map &&m) {
+    clear();
+    root_ = m.root_;
+    head_ = m.head_;
+    tail_ = m.tail_;
+    size_ = m.size_;
+    m.root_ = nullptr;
+    m.head_ = nullptr;
+    m.tail_ = nullptr;
+    m.size_ = 0;
+    return *this;
+}
 
 
 template<typename Key, typename T>
@@ -94,7 +99,9 @@ size_t S21Map<Key, T>::size() const {
 
 template<typename Key, typename T>
 void S21Map<Key, T>::clear() {
+    if (root_) {
     root_->free_node(root_);
+    }
 }
 
 template<typename Key, typename T>
@@ -248,7 +255,16 @@ int main() {
     //     cout << m[i] << "\n";
     // }
 
-    // cout << "\n\n\n\n";
+    cout << "\n\n\n\n";
+
+    S21Map<int, int> copy;
+    copy = move(m);
+    cout << "size m = " << m.size() << "\n";
+    for (int k : i) {
+        cout << "i = " << k << " map[i] = ";
+        cout << copy[k] << "\n";
+        // it++;
+    }
 
     // map<int, int> check;
     // check.insert(pair<int, int>(5, 5));

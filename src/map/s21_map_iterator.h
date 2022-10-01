@@ -77,6 +77,16 @@ class Node {
             if (tree->right) free_node(tree->right); 
             delete tree;
         }
+
+        Node* copy_node(Node* root){
+            Node* node = root;
+            if (node) {
+                node = new Node(root->_data);
+                node->_left = copy_node(root->_left);
+                node->_right = copy_node(root->_right);
+            }
+            return node;
+        }
 };
 
 template< typename Key, typename T>
