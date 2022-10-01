@@ -64,7 +64,7 @@ S21Map<Key, T>& S21Map<Key, T>::operator=(S21Map &m) {
         tail_ = new Node<Key, T>();
         // head_ = m.head_;
         // tail_ = m.tail_;
-        cout << "tail = " << tail_->data.first << "\n";
+        // cout << "tail = " << tail_->data.first << "\n";
         // head_->copy_node(m.head_);
         // tail_->copy_node(m.tail_);
         size_ = m.size_;
@@ -182,40 +182,60 @@ void S21Map<Key, T>::erase(MapIterator<Key, T> pos) {
     bool right_child = (pos.it->right) ? true : false;
 
     if (!left_child && !right_child) {               //  является листом
-        rebuild_node(&pos, NULL);
+        rebuild_node(pos, NULL);
     } else if (!left_child || !right_child) {        //  только одно поддерево второго ребенка нет
-        rebuild_node(&pos, (right_child) ? pos.it->right : pos.it->left);
+        rebuild_node(pos, (right_child) ? pos.it->right : pos.it->left);
     } else {
         MapIterator<Key, T> next = pos;
         ++next;   
         if (!next.it->left && !next.it->right) {     //  самый левый из правого поддерева лист
-            rebuild_node(&next, NULL);
+            rebuild_node(next, NULL);
         } else {    
             cout << "next = " << next.it->data.first << "\n";                               //  самый левый из правого поддерева имеет одно поддерево
-            rebuild_node(&next, (next.it->right) ? next.it->right : next.it->left);
+            rebuild_node(next, (next.it->right) ? next.it->right : next.it->left);
         }
 
         // connect_node(next.it, &next.it->left, pos.it->left);
         // connect_node(next.it, &next.it->right, pos.it->right);
 
-        
-
         next.it->left = pos.it->left;
         next.it->right = pos.it->right;
-        if (pos.it == root_) { root_ = next.it; }
-        if (pos.it->right && pos.it->right == tail_) {cout << "tail\n"; tail_ = next.it->right; }
+        next.it->parent = pos.it->parent;
+        cout << "right = " << next.it->parent->parent->data.first << "\n";
+
+        // next.it->left = pos.it->left->copy_node(pos.it->left);
+        // next.it->right = pos.it->right->copy_node(pos.it->right);
+
+        root_ = next.it;
+        // if (pos.it == root_) {
+        //     root_ = next.it; 
+        // } else if (pos.it->data.first == root_) {
+
+        // }
+        // if (pos.it->right && pos.it->right == tail_) {cout << "tail\n"; tail_ = next.it->right; }
 
         
-        Node<Key, T>** it = &root_;
-        while (it && *it != head_ && *it != tail_) {
-            if (next.it->data.first < (*it)->data.first) {
-                *it = (*it)->left;
-            } else if (next.it->data.first > (*it)->data.first) {
-                *it = (*it)->right;
-            } else {
-                *it = next.it;
-            }
-        }
+        // auto it = begin();
+        // S21Map<Key, T>* new_root;
+        // for (; it != end(); it++) {
+        //     if (it.it != pos.it) {
+        //         new_root->insert(it.it->data);
+        //     } else {
+        //         new_root;
+        //     }
+        // }
+
+        // Node<Key, T>** it = &root_;
+        // while (it && *it != head_ && *it != tail_) {
+        //     if (pos.it->data.first < (*it)->data.first) {
+        //         (*it) = (*it)->left;
+        //     } else if (pos.it->data.first > (*it)->data.first) {
+        //         (*it) = (*it)->right;
+        //     } else {
+        //         (*it) = next.it;
+        //     }
+        // }
+        // root_ = *it;
 
     }
 
