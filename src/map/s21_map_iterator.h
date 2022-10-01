@@ -41,7 +41,7 @@ class Node {
         Node* next() {
             Node* next = this;
             if (next->right) {
-                std::cout << "right = " << next->right->data.first << "\n";
+                // std::cout << "right = " << next->right->data.first << "\n";
                 
                 next = next->right;
                 while (next->left) {
@@ -51,7 +51,7 @@ class Node {
                 while (next->parent && next->parent->right == next) {
                     next = next->parent;
                 }
-                next = next->parent;  //  ??            
+                next = next->parent;          
             }
             return next;
         }
@@ -67,7 +67,7 @@ class Node {
                 while (prev->parent && prev->parent->right == prev) {
                     prev = prev->parent;
                 }
-                prev = prev->parent;  //  ??
+                prev = prev->parent;
             }
             return prev;
         }

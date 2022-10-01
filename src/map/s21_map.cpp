@@ -1,6 +1,7 @@
 #include "s21_map.h"
 
 #include <map>
+#include <vector>
 
 template<typename Key, typename T>
 S21Map<Key, T>::S21Map() {
@@ -151,25 +152,26 @@ std::pair<MapIterator<Key, T>, bool> S21Map<Key, T>::insert_or_assign(const Key&
 
 template<typename Key, typename T>
 void S21Map<Key, T>::erase(MapIterator<Key, T> pos) {
-    if (!pos.it->left && !pos.it->right) {     //  является листом
-        if (pos.it->parent->left == pos.it) {
-            pos.it->parent->left = NULL;
-        } else {
-            pos.it->parent->right = NULL;
-        }
-        delete pos.it;
-    } else if (!pos.it->left) {  //  только правое поддерево левого ребенка нет
-        if (pos.it->parent->left == pos.it) {
-            pos.it->parent->left = pos.it->right;
-        } else {
-            pos.it->parent->right = pos.it->right;
-        }
-        delete pos.it;
-    // } else if () {  //  самый левый из правого поддерева лист
+    bool left_child = (pos.it->left) ? true : false;
+    bool right_child = (pos.it->right) ? true : false;
 
-    // } else if () {  //  самый левый из правого поддерева имеет одно поддерево
-
+    if (!left_child && !right_child) {               //  является листом
+        rebuild_node(pos, NULL);
+    } else if (!left_child || !right_child) {        //  только одно поддерево второго ребенка нет
+        rebuild_node(pos, (right_child) ? pos.it->right : pos.it->left);
+    } else {
+        MapIterator<Key, T> next = pos;
+        ++next;   
+        if (!next.it->left && !next.it->right) {     //  самый левый из правого поддерева лист
+            rebuild_node(next, NULL);
+        } else {                                      //  самый левый из правого поддерева имеет одно поддерево
+            rebuild_node(next, (next.it->right) ? next.it->right : next.it->left);
+        }
+        next.it->left = pos.it->left;
+        next.it->right = pos.it->right;
+        if (pos.it == root_) { root_ = next.it; }
     }
+    delete pos.it;
 }
 
 // template<typename Key, typename T>
@@ -198,16 +200,22 @@ int main() {
 
     S21Map<int, int> m;
     m.insert(pair<int, int>(5, 5));
-    m.insert(pair<int, int>(6, 6));
+    // m.insert(pair<int, int>(6, 6));
     m.insert(pair<int, int>(3, 3));
     m.insert(pair<int, int>(4, 4));
     m.insert(pair<int, int>(1, 1));
     m.insert(pair<int, int>(2, 2));
-    m.insert(pair<int, int>(8, 8));
+    m.insert(pair<int, int>(18, 18));
+    m.insert(pair<int, int>(7, 7));
+    m.insert(pair<int, int>(19, 19));
+    m.insert(pair<int, int>(10, 10));
+    m.insert(pair<int, int>(9, 9));
+    m.insert(pair<int, int>(12, 12));
+
     // m.insert_or_assign(3, 33);
 
 
-    int i = 0;
+    vector<int> i{1, 2, 3, 4, 5, 7, 9, 10, 12, 18, 19};
     m[0] = 12345;
     m.at(5) = 555;
     auto it = m.begin();
@@ -215,19 +223,25 @@ int main() {
     ++it;
     ++it;
     ++it;
+    ++it;
+    ++it;
+    ++it;
+    ++it;
+    ++it;
+    ++it;
+    ++it;
+
     // if (i == 4) {
         m.erase(it);
-        i++;
     // }
 
-    do {
-        cout << "i = " << i << " map[i] = ";
-        cout << m[i] << "\n";
-        i++;
+    for (int k : i) {
+        cout << "i = " << k << " map[i] = ";
+        cout << m[k] << "\n";
         // it++;
-
+    }
         
-    } while (i < 8);
+   
 
     // for (int i = 0; i < 9; i++) {
     //     cout << "i = " << i << " check[i] = ";
