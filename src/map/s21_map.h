@@ -27,7 +27,7 @@ class S21Map {
         S21Map(S21Map &&m);
         ~S21Map();
         S21Map& operator=(S21Map &&m);
-        S21Map& operator=(S21Map &m);  //  for me
+        S21Map& operator=(const S21Map &m);  //  for me
 
         mapped_type& at(const Key& key);
         mapped_type& operator[](const Key& key);
@@ -44,15 +44,15 @@ class S21Map {
         std::pair<iterator, bool> insert(const Key& key, const T& obj);
         std::pair<iterator, bool> insert_or_assign(const Key& key, const T& obj);
         void erase(iterator pos);
-        // void swap(S21Map& other);
+        void swap(S21Map& other);
         // void merge(S21Map& other);
 
         // bool contains(const Key& key);
 
     private:
-        Node<Key, T>* root_;
-        Node<Key, T>* head_;
-        Node<Key, T>* tail_;
+        Node<Key, T>* root_ = NULL;
+        Node<Key, T>* head_ = NULL;
+        Node<Key, T>* tail_ = NULL;
         size_type size_;
 
         void connect_node (Node<Key, T>* parent, Node<Key, T>** childptr, Node<Key, T>* child) {

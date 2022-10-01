@@ -27,6 +27,7 @@ class Node {
         }
 
         Node& operator=(const Node& other) {
+            
             if (*this != &other) {
                 parent = other.parent;
                 left = other.left;

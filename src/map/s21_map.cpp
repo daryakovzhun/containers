@@ -17,10 +17,10 @@ S21Map<Key, T>::S21Map() {
 // S21Map<Key, T>::S21Map(std::initializer_list<value_type> const &items);
 
 template<typename Key, typename T>
-S21Map<Key, T>::S21Map(const S21Map &m) {
-    root_ = new Node<Key, T>();  // ??
-    head_ = new Node<Key, T>();
-    tail_ = new Node<Key, T>();
+S21Map<Key, T>::S21Map(const S21Map<Key, T>& m) {
+    // root_ = NULL;
+    // head_ = NULL;
+    // tail_ = NULL;
     *this = m;
 }
 
@@ -38,7 +38,15 @@ S21Map<Key, T>::S21Map(S21Map &&m) {
 
 template<typename Key, typename T>
 S21Map<Key, T>::~S21Map() {
-    clear(); 
+    if (root_) {
+        clear();
+    }
+    if (head_) {
+        delete head_;
+    }
+    if (tail_) {
+        delete tail_;
+    }
 }
 
 template<typename Key, typename T>
@@ -56,17 +64,12 @@ S21Map<Key, T>& S21Map<Key, T>::operator=(S21Map &&m) {
 }
 
 template<typename Key, typename T>
-S21Map<Key, T>& S21Map<Key, T>::operator=(S21Map &m) {
+S21Map<Key, T>& S21Map<Key, T>::operator=(const S21Map &m) {
     // if (*this != m) {
         clear();
         root_ = root_->copy_node(m.root_);
-        head_ = new Node<Key, T>();
-        tail_ = new Node<Key, T>();
-        // head_ = m.head_;
-        // tail_ = m.tail_;
-        // cout << "tail = " << tail_->data.first << "\n";
-        // head_->copy_node(m.head_);
-        // tail_->copy_node(m.tail_);
+        head_ = m.head_;
+        tail_ = m.tail_;
         size_ = m.size_;
     // }
     return *this;
@@ -119,8 +122,20 @@ size_t S21Map<Key, T>::size() const {
 template<typename Key, typename T>
 void S21Map<Key, T>::clear() {
     if (root_) {
-    root_->free_node(root_);
+        root_->free_node(root_);
+        root_ = NULL; 
+        head_ = NULL;
+        tail_ = NULL;
     }
+    if (head_) {
+        head_->free_node(head_);
+        head_ = NULL;
+    }
+    if (tail_) {
+        tail_->free_node(tail_);
+        tail_ = NULL;
+    }
+    size_ = 0;
 }
 
 template<typename Key, typename T>
@@ -178,72 +193,37 @@ std::pair<MapIterator<Key, T>, bool> S21Map<Key, T>::insert_or_assign(const Key&
 
 template<typename Key, typename T>
 void S21Map<Key, T>::erase(MapIterator<Key, T> pos) {
+    if (empty()) { return; }
+
     bool left_child = (pos.it->left) ? true : false;
     bool right_child = (pos.it->right) ? true : false;
 
     if (!left_child && !right_child) {               //  является листом
         rebuild_node(pos, NULL);
+        delete pos.it;
     } else if (!left_child || !right_child) {        //  только одно поддерево второго ребенка нет
         rebuild_node(pos, (right_child) ? pos.it->right : pos.it->left);
+        delete pos.it;
     } else {
         MapIterator<Key, T> next = pos;
         ++next;   
         if (!next.it->left && !next.it->right) {     //  самый левый из правого поддерева лист
             rebuild_node(next, NULL);
         } else {    
-            cout << "next = " << next.it->data.first << "\n";                               //  самый левый из правого поддерева имеет одно поддерево
-            rebuild_node(next, (next.it->right) ? next.it->right : next.it->left);
+            rebuild_node(next, (next.it->right) ? next.it->right : next.it->left);   //  самый левый из правого поддерева имеет одного ребенка
         }
-
-        // connect_node(next.it, &next.it->left, pos.it->left);
-        // connect_node(next.it, &next.it->right, pos.it->right);
-
-        next.it->left = pos.it->left;
-        next.it->right = pos.it->right;
-        next.it->parent = pos.it->parent;
-        cout << "right = " << next.it->parent->parent->data.first << "\n";
-
-        // next.it->left = pos.it->left->copy_node(pos.it->left);
-        // next.it->right = pos.it->right->copy_node(pos.it->right);
-
-        root_ = next.it;
-        // if (pos.it == root_) {
-        //     root_ = next.it; 
-        // } else if (pos.it->data.first == root_) {
-
-        // }
-        // if (pos.it->right && pos.it->right == tail_) {cout << "tail\n"; tail_ = next.it->right; }
-
-        
-        // auto it = begin();
-        // S21Map<Key, T>* new_root;
-        // for (; it != end(); it++) {
-        //     if (it.it != pos.it) {
-        //         new_root->insert(it.it->data);
-        //     } else {
-        //         new_root;
-        //     }
-        // }
-
-        // Node<Key, T>** it = &root_;
-        // while (it && *it != head_ && *it != tail_) {
-        //     if (pos.it->data.first < (*it)->data.first) {
-        //         (*it) = (*it)->left;
-        //     } else if (pos.it->data.first > (*it)->data.first) {
-        //         (*it) = (*it)->right;
-        //     } else {
-        //         (*it) = next.it;
-        //     }
-        // }
-        // root_ = *it;
-
+        pos.it->data = next.it->data;
+        delete next.it;
     }
-
-    delete pos.it;
+    size_--;
 }
 
-// template<typename Key, typename T>
-// void S21Map<Key, T>::swap(S21Map<Key, T>& other);
+template<typename Key, typename T>
+void S21Map<Key, T>::swap(S21Map<Key, T>& other) {
+    S21Map<Key, T> buffer(other);
+    other = *this;
+    *this = buffer;
+}
 
 // template<typename Key, typename T>
 // void S21Map<Key, T>::merge(S21Map<Key, T>& other);
@@ -280,7 +260,7 @@ int main() {
     m.insert(pair<int, int>(9, 9));
     m.insert(pair<int, int>(12, 12));
 
-    // m.insert_or_assign(3, 33);
+    m.insert_or_assign(3, 33);
 
 
     vector<int> i{1, 2, 3, 4, 5, 6, 7, 9, 10, 12, 18, 19};
@@ -301,31 +281,47 @@ int main() {
 
     // if (i == 4) {
         m.erase(it);
-    // }
+// }
 
     for (int k : i) {
         cout << "i = " << k << " map[i] = ";
         cout << m[k] << "\n";
     }
-        
-   
 
-    // for (int i = 0; i < 9; i++) {
-    //     cout << "i = " << i << " check[i] = ";
-    //     cout << m[i] << "\n";
-    // }
+    cout << "\n\n";
 
-    cout << "\n\n\n\n";
 
     S21Map<int, int> copy;
-    copy = m;
-    cout << "size m = " << m.size() << "\n";
+    // copy = m;
+
+    copy.insert(pair<int, int>(4, 4));
+    copy.insert(pair<int, int>(1, 1));
+    copy.insert(pair<int, int>(2, 2));
+    copy.insert(pair<int, int>(18, 18));
+    copy.insert(pair<int, int>(7, 7));
+    copy.insert(pair<int, int>(19, 19));
+
+    cout << "size m = " << m.size() << "\n";   /// ???????????
     cout << "size copy = " << copy.size() << "\n";
+
+    vector<int> j{1, 2, 4, 7, 18, 19};
+    for (int k : j) {
+        cout << "i = " << k << " map[i] = ";
+        cout << copy[k] << "\n";
+    }
+
+    cout << "\n\n\n\n";
+    m.swap(copy);
+    for (int k : j) {
+        cout << "i = " << k << " map[i] = ";
+        cout << m[k] << "\n";
+    }
+    cout << "\n\n";
     for (int k : i) {
         cout << "i = " << k << " map[i] = ";
         cout << copy[k] << "\n";
-        // it++;
     }
+
 
     // map<int, int> check;
     // check.insert(pair<int, int>(5, 5));
