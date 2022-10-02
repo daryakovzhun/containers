@@ -9,7 +9,7 @@
 #include <iostream> 
 using namespace std;
 
-template<typename Key, typename T> 
+template<typename Key, typename T>
 class S21Map {
     public:
         using key_type = Key;
@@ -29,15 +29,15 @@ class S21Map {
         S21Map& operator=(S21Map &&m);
         S21Map& operator=(const S21Map &m);  //  for me
 
-        mapped_type& at(const Key& key);
+        mapped_type& at(const Key& key) const;
         mapped_type& operator[](const Key& key);
 
         iterator begin() const;
         iterator end() const;
 
-        bool empty();
+        bool empty() const;
         size_type size() const;
-        // size_type max_size();
+        size_type max_size() const;
 
         void clear();
         std::pair<iterator, bool> insert(const value_type& value);
@@ -47,12 +47,12 @@ class S21Map {
         void swap(S21Map& other);
         void merge(S21Map& other);
 
-        // bool contains(const Key& key);
+        bool contains(const Key& key) const;
 
     private:
-        Node<Key, T>* root_ = NULL;
-        Node<Key, T>* head_ = NULL;
-        Node<Key, T>* tail_ = NULL;
+        Node<Key, T>* root_;
+        Node<Key, T>* head_;
+        Node<Key, T>* tail_;
         size_type size_;
 
         void connect_node (Node<Key, T>* parent, Node<Key, T>** childptr, Node<Key, T>* child) {
@@ -60,16 +60,12 @@ class S21Map {
                 child->parent = parent;
             }
 
-            // if ((child == head_ || child == tail_) && (parent == head_ || parent == tail_)) {
-            //     return;
-            // }
-
             // if (childptr) {
                 *childptr = child;
             // }
         }
 
-        std::pair<iterator, bool> find_by_key(const key_type& key) {
+        std::pair<iterator, bool> find_by_key(const key_type& key) const {
             if (empty()) {
                 return std::pair<iterator, bool>(end(), false);
             }

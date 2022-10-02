@@ -1,6 +1,6 @@
 #include "s21_map.h"
 
-#include <map>
+// #include <map>
 #include <vector>
 
 template<typename Key, typename T>
@@ -13,14 +13,25 @@ S21Map<Key, T>::S21Map() {
     size_ = 0;
 }
 
-// template<typename Key, typename T>
-// S21Map<Key, T>::S21Map(std::initializer_list<value_type> const &items);
+template<typename Key, typename T>
+S21Map<Key, T>::S21Map(std::initializer_list<std::pair<const Key, T>> const &items) {
+    root_ = NULL;
+    head_ = new Node<Key, T>();
+    tail_ = new Node<Key, T>();
+    head_->parent = tail_;
+    tail_->parent = head_;
+    size_ = 0;
+
+    for (auto pair : items) {
+        insert(pair);
+    }
+}
 
 template<typename Key, typename T>
 S21Map<Key, T>::S21Map(const S21Map<Key, T>& m) {
-    // root_ = NULL;
-    // head_ = NULL;
-    // tail_ = NULL;
+    root_ = NULL;
+    head_ = NULL;
+    tail_ = NULL;
     *this = m;
 }
 
@@ -30,22 +41,16 @@ S21Map<Key, T>::S21Map(S21Map &&m) {
     head_ = m.head_;
     tail_ = m.tail_;
     size_ = m.size_;
-    m.root_ = nullptr;
-    m.head_ = nullptr;
-    m.tail_ = nullptr;
+    m.root_ = NULL;
+    m.head_ = NULL;
+    m.tail_ = NULL;
     m.size_ = 0;
 }
 
 template<typename Key, typename T>
 S21Map<Key, T>::~S21Map() {
-    if (root_) {
+    if (root_ || head_ || tail_) {
         clear();
-    }
-    if (head_) {
-        delete head_;
-    }
-    if (tail_) {
-        delete tail_;
     }
 }
 
@@ -56,9 +61,9 @@ S21Map<Key, T>& S21Map<Key, T>::operator=(S21Map &&m) {
     head_ = m.head_;
     tail_ = m.tail_;
     size_ = m.size_;
-    m.root_ = nullptr;
-    m.head_ = nullptr;
-    m.tail_ = nullptr;
+    m.root_ = NULL;
+    m.head_ = NULL;
+    m.tail_ = NULL;
     m.size_ = 0;
     return *this;
 }
@@ -76,8 +81,8 @@ S21Map<Key, T>& S21Map<Key, T>::operator=(const S21Map &m) {
 }
 
 template<typename Key, typename T>
-T& S21Map<Key, T>::at(const Key& key) {
-    auto buffer = find_by_key(key);
+T& S21Map<Key, T>::at(const Key& key) const {
+    const auto buffer = find_by_key(key);
     if (buffer.second == false) {
         throw std::out_of_range("Key not found");
     }
@@ -105,7 +110,7 @@ MapIterator<Key, T> S21Map<Key, T>::end() const {
 }
 
 template<typename Key, typename T>
-bool S21Map<Key, T>::empty() {
+bool S21Map<Key, T>::empty() const {
     return size_ == 0;
 }
 
@@ -115,9 +120,9 @@ size_t S21Map<Key, T>::size() const {
 }
 
 // template<typename Key, typename T>
-// size_type S21Map<Key, T>::max_size();
+// size_t S21Map<Key, T>::max_size() const {
 
-
+// }
 
 template<typename Key, typename T>
 void S21Map<Key, T>::clear() {
@@ -166,12 +171,10 @@ std::pair<MapIterator<Key, T>, bool> S21Map<Key, T>::insert(const std::pair<cons
     if (value.first < parent->data.first) {
         connect_node(parent, &parent->left, result);
         connect_node(result, &result->left, it);
-        connect_node(result, &result->right, NULL);  ///
 
     } else if (value.first > parent->data.first) {
         connect_node(parent, &parent->right, result);
         connect_node(result, &result->right, it);
-        connect_node(result, &result->left, NULL);  ////
     }
     size_++;
     return std::pair<MapIterator<Key, T>, bool>(MapIterator<Key, T>(result), true);
@@ -184,7 +187,7 @@ std::pair<MapIterator<Key, T>, bool> S21Map<Key, T>::insert(const Key& key, cons
 
 template<typename Key, typename T>
 std::pair<MapIterator<Key, T>, bool> S21Map<Key, T>::insert_or_assign(const Key& key, const T& obj) {
-    std::pair<MapIterator<Key, T>, bool> reuslt = insert(std::pair<Key, T>(key, obj));
+    auto reuslt = insert(std::pair<Key, T>(key, obj));  //  std::pair<MapIterator<Key, T>, bool> (auto)
     if (reuslt.second == false) {
         reuslt.first.it->data.second = obj;
     }
@@ -229,47 +232,65 @@ template<typename Key, typename T>
 void S21Map<Key, T>::merge(S21Map<Key, T>& other) {
     auto it = other.begin();
     for (; it != other.end(); it++) {
-        cout << "it = " << it.it->data.first << "\n" ;
         insert(it.it->data);
     }
 }
 
-// template<typename Key, typename T>
-// bool S21Map<Key, T>::contains(const Key& key);
+template<typename Key, typename T>
+bool S21Map<Key, T>::contains(const Key& key) const {
+    return find_by_key(key).second;
+}
 
 
 
 int main() {
 
-    //  merge test
-    S21Map<int, char> first;
-    first.insert(pair<int, char>(1, 'A'));
-    first.insert(pair<int, char>(2, 'B'));
-    S21Map<int, char> second;
-    second.insert(pair<int, char>(2, 'C'));
-    second.insert(pair<int, char>(4, 'D'));
-    second.insert(pair<int, char>(1, 'T'));
-    second.insert(pair<int, char>(3, 'E'));
-
-    first.merge(second);
-
-    vector<int> i{1, 2, 3, 4, 5, 6};
+    S21Map<int, char> ma{{3, '3'}, {2, '2'}, {5, '5'}};
+    vector<int> i{2, 3, 5, 18};
+    ma.insert(pair<int, char>(18, '9'));
     for (int k : i) {
         cout << "i = " << k << " map[i] = ";
-        cout << first[k] << "\n";
+        cout << ma[k] << "\n";
     }
 
-//     // S21Map<int, string> m;
-//     // m.insert(pair<int, string>(5, "5"));
-//     // m.insert(pair<int, string>(8, "8"));
-//     // m.insert(pair<int, string>(1, "1"));
-//     // m.insert(pair<int, string>(23, "23"));
-//     // m.insert(pair<int, string>(3, "3"));
-//     // m.insert(pair<int, string>(2, "2"));
-//     // m.insert(pair<int, string>(15, "15"));
-//     // m.insert(pair<int, string>(20, "20"));
-//     // m.insert(pair<int, string>(13, "13"));
-//     // m.insert(pair<int, string>(11, "11"));
+    // //  merge test
+    // S21Map<int, char> first;
+    // first.insert(pair<int, char>(1, 'A'));
+    // first.insert(pair<int, char>(2, 'B'));
+    // S21Map<int, char> second;
+    // second.insert(pair<int, char>(2, 'C'));
+    // second.insert(pair<int, char>(4, 'D'));
+    // second.insert(pair<int, char>(1, 'T'));
+    // second.insert(pair<int, char>(3, 'E'));
+
+    // first.merge(second);
+
+    // vector<int> i{1, 2, 3, 4, 6};
+    // for (int k : i) {
+    //     cout << "i = " << k << " map[i] = ";
+    //     cout << first[k] << "\n";
+    // }
+
+    // for(int x: {2, 5, 6, 7}) {
+    //     if(first.contains(x)) {
+    //         std::cout << x << ": Found\n";
+    //     } else {
+    //         std::cout << x << ": Not found\n";
+    //     }
+    // }
+
+
+    // S21Map<int, string> m;
+    // m.insert(pair<int, string>(5, "5"));
+    // m.insert(pair<int, string>(8, "8"));
+    // m.insert(pair<int, string>(1, "1"));
+    // m.insert(pair<int, string>(23, "23"));
+    // m.insert(pair<int, string>(3, "3"));
+    // m.insert(pair<int, string>(2, "2"));
+    // m.insert(pair<int, string>(15, "15"));
+    // m.insert(pair<int, string>(20, "20"));
+    // m.insert(pair<int, string>(13, "13"));
+    // m.insert(pair<int, string>(11, "11"));
 
 //     S21Map<int, int> m;
 //     m.insert(pair<int, int>(5, 5));
@@ -288,7 +309,7 @@ int main() {
 //     m.insert_or_assign(3, 33);
 
 
-//     vector<int> i{1, 2, 3, 4, 5, 6, 7, 9, 10, 12, 18, 19};
+//     vector<int> i{0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 12, 18, 19};
 //     m[0] = 12345;
 //     m.at(5) = 555;
 //     auto it = m.begin();
@@ -308,6 +329,7 @@ int main() {
 //         m.erase(it);
 // // }
 
+
 //     for (int k : i) {
 //         cout << "i = " << k << " map[i] = ";
 //         cout << m[k] << "\n";
@@ -326,7 +348,7 @@ int main() {
 //     copy.insert(pair<int, int>(7, 7));
 //     copy.insert(pair<int, int>(19, 19));
 
-//     cout << "size m = " << m.size() << "\n";   /// ???????????
+//     cout << "size m = " << m.size() << "\n";
 //     cout << "size copy = " << copy.size() << "\n";
 
 //     vector<int> j{1, 2, 4, 7, 18, 19};
