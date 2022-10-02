@@ -18,7 +18,7 @@ class S21Map {
         using reference = value_type&;
         using const_reference = const value_type&;
         using iterator = MapIterator<Key, T>;
-        // using const_iterator = MapConstIterator<Key, T>; 
+        using const_iterator = MapConstIterator<Key, T>; 
         using size_type = size_t;
 
         S21Map();

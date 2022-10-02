@@ -15,9 +15,9 @@ class Node {
         std::pair< Key, T> data; // const
 
         Node(const std::pair<const Key, T>& value = std::pair<const Key, T>(), Node* p = NULL, Node* l = NULL, Node* r = NULL) {
-            data.first = value.first;
-            data.second = value.second;
-            // data = value;
+            // data.first = value.first;
+            // data.second = value.second;
+            data = value;
             parent = p;
             left = l;
             right = r;
@@ -27,24 +27,20 @@ class Node {
         }
 
         Node& operator=(const Node& other) {
-            
             if (*this != &other) {
                 parent = other.parent;
                 left = other.left;
                 right = other.right;
                 data = other.data;
-                // *this = copy_node(other);
             }
             return *this;
         }
 
         ~Node() {}
 
-        Node* next() {
+        Node* next() const {
             Node* next = this;
             if (next->right) {
-                // std::cout << "right = " << next->right->data.first << "\n";
-                
                 next = next->right;
                 while (next->left) {
                     next = next->left;
@@ -58,7 +54,7 @@ class Node {
             return next;
         }
 
-        Node* prev() {
+        Node* prev() const {
             Node* prev = this;
             if (prev->left) {
                 prev = prev->left;
@@ -138,17 +134,71 @@ class MapIterator {
             return buffer;
         }
 
-        bool operator==(const MapIterator& other) {
+        bool operator==(const MapIterator& other) const {
             return it == other.it;
         }
 
-        bool operator!=(const MapIterator& other) {
+        bool operator!=(const MapIterator& other) const {
             return it != other.it;
         }
 
 
 };
 
+template< typename Key, typename T>
+class MapConstIterator {   
+    public:
+        using key_type = Key;
+        using mapped_type = T;
+        using value_type = std::pair<const key_type, mapped_type>;
+        using const_reference = const value_type&;
 
+        const Node<Key, T>* it;
+
+        MapConstIterator(Node<Key, T>* root = NULL) : it(root) {}
+        MapConstIterator(const MapConstIterator& other) {
+            *this = other;
+        }
+        ~MapConstIterator() {}
+
+        // MapConstIterator& operator=(const MapConstIterator& other) {
+        //     it = other.it;
+        //     return *this;
+        // }
+
+        const_reference operator*() const {
+            return it->data;
+        }
+
+        MapConstIterator& operator++() {
+            it = it->next();
+            return *this;
+        }
+
+        MapConstIterator operator++(int value) {  // for me
+            MapConstIterator buffer(*this);
+            it = it->next();
+            return buffer;
+        }
+
+        MapConstIterator& operator--() {
+            it = it->prev();
+            return *this;
+        }
+
+        MapConstIterator operator--(int value) {  //  for me
+            MapConstIterator buffer(*this);
+            it = it->prev();
+            return buffer;
+        }
+
+        bool operator==(const MapConstIterator& other) const {
+            return it == other.it;
+        }
+
+        bool operator!=(const MapConstIterator& other) const {
+            return it != other.it;
+        }
+};
 
 #endif //  SRC_S21_MAP_ITERATOR_H
