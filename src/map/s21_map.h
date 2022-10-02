@@ -37,7 +37,7 @@ class S21Map {
 
         bool empty() const;
         size_type size() const;
-        size_type max_size() const;
+        // size_type max_size() const;
 
         void clear();
         std::pair<iterator, bool> insert(const value_type& value);

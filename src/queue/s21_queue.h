@@ -3,7 +3,8 @@
 
 #include <initializer_list>
 #include <string.h>
-// #include <stdexcept>
+
+#include <list>
 
 template<typename T>
 class S21Queue {
@@ -18,25 +19,21 @@ class S21Queue {
         S21Queue(const S21Queue &q);
         S21Queue(S21Queue &&q);
         ~S21Queue();
-        void operator=(S21Queue &&q);
+        S21Queue& operator=(S21Queue &&q);
 
-        const_reference front() const { return queue_[head_];}
-        const_reference back() const {return queue_[tail_];}
+        const_reference front() const { return queue_.front();}
+        const_reference back() const {return queue_.back();}
 
         bool empty();
-        size_type size() const { return size_;}
+        size_type size() const { return queue_.size();}
 
         void push(const_reference value);
         void pop();
         void swap(S21Queue& other);
 
-        void AllocateMemory(S21Queue<T> &q, size_t size);
-
+        bool operator!=(S21Queue& other) const;
     private:
-        value_type *queue_;
-        int head_;
-        int tail_;
-        size_type size_;
+        std::list<T> queue_;
 };
 
 #endif //  SRC_S21_QUEUE_H
