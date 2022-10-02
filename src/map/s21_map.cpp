@@ -166,12 +166,12 @@ std::pair<MapIterator<Key, T>, bool> S21Map<Key, T>::insert(const std::pair<cons
     if (value.first < parent->data.first) {
         connect_node(parent, &parent->left, result);
         connect_node(result, &result->left, it);
-        connect_node(result, &result->right, NULL);
+        connect_node(result, &result->right, NULL);  ///
 
     } else if (value.first > parent->data.first) {
         connect_node(parent, &parent->right, result);
         connect_node(result, &result->right, it);
-        connect_node(result, &result->left, NULL);
+        connect_node(result, &result->left, NULL);  ////
     }
     size_++;
     return std::pair<MapIterator<Key, T>, bool>(MapIterator<Key, T>(result), true);
@@ -225,8 +225,14 @@ void S21Map<Key, T>::swap(S21Map<Key, T>& other) {
     *this = buffer;
 }
 
-// template<typename Key, typename T>
-// void S21Map<Key, T>::merge(S21Map<Key, T>& other);
+template<typename Key, typename T>
+void S21Map<Key, T>::merge(S21Map<Key, T>& other) {
+    auto it = other.begin();
+    for (; it != other.end(); it++) {
+        cout << "it = " << it.it->data.first << "\n" ;
+        insert(it.it->data);
+    }
+}
 
 // template<typename Key, typename T>
 // bool S21Map<Key, T>::contains(const Key& key);
@@ -234,113 +240,132 @@ void S21Map<Key, T>::swap(S21Map<Key, T>& other) {
 
 
 int main() {
-    // S21Map<int, string> m;
-    // m.insert(pair<int, string>(5, "5"));
-    // m.insert(pair<int, string>(8, "8"));
-    // m.insert(pair<int, string>(1, "1"));
-    // m.insert(pair<int, string>(23, "23"));
-    // m.insert(pair<int, string>(3, "3"));
-    // m.insert(pair<int, string>(2, "2"));
-    // m.insert(pair<int, string>(15, "15"));
-    // m.insert(pair<int, string>(20, "20"));
-    // m.insert(pair<int, string>(13, "13"));
-    // m.insert(pair<int, string>(11, "11"));
 
-    S21Map<int, int> m;
-    m.insert(pair<int, int>(5, 5));
-    m.insert(pair<int, int>(6, 6));
-    m.insert(pair<int, int>(3, 3));
-    m.insert(pair<int, int>(4, 4));
-    m.insert(pair<int, int>(1, 1));
-    m.insert(pair<int, int>(2, 2));
-    m.insert(pair<int, int>(18, 18));
-    m.insert(pair<int, int>(7, 7));
-    m.insert(pair<int, int>(19, 19));
-    m.insert(pair<int, int>(10, 10));
-    m.insert(pair<int, int>(9, 9));
-    m.insert(pair<int, int>(12, 12));
+    //  merge test
+    S21Map<int, char> first;
+    first.insert(pair<int, char>(1, 'A'));
+    first.insert(pair<int, char>(2, 'B'));
+    S21Map<int, char> second;
+    second.insert(pair<int, char>(2, 'C'));
+    second.insert(pair<int, char>(4, 'D'));
+    second.insert(pair<int, char>(1, 'T'));
+    second.insert(pair<int, char>(3, 'E'));
 
-    m.insert_or_assign(3, 33);
+    first.merge(second);
 
-
-    vector<int> i{1, 2, 3, 4, 5, 6, 7, 9, 10, 12, 18, 19};
-    m[0] = 12345;
-    m.at(5) = 555;
-    auto it = m.begin();
-    ++it;
-    ++it;
-    ++it;
-    ++it;
-    ++it;
-    ++it;
-    ++it;
-    ++it;
-    ++it;
-    ++it;
-    ++it;
-
-    // if (i == 4) {
-        m.erase(it);
-// }
-
+    vector<int> i{1, 2, 3, 4, 5, 6};
     for (int k : i) {
         cout << "i = " << k << " map[i] = ";
-        cout << m[k] << "\n";
+        cout << first[k] << "\n";
     }
 
-    cout << "\n\n";
+//     // S21Map<int, string> m;
+//     // m.insert(pair<int, string>(5, "5"));
+//     // m.insert(pair<int, string>(8, "8"));
+//     // m.insert(pair<int, string>(1, "1"));
+//     // m.insert(pair<int, string>(23, "23"));
+//     // m.insert(pair<int, string>(3, "3"));
+//     // m.insert(pair<int, string>(2, "2"));
+//     // m.insert(pair<int, string>(15, "15"));
+//     // m.insert(pair<int, string>(20, "20"));
+//     // m.insert(pair<int, string>(13, "13"));
+//     // m.insert(pair<int, string>(11, "11"));
+
+//     S21Map<int, int> m;
+//     m.insert(pair<int, int>(5, 5));
+//     m.insert(pair<int, int>(6, 6));
+//     m.insert(pair<int, int>(3, 3));
+//     m.insert(pair<int, int>(4, 4));
+//     m.insert(pair<int, int>(1, 1));
+//     m.insert(pair<int, int>(2, 2));
+//     m.insert(pair<int, int>(18, 18));
+//     m.insert(pair<int, int>(7, 7));
+//     m.insert(pair<int, int>(19, 19));
+//     m.insert(pair<int, int>(10, 10));
+//     m.insert(pair<int, int>(9, 9));
+//     m.insert(pair<int, int>(12, 12));
+
+//     m.insert_or_assign(3, 33);
 
 
-    S21Map<int, int> copy;
-    // copy = m;
+//     vector<int> i{1, 2, 3, 4, 5, 6, 7, 9, 10, 12, 18, 19};
+//     m[0] = 12345;
+//     m.at(5) = 555;
+//     auto it = m.begin();
+//     ++it;
+//     ++it;
+//     ++it;
+//     ++it;
+//     ++it;
+//     ++it;
+//     ++it;
+//     ++it;
+//     ++it;
+//     ++it;
+//     ++it;
 
-    copy.insert(pair<int, int>(4, 4));
-    copy.insert(pair<int, int>(1, 1));
-    copy.insert(pair<int, int>(2, 2));
-    copy.insert(pair<int, int>(18, 18));
-    copy.insert(pair<int, int>(7, 7));
-    copy.insert(pair<int, int>(19, 19));
+//     // if (i == 4) {
+//         m.erase(it);
+// // }
 
-    cout << "size m = " << m.size() << "\n";   /// ???????????
-    cout << "size copy = " << copy.size() << "\n";
+//     for (int k : i) {
+//         cout << "i = " << k << " map[i] = ";
+//         cout << m[k] << "\n";
+//     }
 
-    vector<int> j{1, 2, 4, 7, 18, 19};
-    for (int k : j) {
-        cout << "i = " << k << " map[i] = ";
-        cout << copy[k] << "\n";
-    }
-
-    cout << "\n\n\n\n";
-    m.swap(copy);
-    for (int k : j) {
-        cout << "i = " << k << " map[i] = ";
-        cout << m[k] << "\n";
-    }
-    cout << "\n\n";
-    for (int k : i) {
-        cout << "i = " << k << " map[i] = ";
-        cout << copy[k] << "\n";
-    }
+//     cout << "\n\n";
 
 
-    // map<int, int> check;
-    // check.insert(pair<int, int>(5, 5));
-    // check.insert(pair<int, int>(6, 6));
-    // check.insert(pair<int, int>(3, 3));
-    // check.insert(pair<int, int>(4, 4));
-    // check.insert(pair<int, int>(1, 1));
-    // check.insert(pair<int, int>(2, 2));
-    // check.insert(pair<int, int>(8, 8));
-    // // check.insert_or_assign(3, 33);
+//     S21Map<int, int> copy;
+//     // copy = m;
+
+//     copy.insert(pair<int, int>(4, 4));
+//     copy.insert(pair<int, int>(1, 1));
+//     copy.insert(pair<int, int>(2, 2));
+//     copy.insert(pair<int, int>(18, 18));
+//     copy.insert(pair<int, int>(7, 7));
+//     copy.insert(pair<int, int>(19, 19));
+
+//     cout << "size m = " << m.size() << "\n";   /// ???????????
+//     cout << "size copy = " << copy.size() << "\n";
+
+//     vector<int> j{1, 2, 4, 7, 18, 19};
+//     for (int k : j) {
+//         cout << "i = " << k << " map[i] = ";
+//         cout << copy[k] << "\n";
+//     }
+
+//     cout << "\n\n\n\n";
+//     m.swap(copy);
+//     for (int k : j) {
+//         cout << "i = " << k << " map[i] = ";
+//         cout << m[k] << "\n";
+//     }
+//     cout << "\n\n";
+//     for (int k : i) {
+//         cout << "i = " << k << " map[i] = ";
+//         cout << copy[k] << "\n";
+//     }
 
 
-    // int i = 0;
-    // check[0] = 12345;
-    // check.at(5) = 555;
-    // // auto it = check.begin();
-    // for (int i = 0; i < 9; i++) {
-    //     cout << "i = " << i << " check[i] = ";
-    //     cout << check[i] << "\n";
-    // }
+//     // map<int, int> check;
+//     // check.insert(pair<int, int>(5, 5));
+//     // check.insert(pair<int, int>(6, 6));
+//     // check.insert(pair<int, int>(3, 3));
+//     // check.insert(pair<int, int>(4, 4));
+//     // check.insert(pair<int, int>(1, 1));
+//     // check.insert(pair<int, int>(2, 2));
+//     // check.insert(pair<int, int>(8, 8));
+//     // // check.insert_or_assign(3, 33);
+
+
+//     // int i = 0;
+//     // check[0] = 12345;
+//     // check.at(5) = 555;
+//     // // auto it = check.begin();
+//     // for (int i = 0; i < 9; i++) {
+//     //     cout << "i = " << i << " check[i] = ";
+//     //     cout << check[i] << "\n";
+//     // }
 } 
 
