@@ -1,8 +1,7 @@
 #include <gmock/gmock.h>
-#include <gtest/gtest.h>
 #include <queue>
 
-#include "../queue/s21_queue.cpp"
+#include "../queue/s21_queue.cc"
 
 using namespace std;
 
@@ -132,7 +131,7 @@ TEST(TestGroupName, operator_eq) {
     }
 
     S21Queue<int> check(buffer);
-    q = std::move(buffer);
+    q = move(buffer);
 
     ASSERT_TRUE(q.front() == check.front());
     ASSERT_TRUE(q.back() == check.back());
@@ -154,14 +153,9 @@ TEST(TestGroupName, constructor_init_list) {
 
 TEST(TestGroupName, constructor_move) {
     S21Queue<int> q{3, 5, 2, 1, 6};
-    S21Queue<int> check(std::move(q));
+    S21Queue<int> check(move(q));
 
     ASSERT_TRUE((q != check) == true);
     ASSERT_TRUE(q.size() == 0);
 }
 
-int main(int argc, char **argv) {
-  ::testing::InitGoogleTest(&argc, argv);
-
-  return RUN_ALL_TESTS();
-}
