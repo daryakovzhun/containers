@@ -1,13 +1,10 @@
 #include "s21_queue.h"
 
 template<typename T>
-S21Queue<T>::S21Queue() {
-    queue_ = NULL;
-}
+S21Queue<T>::S21Queue() { }
 
 template<typename T>
 S21Queue<T>::S21Queue(std::initializer_list<T> const &items) {
-    queue_ = NULL;
     for (auto obj : items) {
         queue_.push_back(obj);
     }
@@ -19,9 +16,9 @@ S21Queue<T>::S21Queue(const S21Queue &q) {
 }
 
 template<typename T>
-S21Queue<T>::S21Queue(S21Queue &&q) {   //  ??
-    queue_ = q.queue_;
-    q.queue_ = nullptr;
+S21Queue<T>::S21Queue(S21Queue &&q) {
+    std::list<T>buffer = std::move(q.queue_);
+    queue_ = buffer;
 }
 
 template<typename T>
@@ -32,6 +29,7 @@ S21Queue<T>::~S21Queue() {
 template<typename T>
 S21Queue<T>& S21Queue<T>::operator=(S21Queue &&q) {
     if (*this != q) {
+        queue_.clear();
         queue_ = q.queue_;
     }
     return *this;
@@ -54,14 +52,11 @@ void S21Queue<T>::pop() {
 
 template<typename T>
 void S21Queue<T>::swap(S21Queue& other) {
-    queue_.swap(other);
+    queue_.swap(other.queue_);
 }
 
 template<typename T>
 bool S21Queue<T>::operator!=(S21Queue& other) const {
-    return queue_ == other.queue_;
+    return !(queue_ == other.queue_);
 }
 
-int main() {
-    return 0;
-}
