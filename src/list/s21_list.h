@@ -41,8 +41,8 @@ class list{
         const_reference back();
 
         // List iterators
-        iterator begin() {return iterator(head);}
-        iterator end() {return iterator(nullptr);};
+        iterator begin();
+        iterator end();
 
         // List Capacity
         bool empty();
