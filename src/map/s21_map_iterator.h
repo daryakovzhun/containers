@@ -38,7 +38,7 @@ class Node {
 
         ~Node() {}
 
-        Node* next() const {
+        Node* next() {
             Node* next = this;
             if (next->right) {
                 next = next->right;
@@ -54,7 +54,7 @@ class Node {
             return next;
         }
 
-        Node* prev() const {
+        Node* prev() {
             Node* prev = this;
             if (prev->left) {
                 prev = prev->left;

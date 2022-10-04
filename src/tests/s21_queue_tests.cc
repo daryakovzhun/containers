@@ -5,7 +5,7 @@
 
 using namespace std;
 
-TEST(TestGroupName, front) {
+TEST(TestGroupName, queue_front) {
     queue<int> check;
     S21Queue<int> q;
 
@@ -23,7 +23,7 @@ TEST(TestGroupName, front) {
     ASSERT_TRUE(q.size() == check.size());
 }
 
-TEST(TestGroupName, back) {
+TEST(TestGroupName, queue_back) {
     queue<int> check;
     S21Queue<int> q;
 
@@ -41,7 +41,7 @@ TEST(TestGroupName, back) {
     ASSERT_TRUE(q.size() == check.size());
 }
 
-TEST(TestGroupName, swap) {
+TEST(TestGroupName, queue_swap) {
     S21Queue<int> check;
     S21Queue<int> buffer;
     S21Queue<int> q;
@@ -72,7 +72,7 @@ TEST(TestGroupName, swap) {
     ASSERT_TRUE((q != check) == false);
 }
 
-TEST(TestGroupName, not_empty) {
+TEST(TestGroupName, queue_not_empty) {
     S21Queue<int> q;
 
     for (int i = 0; i < 50; i++) {
@@ -85,12 +85,12 @@ TEST(TestGroupName, not_empty) {
     ASSERT_TRUE(q.empty() == false);
 }
 
-TEST(TestGroupName, empty) {
+TEST(TestGroupName, queue_empty) {
     S21Queue<int> q;
     ASSERT_TRUE(q.empty() == true);
 }
 
-TEST(TestGroupName, operator_not_eq) {
+TEST(TestGroupName, queue_operator_not_eq) {
     S21Queue<int> buffer;
     S21Queue<int> q;
     S21Queue<int> q2;
@@ -117,7 +117,7 @@ TEST(TestGroupName, operator_not_eq) {
     ASSERT_TRUE( (q2 != buffer) == false);
 }
 
-TEST(TestGroupName, operator_eq) {
+TEST(TestGroupName, queue_operator_eq) {
     S21Queue<int> q;
     S21Queue<int> buffer;
 
@@ -139,7 +139,7 @@ TEST(TestGroupName, operator_eq) {
     ASSERT_TRUE((q != check) == false);
 }
 
-TEST(TestGroupName, constructor_init_list) {
+TEST(TestGroupName, queue_constructor_init_list) {
     S21Queue<int> q{3, 5, 2, 1, 6};
     S21Queue<int> check;
     check.push(3);
@@ -151,7 +151,7 @@ TEST(TestGroupName, constructor_init_list) {
     ASSERT_TRUE((q != check) == false);
 }
 
-TEST(TestGroupName, constructor_move) {
+TEST(TestGroupName, queue_constructor_move) {
     S21Queue<int> q{3, 5, 2, 1, 6};
     S21Queue<int> check(move(q));
 
