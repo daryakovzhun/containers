@@ -4,8 +4,10 @@
 using namespace std;
 
 int main() {
-    list<int> a;
-    a.pop_back();
+    list<string> a;
+    // a.push_back("gg");
+    cout << *a.end();
+    
     // list<int>::iterator it = a.begin();
    
     // cout << *it << endl;
