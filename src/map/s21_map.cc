@@ -1,6 +1,10 @@
 #include "s21_map.h"
 
-#include <vector>
+#include <limits>
+#include <stdlib.h>
+// #include <vector>
+#include <map>
+#include <string>
 
 template<typename Key, typename T>
 S21Map<Key, T>::S21Map() {
@@ -129,10 +133,12 @@ size_t S21Map<Key, T>::size() const {
     return size_;
 }
 
-// template<typename Key, typename T>
-// size_t S21Map<Key, T>::max_size() const {
-
-// }
+template<typename Key, typename T>
+size_t S21Map<Key, T>::max_size() const {
+    std::allocator<pair<const Key, T>> alloc;
+    std::cout << "sizeof = " << sizeof(pair<const Key, T>)<< "\n";
+    return alloc.max_size() / (sizeof(pair<const Key, T>)); 
+}
 
 template<typename Key, typename T>
 void S21Map<Key, T>::clear() {
@@ -197,7 +203,7 @@ std::pair<MapIterator<Key, T>, bool> S21Map<Key, T>::insert(const Key& key, cons
 
 template<typename Key, typename T>
 std::pair<MapIterator<Key, T>, bool> S21Map<Key, T>::insert_or_assign(const Key& key, const T& obj) {
-    auto reuslt = insert(std::pair<Key, T>(key, obj));  //  std::pair<MapIterator<Key, T>, bool> (auto)
+    auto reuslt = insert(std::pair<Key, T>(key, obj));
     if (reuslt.second == false) {
         reuslt.first.it->data.second = obj;
     }
@@ -249,4 +255,12 @@ void S21Map<Key, T>::merge(S21Map<Key, T>& other) {
 template<typename Key, typename T>
 bool S21Map<Key, T>::contains(const Key& key) const {
     return find_by_key(key).second;
+}
+
+
+int main () {
+    S21Map<int, double> m;
+    map<int, double> check;
+
+    cout << "    m = " << m.max_size() << "\ncheck = " << check.max_size();
 }
