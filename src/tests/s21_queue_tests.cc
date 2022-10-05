@@ -7,7 +7,7 @@ using namespace std;
 
 TEST(TestGroupName, queue_front) {
     queue<int> check;
-    S21Queue<int> q;
+    s21::queue<int> q;
 
     for (int i = 0; i < 50; i++) {
         check.push(i);
@@ -25,7 +25,7 @@ TEST(TestGroupName, queue_front) {
 
 TEST(TestGroupName, queue_back) {
     queue<int> check;
-    S21Queue<int> q;
+    s21::queue<int> q;
 
     for (int i = 0; i < 50; i++) {
         check.push(i);
@@ -42,9 +42,9 @@ TEST(TestGroupName, queue_back) {
 }
 
 TEST(TestGroupName, queue_swap) {
-    S21Queue<int> check;
-    S21Queue<int> buffer;
-    S21Queue<int> q;
+    s21::queue<int> check;
+    s21::queue<int> buffer;
+    s21::queue<int> q;
 
     for (int i = 0; i < 50; i++) {
         buffer.push(i);
@@ -73,7 +73,7 @@ TEST(TestGroupName, queue_swap) {
 }
 
 TEST(TestGroupName, queue_not_empty) {
-    S21Queue<int> q;
+    s21::queue<int> q;
 
     for (int i = 0; i < 50; i++) {
         q.push(i);
@@ -86,14 +86,14 @@ TEST(TestGroupName, queue_not_empty) {
 }
 
 TEST(TestGroupName, queue_empty) {
-    S21Queue<int> q;
+    s21::queue<int> q;
     ASSERT_TRUE(q.empty() == true);
 }
 
 TEST(TestGroupName, queue_operator_not_eq) {
-    S21Queue<int> buffer;
-    S21Queue<int> q;
-    S21Queue<int> q2;
+    s21::queue<int> buffer;
+    s21::queue<int> q;
+    s21::queue<int> q2;
 
     for (int i = 0; i < 50; i++) {
         buffer.push(i);
@@ -118,8 +118,8 @@ TEST(TestGroupName, queue_operator_not_eq) {
 }
 
 TEST(TestGroupName, queue_operator_eq) {
-    S21Queue<int> q;
-    S21Queue<int> buffer;
+    s21::queue<int> q;
+    s21::queue<int> buffer;
 
     for (int i = 0; i < 50; i++) {
         buffer.push(i);
@@ -130,7 +130,7 @@ TEST(TestGroupName, queue_operator_eq) {
         }
     }
 
-    S21Queue<int> check(buffer);
+    s21::queue<int> check(buffer);
     q = move(buffer);
 
     ASSERT_TRUE(q.front() == check.front());
@@ -140,8 +140,8 @@ TEST(TestGroupName, queue_operator_eq) {
 }
 
 TEST(TestGroupName, queue_constructor_init_list) {
-    S21Queue<int> q{3, 5, 2, 1, 6};
-    S21Queue<int> check;
+    s21::queue<int> q{3, 5, 2, 1, 6};
+    s21::queue<int> check;
     check.push(3);
     check.push(5);
     check.push(2);
@@ -152,8 +152,8 @@ TEST(TestGroupName, queue_constructor_init_list) {
 }
 
 TEST(TestGroupName, queue_constructor_move) {
-    S21Queue<int> q{3, 5, 2, 1, 6};
-    S21Queue<int> check(move(q));
+    s21::queue<int> q{3, 5, 2, 1, 6};
+    s21::queue<int> check(move(q));
 
     ASSERT_TRUE((q != check) == true);
     ASSERT_TRUE(q.size() == 0);

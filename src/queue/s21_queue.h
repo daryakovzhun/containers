@@ -2,38 +2,40 @@
 #define SRC_S21_QUEUE_H
 
 #include <initializer_list>
-#include <string.h>
 
+#include <string.h>
 #include <list>
 
-template<typename T>
-class S21Queue {
-    public:
-        using value_type = T;
-        using reference = T&;
-        using const_reference = const T&;
-        using size_type = size_t ;
+namespace s21 {
+    template<typename T>
+    class queue {
+        public:
+            using value_type = T;
+            using reference = T&;
+            using const_reference = const T&;
+            using size_type = size_t ;
 
-        S21Queue();
-        S21Queue(std::initializer_list<value_type> const &items);
-        S21Queue(const S21Queue &q);
-        S21Queue(S21Queue &&q);
-        ~S21Queue();
-        S21Queue& operator=(S21Queue &&q);
+            queue();
+            queue(std::initializer_list<value_type> const &items);
+            queue(const queue &q);
+            queue(queue &&q);
+            ~queue();
+            queue& operator=(queue &&q);
 
-        const_reference front() const { return queue_.front();}
-        const_reference back() const {return queue_.back();}
+            const_reference front() const { return queue_.front();}
+            const_reference back() const {return queue_.back();}
 
-        bool empty();
-        size_type size() const { return queue_.size();}
+            bool empty();
+            size_type size() const { return queue_.size();}
 
-        void push(const_reference value);
-        void pop();
-        void swap(S21Queue& other);
+            void push(const_reference value);
+            void pop();
+            void swap(queue& other);
 
-        bool operator!=(S21Queue& other) const;
-    private:
-        std::list<T> queue_;
-};
+            bool operator!=(queue& other) const;
+        private:
+            std::list<T> queue_;
+    };
+}
 
 #endif //  SRC_S21_QUEUE_H

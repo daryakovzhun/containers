@@ -8,7 +8,7 @@
 using namespace std;
 
 TEST(TestGroupName, map_init_list) {
-    S21Map<int, char> m{{3, '3'}, {2, '2'}, {5, '5'}};
+    s21::map<int, char> m{{3, '3'}, {2, '2'}, {5, '5'}};
 
     ASSERT_TRUE(m[3] == '3');
     ASSERT_TRUE(m[2] == '2');
@@ -22,7 +22,7 @@ TEST(TestGroupName, map_init_list) {
 }
 
 TEST(TestGroupName, map_insert_or_assign) {
-    S21Map<int, int> m;
+    s21::map<int, int> m;
     m.insert(pair<int, int>(5, 5));
     m.insert(pair<int, int>(6, 6));
     m.insert(pair<int, int>(3, 3));
@@ -51,7 +51,7 @@ TEST(TestGroupName, map_insert_or_assign) {
 }
 
 TEST(TestGroupName, map_copy_constructor) {
-    S21Map<int, int> m;
+    s21::map<int, int> m;
     m.insert(pair<int, int>(5, 5));
     m.insert(pair<int, int>(6, 6));
     m.insert(pair<int, int>(3, 3));
@@ -65,7 +65,7 @@ TEST(TestGroupName, map_copy_constructor) {
     m.insert(pair<int, int>(9, 9));
     m.insert(pair<int, int>(12, 12));
 
-    S21Map<int, int> copy(m);
+    s21::map<int, int> copy(m);
     auto it_m = m.begin();
     auto it_copy = copy.begin();
 
@@ -77,7 +77,7 @@ TEST(TestGroupName, map_copy_constructor) {
 }
 
 TEST(TestGroupName, map_move_constructor) {
-    S21Map<int, int> m;
+    s21::map<int, int> m;
     m.insert(pair<int, int>(5, 5));
     m.insert(pair<int, int>(6, 6));
     m.insert(pair<int, int>(3, 3));
@@ -91,7 +91,7 @@ TEST(TestGroupName, map_move_constructor) {
     m.insert(pair<int, int>(9, 9));
     m.insert(pair<int, int>(12, 12));
 
-     S21Map<int, int> move_m(move(m));
+     s21::map<int, int> move_m(move(m));
 
     ASSERT_TRUE(move_m.size() == 12);
     ASSERT_TRUE(m.size() == 0);
@@ -102,7 +102,7 @@ TEST(TestGroupName, map_move_constructor) {
 }
 
 TEST(TestGroupName, map_operator_eq) {
-    S21Map<int, int> m;
+    s21::map<int, int> m;
     m.insert(pair<int, int>(5, 5));
     m.insert(pair<int, int>(6, 6));
     m.insert(pair<int, int>(3, 3));
@@ -116,7 +116,7 @@ TEST(TestGroupName, map_operator_eq) {
     m.insert(pair<int, int>(9, 9));
     m.insert(pair<int, int>(12, 12));
 
-    S21Map<int, int> copy;
+    s21::map<int, int> copy;
     copy = m;
     auto it_m = m.begin();
     auto it_copy = copy.begin();
@@ -129,7 +129,7 @@ TEST(TestGroupName, map_operator_eq) {
 }
 
 TEST(TestGroupName, map_operator_eq_move) {
-    S21Map<int, int> m;
+    s21::map<int, int> m;
     m.insert(pair<int, int>(5, 5));
     m.insert(pair<int, int>(6, 6));
     m.insert(pair<int, int>(3, 3));
@@ -143,7 +143,7 @@ TEST(TestGroupName, map_operator_eq_move) {
     m.insert(pair<int, int>(9, 9));
     m.insert(pair<int, int>(12, 12));
 
-     S21Map<int, int> move_m;
+     s21::map<int, int> move_m;
      move_m = move(m);
 
     ASSERT_TRUE(move_m.size() == 12);
@@ -155,7 +155,7 @@ TEST(TestGroupName, map_operator_eq_move) {
 }
 
 TEST(TestGroupName, map_at) {
-    S21Map<int, char> m{{3, '3'}, {2, '2'}, {5, '5'}};
+    s21::map<int, char> m{{3, '3'}, {2, '2'}, {5, '5'}};
 
     m.at(2) = '9';
     ASSERT_TRUE(m[2] == '9');
@@ -166,11 +166,11 @@ TEST(TestGroupName, map_at) {
 }
 
 TEST(TestGroupName, map_swap) {
-    S21Map<int, int> m1{{3, 3}, {2, 2}, {5, 5}};
-    S21Map<int, int> m2{{5, 5}, {7, 7}, {3, 3}, {4, 4}, {8, 8}, {6, 6}, {2, 2}, {1, 1}};
+    s21::map<int, int> m1{{3, 3}, {2, 2}, {5, 5}};
+    s21::map<int, int> m2{{5, 5}, {7, 7}, {3, 3}, {4, 4}, {8, 8}, {6, 6}, {2, 2}, {1, 1}};
 
-    S21Map<int, int> buffer_m1{{3, 3}, {2, 2}, {5, 5}};
-    S21Map<int, int> buffer_m2{{5, 5}, {7, 7}, {3, 3}, {4, 4}, {8, 8}, {6, 6}, {2, 2}, {1, 1}};
+    s21::map<int, int> buffer_m1{{3, 3}, {2, 2}, {5, 5}};
+    s21::map<int, int> buffer_m2{{5, 5}, {7, 7}, {3, 3}, {4, 4}, {8, 8}, {6, 6}, {2, 2}, {1, 1}};
 
     m1.swap(m2);
 
@@ -187,7 +187,7 @@ TEST(TestGroupName, map_swap) {
 }
 
 TEST(TestGroupName, map_insert_key_obj) {
-    S21Map<int, int> m{{3, 3}, {2, 2}, {5, 5}};
+    s21::map<int, int> m{{3, 3}, {2, 2}, {5, 5}};
     m.insert(0, 0);
     m.insert(9, 9);
     m.insert(25, 25);
@@ -202,8 +202,8 @@ TEST(TestGroupName, map_insert_key_obj) {
 }
 
 TEST(TestGroupName, map_merge) {
-    S21Map<int, int> m{{3, 3}, {2, 2}, {5, 5}};
-    S21Map<int, int> m2{{0, 0}, {9, 9}, {5, 55}, {7, 7}, {3, 33}};
+    s21::map<int, int> m{{3, 3}, {2, 2}, {5, 5}};
+    s21::map<int, int> m2{{0, 0}, {9, 9}, {5, 55}, {7, 7}, {3, 33}};
 
     m.merge(m2);
     ASSERT_TRUE(m.size() == 6);
@@ -213,7 +213,7 @@ TEST(TestGroupName, map_merge) {
 }
 
 TEST(TestGroupName, map_contains) {
-    S21Map<int, int> m{{0, 0}, {9, 9}, {5, 55}, {7, 7}, {3, 33}};
+    s21::map<int, int> m{{0, 0}, {9, 9}, {5, 55}, {7, 7}, {3, 33}};
 
     ASSERT_TRUE(m.size() == 5);
     for(auto x: {0, 3, 5, 7, 9}) {
@@ -225,7 +225,7 @@ TEST(TestGroupName, map_contains) {
 }
 
 TEST(TestGroupName, map_erase_1) {
-    S21Map<int, int> m{{5, 5}, {3, 3}, {6, 6}, {4, 4}, {1, 1}, {2, 2}, {18, 18}, {7, 7}, {19, 19}, {10, 10}, {9, 9}, {12, 12}};
+    s21::map<int, int> m{{5, 5}, {3, 3}, {6, 6}, {4, 4}, {1, 1}, {2, 2}, {18, 18}, {7, 7}, {19, 19}, {10, 10}, {9, 9}, {12, 12}};
     ASSERT_TRUE(m.size() == 12);
 
     auto it = m.begin();
@@ -244,7 +244,7 @@ TEST(TestGroupName, map_erase_1) {
 }
 
 TEST(TestGroupName, map_erase_2) {
-    S21Map<int, int> m{{5, 5}, {3, 3}, {6, 6}, {4, 4}, {1, 1}, {2, 2}, {18, 18}, {7, 7}, {19, 19}, {10, 10}, {9, 9}, {12, 12}};
+    s21::map<int, int> m{{5, 5}, {3, 3}, {6, 6}, {4, 4}, {1, 1}, {2, 2}, {18, 18}, {7, 7}, {19, 19}, {10, 10}, {9, 9}, {12, 12}};
     ASSERT_TRUE(m.size() == 12);
 
     auto it = m.begin();
@@ -263,7 +263,7 @@ TEST(TestGroupName, map_erase_2) {
 }
 
 TEST(TestGroupName, map_erase_3) {
-    S21Map<int, int> m{{5, 5}, {3, 3}, {6, 6}, {4, 4}, {1, 1}, {2, 2}, {18, 18}, {7, 7}, {19, 19}, {10, 10}, {9, 9}, {12, 12}};
+    s21::map<int, int> m{{5, 5}, {3, 3}, {6, 6}, {4, 4}, {1, 1}, {2, 2}, {18, 18}, {7, 7}, {19, 19}, {10, 10}, {9, 9}, {12, 12}};
     ASSERT_TRUE(m.size() == 12);
 
     auto it = m.begin();
@@ -282,7 +282,7 @@ TEST(TestGroupName, map_erase_3) {
 }
 
 TEST(TestGroupName, map_erase_4) {
-    S21Map<int, int> m{{5, 5}, {3, 3}, {6, 6}, {4, 4}, {1, 1}, {2, 2}, {18, 18}, {7, 7}, {20, 20}, {10, 10}, {9, 9}, {12, 12}, {21, 21}};
+    s21::map<int, int> m{{5, 5}, {3, 3}, {6, 6}, {4, 4}, {1, 1}, {2, 2}, {18, 18}, {7, 7}, {20, 20}, {10, 10}, {9, 9}, {12, 12}, {21, 21}};
     ASSERT_TRUE(m.size() == 13);
 
     auto it = m.begin();
