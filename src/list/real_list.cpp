@@ -5,8 +5,8 @@ using namespace std;
 
 int main() {
     list<string> a;
-    // a.push_back("gg");
-    cout << *a.end();
+    list<string> b;
+    b.operator=(a);
     
     // list<int>::iterator it = a.begin();
    

@@ -43,7 +43,6 @@ namespace s21 {
         for (auto nodes : l) {
             push_back(nodes);
         }
-
     }
 
     template<typename T>
@@ -58,41 +57,24 @@ namespace s21 {
         clear();
     }
 
-    // operator=(list &&l)
-    // List element access 
     template <typename T>
-    const T& list<T>::front() {return head->data;}
-
-    template <typename T>
-    const T& list<T>::back() {return tail->data;}
-
-
-    // List iterators
-    template <typename T>
-    ListIterator<T> list<T>::begin() {return iterator(head);}
-
-    template <typename T>
-    ListIterator<T> list<T>::end() {return ++iterator(tail);} // iterator(tail);?????????????
-
+    list<T>& list<T>::operator=(list &&l) noexcept {
+        // if (*this != l) {
+        //     this->clear();
+            head = l.head;
+            tail = l.tail;
+            size_ = l.size_;
+        // }
+        l.head = nullptr;
+        l.tail = nullptr;
+        l.size_ = 0;
+        return *this;
+    }
 
     // List Capacity
-    template <typename T>
-    bool list<T>::empty() {
-        return !this->size();
-    }
 
     template <typename T>
-    size_t list<T>::size() {
-        return this->size_;
-    }
-
-    template <typename T>
-    size_t list<T>::max_size() {
-        return std::numeric_limits<T>::max();
-    }
-
-    template <typename T>
-    ListIterator<T> list<T>::insert(iterator pos, const T value) {
+    ListIterator<T> list<T>::insert(iterator pos, const_reference value) {
         size_t n = distance(pos);
         auto it(addNode(value, n));
         return it;
@@ -131,13 +113,14 @@ namespace s21 {
             head->data = value;
             res = head = tail;// = new Node<T>(value); ??
         } else if (pos == 0) {
-            head = head->prev = new Node<T>(value, head);
+            head = head->prev = new Node<T>(value, head);                                                                                                          
             res = head;
         } else {
+            // cout << "***" << (head->pnext == tail) << "***" << endl;
             Node<T> *current = head;
             for(int i = 0; i < pos - 1; i++) {
                 current = current->pnext;
-            }
+            }                                                                        
             current->pnext  = new Node<T>(value, current->pnext, current);
             res = current->pnext;
             if (pos != size_) { res->pnext->prev = res;} else {tail = res;}
@@ -187,12 +170,12 @@ namespace s21 {
 
     template <typename T>
     void list<T>::Print_list() {
-        cout << (head->pnext == tail->prev) << endl;
-        if (size_) {
+            if (size_) {
             iterator it = this->begin();
             for (; it != this->end(); ++it) {
                 cout << *it << endl;
             }
+            cout << back() << endl;
         }
     }
 
@@ -211,12 +194,17 @@ namespace s21 {
 
 int main() {
 
-    s21::list <int> a = {52, 16, 99};
+    s21::list <int> a = {1, 2, 3};
+    s21::list <int> b = {7,5};
+    b.operator=(std::move(a));
+    // cout << a.front() << endl;
+    
     // cout << a.front();
     // cout << a.max_size() << endl;
-    a.push_front(1454);
-    a.push_back(4);
-    a.push_back(98);
+    // a.push_front(1454);
+    // a.push_back(4);
+    // a.push_back(98);
+    // a.push_front(4);
     a.Print_list();
     // list<string>::iterator it(a.begin());
     // it.shift(2);

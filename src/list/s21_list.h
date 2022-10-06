@@ -3,7 +3,9 @@
 
 #include <iostream>
 #include <initializer_list>
+#include "node.h"
 #include "list_iterator.h"
+#include "list_const_iterator.h"
 #include <utility>
 
 using namespace std;
@@ -25,7 +27,7 @@ namespace s21 {
             using const_reference = const T&;
             using size_type = size_t;
             using iterator = ListIterator<T>;
-            // using const_iterator = ListConstIterator<T>;
+            using const_iterator = ListConstIterator<T>;
 
             // List functions
             list();
@@ -34,26 +36,26 @@ namespace s21 {
             list(const list &l);
             list(list &&l);
             ~list();
-            // operator=(list &&l);
+            list<T>& operator=(list &&l) noexcept;
 
             // List element access 
-            const_reference front();
-            const_reference back();
+            const_reference front() {return head->data;}
+            const_reference back() {return tail->data;}
 
             // List iterators
-            iterator begin();
-            iterator end();
+            iterator begin() {return iterator(head);}
+            iterator end() {return iterator(tail);}
 
             // List Capacity
-            bool empty();
-            size_t size(); // size_type
-            size_t max_size(); // size_type
+            bool empty() {return !this->size();}
+            size_t size() {return this->size_;}
+            //size_t max_size() {return std::numeric_limits<T>::max();}; // size_type
 
             // list modifiers
             void deleteNode(size_type pos);
             Node<T>* addNode(const T& value, size_type pos);
             void clear();
-            iterator insert(iterator pos, const T value);
+            iterator insert(iterator pos, const_reference value);
             void erase(iterator pos);
             void push_back(const_reference  value);
             void pop_back();
