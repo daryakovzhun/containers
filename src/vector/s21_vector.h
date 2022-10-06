@@ -32,7 +32,7 @@ class vector
         explicit vector(size_type n) : m_size(n), m_capacity(n), arr(n ? new T[n] : nullptr) {}
         vector(std::initializer_list<value_type> const &items);
         // copy constructor with simplified syntax
-        vector(const vector &v) : m_size(v.m_size), m_capacity(v.m_capacity), arr(new T[m_size])
+        vector(const vector &v) : m_size(v.m_size), m_capacity(v.m_size), arr(new T[m_size])
         {
             for (size_t i = 0; i < m_size; ++i)
                 arr[i] = v.arr[i];
@@ -49,25 +49,24 @@ class vector
 
 
         // some method examples
-        // iterator begin();
-        // iterator end();
-
+        iterator begin() { return arr; }
+        iterator end()   { return (arr + m_size - 1); }
 
         // size getter
-        // bool empty();
-        size_type size();
+        bool empty()         { return m_size ? 0 : 1; }
+        size_type size()     { return m_size; }
+        size_type capacity() { return m_capacity; }
         // size_type max_size();
-        // size_type capacity();
-        // void shrink_to_fit();
+        void shrink_to_fit();
         // void reserve(size_type size);
 
 
         // element accessor
         reference at(size_type pos);
-        reference operator[](size_type pos) { return arr[pos]; }
-        const_reference front()             { return arr[0]; }
+        reference operator[](size_type pos) { return arr[pos];        }
+        const_reference front()             { return arr[0];          }
         const_reference back()              { return arr[m_size - 1]; }
-        T* data()                           { return arr; }
+        T* data()                           { return arr;             }
 
 
         // append new element

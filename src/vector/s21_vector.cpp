@@ -33,18 +33,26 @@ vector<T>::vector(std::initializer_list<value_type> const &items)
 };
 
 
-template <typename T>
-size_t vector<T>::size()
-{
-    return m_size;
-}
-
-
 
 
 
 // externalizing template instances for correct linking, feel free to find more information
 template class vector<int>;
+
+
+
+// size getter__________________________________________________________________
+
+template <typename T>
+void vector<T>::shrink_to_fit()
+{
+    vector<T> tmp(*this);
+    if (this->arr) delete this->arr;
+    this->arr = tmp.arr;
+    tmp.arr = nullptr;
+    this->m_capacity = tmp.m_capacity;
+}
+
 
 
 
