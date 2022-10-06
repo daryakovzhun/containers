@@ -1,10 +1,10 @@
 #include "s21_map.h"
 
-#include <limits>
-#include <stdlib.h>
-// #include <vector>
-#include <map>
-#include <string>
+// #include <limits>
+// #include <stdlib.h>
+// // #include <vector>
+// #include <map>
+// #include <string>
 
 namespace s21 {
     template<typename Key, typename T>
@@ -18,14 +18,7 @@ namespace s21 {
     }
 
     template<typename Key, typename T>
-    map<Key, T>::map(std::initializer_list<std::pair<const Key, T>> const &items) {
-        root_ = NULL;
-        head_ = new Node<Key, T>();
-        tail_ = new Node<Key, T>();
-        head_->parent = tail_;
-        tail_->parent = head_;
-        size_ = 0;
-
+    map<Key, T>::map(std::initializer_list<std::pair<const Key, T>> const &items) : map() {
         for (auto pair : items) {
             insert(pair);
         }
@@ -40,15 +33,8 @@ namespace s21 {
     }
 
     template<typename Key, typename T>
-    map<Key, T>::map(map &&m) {
-        root_ = m.root_;
-        head_ = m.head_;
-        tail_ = m.tail_;
-        size_ = m.size_;
-        m.root_ = NULL;
-        m.head_ = NULL;
-        m.tail_ = NULL;
-        m.size_ = 0;
+    map<Key, T>::map(map &&m) : map() {
+        *this = std::move(m);
     }
 
     template<typename Key, typename T>
