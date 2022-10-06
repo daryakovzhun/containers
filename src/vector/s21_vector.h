@@ -1,5 +1,5 @@
-#ifndef S21_VECTOR_H
-#define S21_VECTOR_H
+#ifndef S21_vector_H
+#define S21_vector_H
 
 #include <iostream>
 #include <initializer_list>
@@ -9,7 +9,7 @@
 namespace s21 {
 
 template <class T>
-class Vector
+class vector
 {
     private:
         size_t m_size;
@@ -28,24 +28,24 @@ class Vector
         void reserve_more_capacity(size_type size);
 
     public:
-        Vector() : m_size(0U), m_capacity(0U), arr(nullptr) {}
-        explicit Vector(size_type n) : m_size(n), m_capacity(n), arr(n ? new T[n] : nullptr) {}
-        Vector(std::initializer_list<value_type> const &items);
+        vector() : m_size(0U), m_capacity(0U), arr(nullptr) {}
+        explicit vector(size_type n) : m_size(n), m_capacity(n), arr(n ? new T[n] : nullptr) {}
+        vector(std::initializer_list<value_type> const &items);
         // copy constructor with simplified syntax
-        Vector(const Vector &v) : m_size(v.m_size), m_capacity(v.m_capacity), arr(new T[m_size])
+        vector(const vector &v) : m_size(v.m_size), m_capacity(v.m_capacity), arr(new T[m_size])
         {
             for (size_t i = 0; i < m_size; ++i)
                 arr[i] = v.arr[i];
         }
         // move constructor with simplified syntax
-        Vector(Vector &&v) : m_size(v.m_size), m_capacity(v.m_capacity), arr(v.arr)
+        vector(vector &&v) : m_size(v.m_size), m_capacity(v.m_capacity), arr(v.arr)
         {
             v.arr = nullptr;
             v.m_size = 0;
         }
 
-        ~Vector() { if (arr) delete[] arr; }
-        Vector& operator=(Vector &&v);
+        ~vector() { if (arr) delete[] arr; }
+        vector& operator=(vector &&v);
 
 
         // some method examples
@@ -64,10 +64,10 @@ class Vector
 
         // element accessor
         reference at(size_type pos);
-        // reference operator[](size_type pos);
-        // const_reference front();
-        // const_reference back();
-        // T* data();
+        reference operator[](size_type pos) { return arr[pos]; }
+        const_reference front()             { return arr[0]; }
+        const_reference back()              { return arr[m_size - 1]; }
+        T* data()                           { return arr; }
 
 
         // append new element
@@ -76,7 +76,7 @@ class Vector
         // void erase(iterator pos);
         void push_back(const_reference value);
         // void pop_back();
-        // void swap(Vector& other);
+        // void swap(vector& other);
         // iterator insert(iterator pos, const_reference value);
 };
 
