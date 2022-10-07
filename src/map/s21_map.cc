@@ -116,12 +116,12 @@ namespace s21 {
     }
 
     template<typename Key, typename T>
-    size_t map<Key, T>::size() const {
+    std::size_t map<Key, T>::size() const {
         return size_;
     }
 
     template<typename Key, typename T>
-    size_t map<Key, T>::max_size() const {
+    std::size_t map<Key, T>::max_size() const {
         std::allocator<pair<const Key, T>> alloc;
         // std::cout << "sizeof = " << sizeof(map)<< "\n";
         return alloc.max_size() / 3; 
@@ -247,10 +247,10 @@ namespace s21 {
     }
 }
 
-int main () {
-    cout << "int = " << sizeof(int) << " double = " << sizeof(double) << "\n";
-    s21::map<int, int> m;
-    map<int, int> check;
+// int main () {
+//     cout << "int = " << sizeof(int) << " double = " << sizeof(double) << "\n";
+//     s21::map<int, int> m;
+//     map<int, int> check;
 
-    cout << "    m = " << m.max_size() << "\ncheck = " << check.max_size();
-}
+//     cout << "    m = " << m.max_size() << "\ncheck = " << check.max_size();
+// }
