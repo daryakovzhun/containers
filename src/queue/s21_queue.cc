@@ -18,8 +18,7 @@ namespace s21 {
 
     template<typename T>
     queue<T>::queue(queue &&q) {
-        std::list<T>buffer = std::move(q.queue_);
-        queue_ = buffer;
+        queue_ = std::move(q.queue_);
     }
 
     template<typename T>
@@ -32,6 +31,7 @@ namespace s21 {
         if (*this != q) {
             queue_.clear();
             queue_ = q.queue_;
+            // q.queue_ = NULL;
         }
         return *this;
     }

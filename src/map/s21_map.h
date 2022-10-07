@@ -5,8 +5,6 @@
 #include <utility>
 #include "s21_map_iterator.h"
 
-#include <string>
-#include <iostream> 
 using namespace std;
 
 namespace s21 {

@@ -1,9 +1,9 @@
 #include "s21_map.h"
 
-// #include <limits>
+#include <limits>
 // #include <stdlib.h>
 // // #include <vector>
-// #include <map>
+#include <map>
 // #include <string>
 
 namespace s21 {
@@ -123,8 +123,10 @@ namespace s21 {
     template<typename Key, typename T>
     size_t map<Key, T>::max_size() const {
         std::allocator<pair<const Key, T>> alloc;
-        std::cout << "sizeof = " << sizeof(pair<const Key, T>)<< "\n";
-        return alloc.max_size() / (sizeof(pair<const Key, T>)); 
+        // std::cout << "sizeof = " << sizeof(map)<< "\n";
+        return alloc.max_size() / 3; 
+        // return std::numeric_limits<value_type>::max();
+        // return sizeof(root_) + sizeof(size_);
     }
 
     template<typename Key, typename T>
@@ -245,9 +247,10 @@ namespace s21 {
     }
 }
 
-// int main () {
-//     map<int, double> m;
-//     map<int, double> check;
+int main () {
+    cout << "int = " << sizeof(int) << " double = " << sizeof(double) << "\n";
+    s21::map<int, int> m;
+    map<int, int> check;
 
-//     cout << "    m = " << m.max_size() << "\ncheck = " << check.max_size();
-// }
+    cout << "    m = " << m.max_size() << "\ncheck = " << check.max_size();
+}
