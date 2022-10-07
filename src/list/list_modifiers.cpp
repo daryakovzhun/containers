@@ -6,18 +6,16 @@
 namespace s21 {
     template <typename T>
     void list<T>::clear() {
-        if (!size_) {deleteNode(0);} else  {
-            for (size_t i = 0; i < this->size(); ) {
-                deleteNode(i);
-            }
+        // if (!size_) {deleteNode(0);} else  {
+        //     for (size_t i = 0; i < this->size(); ) {
+        //         deleteNode(i);
+        //     }
+        // }
+        // if (head) {
+        
+        while (head) {
+            pop_front();
         }
-
-        if(head) {
-            for (int i = )
-        }
-        // for (auto it = this->begin(); it != end(); ++it) {
-        //     cout << distance(it) << endl;
-        //     deleteNode(distance(it));
         // }
     }
 
@@ -129,7 +127,7 @@ namespace s21 {
             insert(new_pos, current->data);
             current = current->pnext;
         }
-
+        other.clear();
         // cout << (--pos)->pnext->data;
         // Node<T> *temp = (--pos).getNode();
         // temp->pnext = other.begin().getNode();
@@ -188,8 +186,8 @@ namespace s21 {
 
     template<typename T>
     void list<T>::deleteNode(size_type pos) {
-        Node <T> *current = head;
         if (head != tail) {
+            Node <T> *current = this->head;
             if (pos == 0) {
                 current->pnext->prev = nullptr;
                 head = current->pnext;
@@ -204,9 +202,16 @@ namespace s21 {
                     current->pnext->prev = current->prev;
                 } 
             }
-        } 
-        size_--;
-        delete current;
+            size_--;
+            delete current;
+        } else {
+            delete head;
+            this->head = nullptr;
+            // cout << "**" << head->data << " ** " << endl;
+            // cout << "****" << tail->data << " **** " << endl;
+        }
+        
+        // this->head = nullptr;
     }
 
 
@@ -251,20 +256,27 @@ namespace s21 {
 
 int main() {
 
-    s21::list <int> a;
-    s21::list <int> b = {7,5, 9, 3};
-    s21::list<int>:: const_iterator res = a.const_begin();
-    ++res;
-    a.splice(res, b);
-    // cout << a.front() << endl;
-    
+    // s21::list <int> a;
+    s21::list <int> b = {1};
+    b.deleteNode(0);
+
+    // cout << b.front() << endl;
+    // b.push_back(1);
+    // b.deleteNode(0);
+    // s21::list<int>:: const_iterator res = a.const_begin();
+    // ++res;
+    // a.splice(res, b);
+    // b.pop_front();
+    // b.pop_front();
+    // b.pop_front();
+    // b.pop_front();
     // cout << a.front();
     // cout << a.max_size() << endl;
     // a.push_front(1454);
     // a.push_back(4);
     // a.push_back(98);
     // a.push_front(4);
-    a.Print_list();
+    // b.Print_list();
     // b.Print_list();
     // list<string>::iterator it(a.begin());
     // it.shift(2);
