@@ -1,7 +1,9 @@
 #ifndef SRC_NODE_H__
 #define SRC_NODE_H__
 
+
 namespace s21 {
+
     template <typename T> 
     class Node{
         public:

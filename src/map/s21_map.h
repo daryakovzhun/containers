@@ -5,9 +5,7 @@
 #include <utility>
 #include "s21_map_iterator.h"
 
-#include <string>
-#include <iostream> 
-using namespace std;
+// using namespace std;
 
 namespace s21 {
     template<typename Key, typename T>
@@ -20,7 +18,7 @@ namespace s21 {
             using const_reference = const value_type&;
             using iterator = MapIterator<Key, T>;
             using const_iterator = MapConstIterator<Key, T>; 
-            using size_type = size_t;
+            using size_type = std::size_t;
 
             map();
             map(std::initializer_list<value_type> const &items);
