@@ -46,6 +46,9 @@ namespace s21 {
             iterator begin() {return iterator(head);}
             iterator end() {return iterator(tail);}
 
+            const_iterator const_begin() {return const_iterator(head);}
+            const_iterator const_end() {return const_iterator(tail);}
+
             // List Capacity
             bool empty() {return !this->size();}
             size_t size() {return this->size_;}
@@ -63,7 +66,7 @@ namespace s21 {
             void pop_front();
             void swap(list& other);
             void merge(list& other);
-            // void splice(const_iterator pos, list& other);
+            void splice(const_iterator pos, list& other);
             void reverse();
             void unique();
             void sort();
@@ -75,6 +78,7 @@ namespace s21 {
             // functions for me 
 
             void Print_list(); // for me
+
 
             T& operator[](int num); // for me
 

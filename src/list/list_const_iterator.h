@@ -1,12 +1,14 @@
 #ifndef SRC_LIST_CONST_ITERATOR_H__
 #define SRC_LIST_CONST_ITERATOR_H__
 #include "node.h"
+#include "list_iterator.h"
+
 namespace s21 {
     template<typename T>
     class ListConstIterator
     {
-    using const_reference = const T&;
     public:
+        using const_reference = const T&;
         ListConstIterator() {};
         ListConstIterator(Node<T>* node) : _currentNode(node) {}
         ListConstIterator<T>& operator--() {
@@ -22,8 +24,10 @@ namespace s21 {
         bool operator==(const ListConstIterator<T>& it) const {return _currentNode == it._currentNode;}
 
         ListConstIterator<T>& shift(int n); // for me 
-
-    private:
+        Node<T>* getNode() {return _currentNode;}
+        Node<T>* operator->() {return _currentNode;}
+        // operator ListIterator<T>() const { return ListIterator<T>(_currentNode); }    
+        private:
         Node<T>* _currentNode;
     };
 }
