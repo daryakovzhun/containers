@@ -4,9 +4,9 @@
 #include <limits>
 
 
-#include <iostream>
-#include <algorithm>
-#include <array>
+// #include <iostream>
+// #include <algorithm>
+// #include <array>
 
 namespace s21 {
     template<typename T, std::size_t N>
@@ -33,13 +33,9 @@ namespace s21 {
     }
 
     template<typename T, std::size_t N>
-    array<T, N>::array(array<T, N> &&a) {
-
-    }
-
-
-    template<typename T, std::size_t N>
     array<T, N>& array<T, N>::operator=(array<T, N> &&a) {
+        std::move(std::begin(a.array_), std::end(a.array_), &array_[0]);
+        return *this;
     }
 
     template<typename T, std::size_t N>
@@ -73,8 +69,7 @@ int main () {
 
  
     s21::array<int, 10> b = {1, 2, 3, 4, 5};
-    s21::array<int, 10> a;
-    b.swap(a);
+    s21::array<int, 10> a(std::move(b));
     for (int i = 0; i < 10; i++) {
         std::cout << " b = " << b[i] << " a = " << a[i] << "\n";
     }

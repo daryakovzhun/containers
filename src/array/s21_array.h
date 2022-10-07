@@ -2,6 +2,7 @@
 #define SRC_S21_ARRAY_H
 
 #include <initializer_list>
+#include <utility>
 
 namespace s21 {
     template<typename T, std::size_t N = 0>
@@ -17,9 +18,9 @@ namespace s21 {
             array() { fill(T()); }
             array(std::initializer_list<value_type> const &items);
             array(const array &a);
-            // array(array &&a);
+            array(array &&a) { *this = std::move(a); }
             ~array() {}
-            // array& operator=(array &&a);
+            array& operator=(array &&a);
 
             reference at(size_type pos);
             reference operator[](size_type pos) { return array_[pos]; }
