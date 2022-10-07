@@ -3,7 +3,6 @@
 
 #include <initializer_list>
 
-#include <string.h>
 #include <list>
 
 namespace s21 {
@@ -13,7 +12,7 @@ namespace s21 {
             using value_type = T;
             using reference = T&;
             using const_reference = const T&;
-            using size_type = size_t ;
+            using size_type = std::size_t ;
 
             queue();
             queue(std::initializer_list<value_type> const &items);

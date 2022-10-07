@@ -6,14 +6,16 @@
 
 int main() {
     s21::vector<int> a = {1,8,5};
-    s21::vector<int> b(std::move(a));
-    b.at(0) = 22;
-    b.push_back(33);
-    s21::vector<int> c = {1,3,2};
-    c.push_back(3);
-    s21::vector<int> d(c);
-    std::cout << c.capacity() << std::endl;
-    std::cout << d.capacity() << std::endl;
+    // s21::vector<int> a;
+    a.push_back(3);
+
+    std::vector<int> b = {4,3,2};
+    // std::vector<int> b;
+    b.push_back(3);
+
+    // std::cout << a.capacity() << std::endl;
+    std::cout << a.capacity() << std::endl;
+    std::cout << b.capacity() << std::endl;
 
 
     // std::cout << c.empty() << std::endl;

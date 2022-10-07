@@ -38,6 +38,7 @@ vector<T>::vector(std::initializer_list<value_type> const &items)
 
 // externalizing template instances for correct linking, feel free to find more information
 template class vector<int>;
+// template class vector<double>;
 
 
 
@@ -53,6 +54,11 @@ void vector<T>::shrink_to_fit()
     this->m_capacity = tmp.m_capacity;
 }
 
+template <typename T>
+void vector<T>::reserve(size_type size)
+{
+    reserve_more_capacity(size);
+}
 
 
 
@@ -74,7 +80,7 @@ void vector<T>::push_back(const T & v)
 {
     if (m_size == m_capacity)
     {
-        reserve_more_capacity(m_size * 2);
+        reserve_more_capacity(m_size ? m_size * 2 : 1);
     }
     arr[m_size++] = v;
 }
