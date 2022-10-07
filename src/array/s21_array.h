@@ -14,25 +14,25 @@ namespace s21 {
             using const_iterator = const T*;
             using size_type = std::size_t;
 
-            array();
+            array() { fill(T()); }
             array(std::initializer_list<value_type> const &items);
             array(const array &a);
-            array(array &&a);
-            ~array();
-            array& operator=(array &&a);
+            // array(array &&a);
+            ~array() {}
+            // array& operator=(array &&a);
 
             reference at(size_type pos);
-            reference operator[](size_type pos);
-            const_reference front();
-            const_reference back();
-            iterator data();
+            reference operator[](size_type pos) { return array_[pos]; }
+            const_reference front() { return *array_; }
+            const_reference back() { return *(array_ + N - 1); }
+            iterator data() { return array_; }
 
-            iterator begin();
-            iterator end();
+            iterator begin() { return array_; }
+            iterator end() { return array_ + N; }
 
-            bool empty();
-            size_type size();
-            size_type max_size();
+            bool empty() { return N == 0; }
+            size_type size() { return N; }
+            size_type max_size() { return N; }
 
             void swap(array& other);
             void fill(const_reference value);
