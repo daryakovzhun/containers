@@ -6,10 +6,14 @@
 namespace s21 {
     template <typename T>
     void list<T>::clear() {
-        if (!size_) {deleteNode(0);} else {
+        if (!size_) {deleteNode(0);} else  {
             for (size_t i = 0; i < this->size(); ) {
                 deleteNode(i);
             }
+        }
+
+        if(head) {
+            for (int i = )
         }
         // for (auto it = this->begin(); it != end(); ++it) {
         //     cout << distance(it) << endl;
@@ -61,9 +65,9 @@ namespace s21 {
     list<T>& list<T>::operator=(list &&l) noexcept {
         // if (*this != l) {
         //     this->clear();
-            head = l.head;
-            tail = l.tail;
-            size_ = l.size_;
+        head = l.head;
+        tail = l.tail;
+        size_ = l.size_;
         // }
         l.head = nullptr;
         l.tail = nullptr;
@@ -104,6 +108,59 @@ namespace s21 {
     template <typename T>
     void list<T>::pop_front() {
         deleteNode(0);
+    }
+
+    template <typename T>
+    void list<T>::swap(list& other) {
+
+    }
+
+    template <typename T>
+    void list<T>::merge(list& other) {
+
+    }
+
+    template <typename T>
+    void list<T>::splice(const_iterator pos, list& other) {
+        iterator new_pos(pos.getNode());
+        Node<T> *current = other.head;
+        for (size_type i = 0; i < other.size_; i++) {
+            // cout << current->data << endl;
+            insert(new_pos, current->data);
+            current = current->pnext;
+        }
+
+        // cout << (--pos)->pnext->data;
+        // Node<T> *temp = (--pos).getNode();
+        // temp->pnext = other.begin().getNode();
+
+
+
+
+        // if (pos != head) {
+        // pos->prev->pnext = other.begin().getNode();
+        // other.begin().getNode()->prev = pos->prev;
+        // } else {
+        //     head = other.head;
+        // }
+        // (--other.end())->pnext = pos.getNode();
+        // pos->prev = (--other.end()).getNode();
+        // other.head = other.tail;
+    }
+
+    template <typename T>
+    void list<T>::reverse() {
+
+    }
+
+    template <typename T>
+    void list<T>::unique() {
+
+    }
+
+    template <typename T>
+    void list<T>::sort() {
+
     }
 
     template<typename T>
@@ -194,9 +251,11 @@ namespace s21 {
 
 int main() {
 
-    s21::list <int> a = {1, 2, 3};
-    s21::list <int> b = {7,5};
-    b.operator=(std::move(a));
+    s21::list <int> a;
+    s21::list <int> b = {7,5, 9, 3};
+    s21::list<int>:: const_iterator res = a.const_begin();
+    ++res;
+    a.splice(res, b);
     // cout << a.front() << endl;
     
     // cout << a.front();
@@ -206,6 +265,7 @@ int main() {
     // a.push_back(98);
     // a.push_front(4);
     a.Print_list();
+    // b.Print_list();
     // list<string>::iterator it(a.begin());
     // it.shift(2);
     // a.erase(it);
