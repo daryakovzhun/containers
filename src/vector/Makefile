@@ -1,10 +1,12 @@
 UNAME := $(shell uname)
 
-all: test
+all: out
 
-test:
+out:
 	g++ -g -Wall -std=c++17 main.cpp s21_vector.cpp -lgtest -lgmock -pthread -fprofile-arcs -ftest-coverage
 	./a.out
+
+test: out
 	lcov -t report -o report.info -c -d .
 	genhtml report.info -o finish
 

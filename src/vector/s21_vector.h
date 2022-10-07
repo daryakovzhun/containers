@@ -1,6 +1,7 @@
-#ifndef S21_vector_H
-#define S21_vector_H
+#ifndef S21_VECTOR_H
+#define S21_VECTOR_H
 
+#include <cmath>
 #include <iostream>
 #include <initializer_list>
 #include <utility>
@@ -45,8 +46,7 @@ class vector
         }
 
         ~vector() { if (arr) delete[] arr; }
-        vector& operator=(vector &&v);
-
+        // vector& operator=(vector &&v);
 
         // some method examples
         iterator begin() { return arr; }
@@ -56,9 +56,9 @@ class vector
         bool empty()         { return m_size ? 0 : 1; }
         size_type size()     { return m_size; }
         size_type capacity() { return m_capacity; }
-        // size_type max_size();
+        size_type max_size() { return (powl(2, sizeof(int*) * 8 - 1) / sizeof(T)) - 1; }
         void shrink_to_fit();
-        // void reserve(size_type size);
+        void reserve(size_type size);
 
 
         // element accessor
@@ -70,7 +70,6 @@ class vector
 
 
         // append new element
-        // void push_back(value_type v);  ///////////////////////
         // void clear();
         // void erase(iterator pos);
         void push_back(const_reference value);
