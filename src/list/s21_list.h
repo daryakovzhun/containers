@@ -44,10 +44,10 @@ namespace s21 {
 
             // List iterators
             iterator begin() {return iterator(head);}
-            iterator end() {return iterator(tail);}
+            iterator end() {return iterator(end_);}
 
             const_iterator const_begin() {return const_iterator(head);}
-            const_iterator constend() {return const_iterator(end_);}
+            const_iterator const_end() {return const_iterator(end_);}
 
             // List Capacity
             bool empty() {return !this->size();}
