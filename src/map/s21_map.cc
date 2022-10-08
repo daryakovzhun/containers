@@ -1,7 +1,8 @@
 #include "s21_map.h"
 
 #include <limits>
-// #include <map>
+#include <map>
+#include <cmath>
 
 namespace s21 {
     template<typename Key, typename T>
@@ -54,21 +55,10 @@ namespace s21 {
     map<Key, T>& map<Key, T>::operator=(const map &m) {
         // if (*this != m) {
             clear();
-            // root_ = root_->copy_node(m.root_);
-            // head_ = m.head_;
-            // tail_ = m.tail_;
-            // size_ = m.size_;
-            
-            root_ = NULL;
-            head_ = new Node<Key, T>();
-            tail_ = new Node<Key, T>();
-            head_->parent = tail_;
-            tail_->parent = head_;
-            size_ = 0;
-            for (auto it = m.begin(); it != m.end(); it++) {
-                insert(it.it->data);
-            }
-
+            root_ = root_->copy_node(m.root_);
+            head_ = m.head_;
+            tail_ = m.tail_;
+            size_ = m.size_;
         // }
         return *this;
     }
@@ -96,7 +86,8 @@ namespace s21 {
     std::size_t map<Key, T>::max_size() const {
         std::allocator<std::pair<const Key, T>> alloc;
         // std::cout << "sizeof = " << sizeof(map)<< "\n";
-        return alloc.max_size() / 3; 
+        return alloc.max_size() / 5;
+        // return (powl(2, sizeof(int*) * 8 - 1) / (sizeof(int*)*3 + sizeof(T))) - 1;
         // return std::numeric_limits<value_type>::max();
         // return sizeof(root_) + sizeof(size_);
     }
@@ -209,10 +200,9 @@ namespace s21 {
     }
 }
 
-// int main () {
-//     cout << "int = " << sizeof(int) << " double = " << sizeof(double) << "\n";
-//     s21::map<int, int> m;
-//     map<int, int> check;
+int main () {
+    s21::map<int, int> m;
+    std::map<int, int> check;
 
-//     cout << "    m = " << m.max_size() << "\ncheck = " << check.max_size();
-// }
+    std::cout << "    m = " << m.max_size() << "\ncheck = " << check.max_size();
+}
