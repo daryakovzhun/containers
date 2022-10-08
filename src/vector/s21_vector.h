@@ -46,7 +46,7 @@ class vector
         }
 
         ~vector()                           { if (arr) delete[] arr; }
-        // vector& operator=(vector &&v);
+        vector& operator=(vector &&v);
 
         // some method examples
         iterator begin()                    { return arr;            }
@@ -108,6 +108,16 @@ vector<T>::vector(std::initializer_list<value_type> const &items)
     m_capacity = items.size();
 };
 
+template <typename T>
+vector<T>& vector<T>::operator=(vector<T> &&v)
+{
+    this->swap(v);
+    if (v.arr) delete [] v.arr;
+    v.arr = nullptr;
+    v.m_capacity = 0;
+    v.m_size = 0;
+    return *this;
+}
 
 
 // size getter__________________________________________________________________
