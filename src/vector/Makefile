@@ -3,7 +3,7 @@ UNAME := $(shell uname)
 all: out
 
 out:
-	g++ -g -Wall -std=c++17 main.cpp s21_vector.cpp -lgtest -lgmock -pthread -fprofile-arcs -ftest-coverage
+	g++ -g -Wall -std=c++17 main.cpp -lgtest -lgmock -pthread -fprofile-arcs -ftest-coverage -g -fsanitize=address
 	./a.out
 
 test: out

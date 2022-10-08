@@ -5,20 +5,30 @@
 // using namespace s21;
 
 int main() {
-    s21::vector<int> a = {1,8,5};
-    // s21::vector<int> a;
-    a.push_back(3);
-
-    std::vector<int> b = {4,3,2};
-    // std::vector<int> b;
-    b.push_back(3);
-
-    // std::cout << a.capacity() << std::endl;
-    std::cout << a.capacity() << std::endl;
-    std::cout << b.capacity() << std::endl;
+    s21::vector<int> a = {1,2,3};
+    a.push_back(2);
+    a.insert(a.end() - 1, 69);
 
 
-    // std::cout << c.empty() << std::endl;
+    std::vector<int> b = {4,5,6};
+    b.push_back(2);
+    b.insert(b.end() - 1, 69);
 
-    // for (size_t i = 0; i < b.size(); i++) std::cout << b.at(i) << std::endl;
+
+
+    std::cout << "CAPACITY " << a.capacity() << std::endl;
+    std::cout << "CAPACITY " << b.capacity() << std::endl;
+
+    std::cout << "SIZE     " <<a.size() << std::endl;
+    std::cout << "SIZE     " <<b.size() << std::endl;
+
+
+
+
+    for (size_t i = 0; i < a.size(); i++) std::cout << a.at(i) << " ";
+    std::cout << std::endl;
+
+    for (size_t i = 0; i < b.size(); i++) std::cout << b.at(i) << " ";
+    std::cout << std::endl;
+
 }
