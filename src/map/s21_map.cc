@@ -1,10 +1,7 @@
 #include "s21_map.h"
 
 #include <limits>
-// #include <stdlib.h>
-// // #include <vector>
-#include <map>
-// #include <string>
+// #include <map>
 
 namespace s21 {
     template<typename Key, typename T>
@@ -30,11 +27,6 @@ namespace s21 {
         head_ = NULL;
         tail_ = NULL;
         *this = m;
-    }
-
-    template<typename Key, typename T>
-    map<Key, T>::map(map &&m) : map() {
-        *this = std::move(m);
     }
 
     template<typename Key, typename T>
@@ -101,28 +93,8 @@ namespace s21 {
     }
 
     template<typename Key, typename T>
-    MapIterator<Key, T> map<Key, T>::begin() const {
-        return MapIterator<Key, T>(head_->parent);
-    }
-
-    template<typename Key, typename T>
-    MapIterator<Key, T> map<Key, T>::end() const {
-        return MapIterator<Key, T>(tail_);
-    }
-
-    template<typename Key, typename T>
-    bool map<Key, T>::empty() const {
-        return size_ == 0;
-    }
-
-    template<typename Key, typename T>
-    std::size_t map<Key, T>::size() const {
-        return size_;
-    }
-
-    template<typename Key, typename T>
     std::size_t map<Key, T>::max_size() const {
-        std::allocator<pair<const Key, T>> alloc;
+        std::allocator<std::pair<const Key, T>> alloc;
         // std::cout << "sizeof = " << sizeof(map)<< "\n";
         return alloc.max_size() / 3; 
         // return std::numeric_limits<value_type>::max();
@@ -186,11 +158,6 @@ namespace s21 {
     }
 
     template<typename Key, typename T>
-    std::pair<MapIterator<Key, T>, bool> map<Key, T>::insert(const Key& key, const T& obj) {
-        return insert(std::pair<Key, T>(key, obj));
-    }
-
-    template<typename Key, typename T>
     std::pair<MapIterator<Key, T>, bool> map<Key, T>::insert_or_assign(const Key& key, const T& obj) {
         auto reuslt = insert(std::pair<Key, T>(key, obj));
         if (reuslt.second == false) {
@@ -239,11 +206,6 @@ namespace s21 {
         for (; it != other.end(); it++) {
             insert(it.it->data);
         }
-    }
-
-    template<typename Key, typename T>
-    bool map<Key, T>::contains(const Key& key) const {
-        return find_by_key(key).second;
     }
 }
 

@@ -5,8 +5,6 @@
 #include <utility>
 #include "s21_map_iterator.h"
 
-// using namespace std;
-
 namespace s21 {
     template<typename Key, typename T>
     class map {
@@ -23,7 +21,7 @@ namespace s21 {
             map();
             map(std::initializer_list<value_type> const &items);
             map(const map &m);
-            map(map &&m);
+            map(map &&m) : map() { *this = std::move(m); }
             ~map();
             map& operator=(map &&m);
             map& operator=(const map &m);  //  for me
@@ -31,22 +29,22 @@ namespace s21 {
             mapped_type& at(const Key& key) const;
             mapped_type& operator[](const Key& key);
 
-            iterator begin() const;
-            iterator end() const;
+            iterator begin() const { return MapIterator<Key, T>(head_->parent); }
+            iterator end() const { return MapIterator<Key, T>(tail_); }
 
-            bool empty() const;
-            size_type size() const;
+            bool empty() const { return size_ == 0; }
+            size_type size() const { return size_; }
             size_type max_size() const;
 
             void clear();
             std::pair<iterator, bool> insert(const value_type& value);
-            std::pair<iterator, bool> insert(const Key& key, const T& obj);
+            std::pair<iterator, bool> insert(const Key& key, const T& obj) { return insert(std::pair<Key, T>(key, obj)); }
             std::pair<iterator, bool> insert_or_assign(const Key& key, const T& obj);
             void erase(iterator pos);
             void swap(map& other);
             void merge(map& other);
 
-            bool contains(const Key& key) const;
+            bool contains(const Key& key) const { return find_by_key(key).second; }
 
         private:
             Node<Key, T>* root_;
