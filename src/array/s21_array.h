@@ -31,9 +31,9 @@ namespace s21 {
             iterator begin() { return array_; }
             iterator end() { return array_ + N; }
 
-            bool empty() { return N == 0; }
-            size_type size() { return N; }
-            size_type max_size() { return N; }
+            bool empty() const { return N == 0; }
+            size_type size() const { return N; }
+            size_type max_size() const { return N; }
 
             void swap(array& other);
             void fill(const_reference value);

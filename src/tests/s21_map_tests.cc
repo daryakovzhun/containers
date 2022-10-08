@@ -3,8 +3,6 @@
 
 #include "../map/s21_map.cc"
 
-#include <iostream>
-
 using namespace std;
 
 TEST(TestGroupName, map_init_list) {
