@@ -47,7 +47,7 @@ namespace s21 {
             iterator end() {return iterator(tail);}
 
             const_iterator const_begin() {return const_iterator(head);}
-            const_iterator constend() {return const_iterator(tail);}
+            const_iterator constend() {return const_iterator(end_);}
 
             // List Capacity
             bool empty() {return !this->size();}
@@ -95,6 +95,7 @@ namespace s21 {
 
             Node<T> *head;
             Node<T> *tail;
+            Node<T> *end_;
             size_type size_;
     };
 }

@@ -13,30 +13,38 @@ void print(list<int> const &list)
 int main() {
 
 
-    list <int> a = {7,8,9,10};
-    list <int> b = {1000};
-    // cout << b.front() << endl;
-    // b.push_back(1);
-    // b.deleteNode(0);
-    list<int>:: const_iterator res = a.begin();
-        list<int>::iterator it = a.begin();
+    list <int> a = {49, 78};
+    list <int> b = {1,2,3,4};
+    list<int>:: const_iterator ait = a.begin();
+    list<int>:: iterator bit = a.begin();
+    ++ait;
+    ++ait;
+
+
+    // ++ait;
+    // ++ait;
+
+    // ++bit;
+    // ++bit;
+    // cout << *bit << endl;
+    // c.splice(cit, d);
+    // print(c);
     // ++res;
     // ++res;
     // ++res;
     // ++res;
     // a.splice(res, b);
     // cout << b.size();
-    ++it;
     
 
     // list <int> b = {1,2,3,4};
     // list <int> a = {};
     // list<int>::iterator it = a.begin();
     // ++it;
-    // a.splice(it, b);
+    a.splice(ait, b);
 
     // a.splice(it,b.insert(it, 45654); b);
-    // print(b);
+    print(a);
     // print(a);
     // 
     // print(b);
