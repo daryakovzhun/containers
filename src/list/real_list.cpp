@@ -11,10 +11,32 @@ void print(list<int> const &list)
 }
 
 int main() {
-    list<int> a;
-    a.push_back(1);
-    cout << a.front() << endl;
+
+
+    list <int> a = {7,8,9,10};
+    list <int> b = {1000};
+    // cout << b.front() << endl;
+    // b.push_back(1);
+    // b.deleteNode(0);
+    list<int>:: const_iterator res = a.begin();
+        list<int>::iterator it = a.begin();
+    // ++res;
+    // ++res;
+    // ++res;
+    // ++res;
+    // a.splice(res, b);
+    // cout << b.size();
+    ++it;
+    
+
+    // list <int> b = {1,2,3,4};
+    // list <int> a = {};
+    // list<int>::iterator it = a.begin();
+    // ++it;
     // a.splice(it, b);
+
+    // a.splice(it,b.insert(it, 45654); b);
+    // print(b);
     // print(a);
     // 
     // print(b);
