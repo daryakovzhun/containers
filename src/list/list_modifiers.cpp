@@ -16,14 +16,15 @@ namespace s21 {
         while (head) {
             pop_front();
         }
-        // }
+        if (end_) delete end_;
     }
 
     template <typename T>
     list<T>::list() : size_(0) {
         tail = head = new Node<T>(value_type());
-        head->pnext = tail;
-        tail->prev = head;
+        end_ = new Node<T>(size_, head, tail);
+        tail->pnext = end_;
+        head->prev = end_;
     }
 
     template<typename T>
@@ -121,41 +122,30 @@ namespace s21 {
 
     template <typename T>
     void list<T>::splice(const_iterator pos, list& other) {
-        cout << tail->data << endl;
-        cout << tail->pnext;
-        // other.tail->pnext = pos.getNode();
-        // pos.getNode()->prev = other.tail;
-        // cout << other.tail->pnext->data << endl;
-        // iterator new_pos(pos.getNode());
-        // iterator before = --new_pos;
-        // (before)->pnext = other.head;
-        // other.head->prev = (before).getNode();
-        // new_pos.getNode()->prev = other.tail;
-        // other.tail->pnext = new_pos.getNode();
-        // tail = other.tail;
-        Node<T> *current = other.head;
-        // for (size_type i = 0; i < other.size_; i++) {
-        //     insert(new_pos, current->data);
-
-        //     current = current->pnext;
-        // }
-        // other.clear();
-        // cout << (--pos)->pnext->data;
-        // Node<T> *temp = (--pos).getNode();
-        // temp->pnext = other.begin().getNode();
-
-
-
-
-        // if (pos != head) {
-        // pos->prev->pnext = other.begin().getNode();
-        // other.begin().getNode()->prev = pos->prev;
-        // } else {
-        //     head = other.head;
-        // }
-        // (--other.end())->pnext = pos.getNode();
-        // pos->prev = (--other.end()).getNode();
-        // other.head = other.tail;
+        if (!other.empty()) {
+            const_iterator temp = pos;
+            const_iterator check = other.const_begin();
+            while(check != other.tail) {
+                if (check == temp) {
+                    return;
+                }
+                ++check;
+            }
+            if (pos.getNode() == head || pos.getNode() == end_ ) {
+                head = other.head;
+            } else {
+                pos->prev->pnext = other.head;
+                other.head->prev = pos->prev;
+            }
+            if (this->empty()) {tail = other.tail; tail->pnext = end_;}
+            else {
+                other.tail->pnext = temp.getNode();
+                temp->prev = other.tail;
+            }
+            other.head = other.tail = nullptr;
+            size_ += other.size_;
+            other.size_ = 0;
+        }
     }
 
     template <typename T>
@@ -178,21 +168,28 @@ namespace s21 {
         Node <T> *res;
         if (!size_) {
             head->data = value;
-            res = head = tail;// = new Node<T>(value); ??
+            res = head = tail;
         } else if (pos == 0) {
-            head = head->prev = new Node<T>(value, head);                                                                                                          
+            head = head->prev = new Node<T>(value, head, end_);       
+            end_->pnext = head;                                                                                                   
             res = head;
         } else {
-            // cout << "***" << (head->pnext == tail) << "***" << endl;
             Node<T> *current = head;
             for(int i = 0; i < pos - 1; i++) {
                 current = current->pnext;
             }                                                                        
             current->pnext  = new Node<T>(value, current->pnext, current);
             res = current->pnext;
-            if (pos != size_) { res->pnext->prev = res;} else {tail = res; tail->pnext = nullptr;} 
+            if (pos != size_) { 
+                res->pnext->prev = res;
+            } else {
+                tail = res;
+                tail->pnext = end_;
+                end_->prev = tail;
+            } 
         }
         size_++;
+        this->end_->data = size_;
         return res;
     }
 
@@ -201,12 +198,14 @@ namespace s21 {
         if (head != tail) {
             Node <T> *current = this->head;
             if (pos == 0) {
-                current->pnext->prev = nullptr;
+                current->pnext->prev = end_;
                 head = current->pnext;
+                end_->pnext = head;
             } else if (pos == size_ - 1) {
                 current = tail;
-                current->prev->pnext = nullptr;
+                current->prev->pnext = end_;
                 tail = current->prev;
+                end_->prev = tail;
             } else {
                 for (size_type i = 0; i < pos; i++) {
                     current = current->pnext;
@@ -216,14 +215,13 @@ namespace s21 {
             }
             size_--;
             delete current;
+            this->end_->data = size_;
         } else {
             delete head;
-            this->head = nullptr;
-            // cout << "**" << head->data << " ** " << endl;
-            // cout << "****" << tail->data << " **** " << endl;
+            delete end_;
+            this->end_ = this->head = nullptr;
         }
         
-        // this->head = nullptr;
     }
 
 
@@ -245,16 +243,11 @@ namespace s21 {
     template <typename T>
     void list<T>::Print_list() {
             if (size_) {
-            iterator it = this->begin();
-            for (; it != this->end(); ++it) {
+            for (iterator it = this->begin(); it != this->end(); ++it) {
                 cout << *it << endl;
             }
-            cout << back() << endl;
         }
     }
-
-    /******************************************************************/
-
 
     template <typename T>
     ListIterator<T>& ListIterator<T>::shift(int n) {
@@ -268,24 +261,19 @@ namespace s21 {
 
 int main() {
 
-    s21::list <int> a = {49,78};
-    s21::list <int> b = {1,2,3,4};
-    // cout << b.front() << endl;
-    // b.push_back(1);
-    // b.deleteNode(0);
+    s21::list <int> a = {1,2,3,4};
+    s21::list <int> b = {};
+   
+
     s21::list<int>:: const_iterator ait = a.const_begin();
-    s21::list<int>:: iterator bit = b.begin();
-    // ++bit;
-    // ++res;
-    // ++res;
-    // ++res;
-    // ++res;
-    // ++bit;
-    // b.insert(bit, 55);
-    a.splice(ait, b); // continue
-    // list<string>::iterator it(a.begin());
-    // it.shift(2);
-    // a.erase(it);
-    // a.Print_list();
+    ++ait;
+    // ait.shift(4);
+
+    // // cout << *ait;
+
+    // // b.insert(bit, 55);
+    b.splice(ait, a); // continue
+    // cout << a.tail->prev->data << endl; 
+    // b.Print_list();
     return 0;
 }

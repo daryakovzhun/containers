@@ -46,7 +46,7 @@ class vector
         }
 
         ~vector()                           { if (arr) delete[] arr; }
-        // vector& operator=(vector &&v);
+        vector& operator=(vector &&v);
 
         // some method examples
         iterator begin()                    { return arr;            }
@@ -57,8 +57,8 @@ class vector
         size_type size()                    { return m_size;         }
         size_type capacity()                { return m_capacity;     }
         size_type max_size()                { return (powl(2, sizeof(int*) * 8 - 1) / sizeof(T)) - 1; }
+        void reserve(size_type size)        { reserve_more_capacity(size); }
         void shrink_to_fit();
-        void reserve(size_type size);
 
 
         // element accessor
@@ -108,6 +108,14 @@ vector<T>::vector(std::initializer_list<value_type> const &items)
     m_capacity = items.size();
 };
 
+template <typename T>
+vector<T>& vector<T>::operator=(vector<T> &&v)
+{
+    vector<T> tmp;
+    this->swap(v);
+    v.swap(tmp);
+    return *this;
+}
 
 
 // size getter__________________________________________________________________
@@ -116,19 +124,8 @@ template <typename T>
 void vector<T>::shrink_to_fit()
 {
     vector<T> tmp(*this);
-    if (this->arr) delete this->arr;
-    this->arr = tmp.arr;
-    tmp.arr = nullptr;
-    this->m_capacity = tmp.m_capacity;
+    this->swap(tmp);
 }
-
-template <typename T>
-void vector<T>::reserve(size_type size)
-{
-    reserve_more_capacity(size);
-}
-
-
 
 
 // element accessor_____________________________________________________________
