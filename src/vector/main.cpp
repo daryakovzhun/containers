@@ -5,14 +5,15 @@
 // using namespace s21;
 
 int main() {
-    s21::vector<int> b = {4,5,6};
-    s21::vector<int> c = {4,5,7,8};
+    // s21::vector<int> b = {4,5,6};
+    // s21::vector<int> c = {4,5,7,8};
 
-    // std::vector<int> b = {4,5,6};
-    // std::vector<int> c = {4,5,7,8};
+    std::vector<int> b = {4,5,6};
+    b.push_back(1);
+    std::vector<int> c = {41,51,71,81};
 
-    b = std::move(c);
-
+    // b = std::move(b);
+    b.shrink_to_fit();
 
     std::cout << "CAPACITY " << b.capacity() << std::endl;
     std::cout << "CAPACITY " << c.capacity() << std::endl;
