@@ -6,13 +6,6 @@
 namespace s21 {
     template <typename T>
     void list<T>::clear() {
-        // if (!size_) {deleteNode(0);} else  {
-        //     for (size_t i = 0; i < this->size(); ) {
-        //         deleteNode(i);
-        //     }
-        // }
-        // if (head) {
-        
         while (head) {
             pop_front();
         }
@@ -127,6 +120,7 @@ namespace s21 {
             const_iterator check = other.const_begin();
             while(check != other.tail) {
                 if (check == temp) {
+                    other.clear();
                     return;
                 }
                 ++check;
@@ -150,12 +144,29 @@ namespace s21 {
 
     template <typename T>
     void list<T>::reverse() {
-
+        iterator it = this->begin();     
+        int count = size_ + 1;
+        while(count--) {
+            Node<T> *temp = it.getNode()->pnext;
+            it.getNode()->pnext = it.getNode()->prev;
+            it.getNode()->prev = temp;
+            ++it;
+        }
+        Node<T> *t = head;
+        head = tail;
+        tail = t;
     }
 
     template <typename T>
     void list<T>::unique() {
-
+        iterator it = this->begin(), temp = it->pnext;
+        while(it != this->end()) {
+            while (it.getNode()->data == temp.getNode()->data) {;
+                ++temp;
+                erase(it->pnext);
+            }
+            ++it, ++temp;
+        }
     }
 
     template <typename T>
@@ -209,9 +220,9 @@ namespace s21 {
             } else {
                 for (size_type i = 0; i < pos; i++) {
                     current = current->pnext;
-                    current->prev->pnext = current->pnext;
-                    current->pnext->prev = current->prev;
                 } 
+                current->prev->pnext = current->pnext;
+                current->pnext->prev = current->prev;
             }
             size_--;
             delete current;
@@ -261,19 +272,11 @@ namespace s21 {
 
 int main() {
 
-    s21::list <int> a = {1,2,3,4};
-    s21::list <int> b = {};
-   
-
-    s21::list<int>:: const_iterator ait = a.const_begin();
-    ++ait;
-    // ait.shift(4);
-
-    // // cout << *ait;
-
-    // // b.insert(bit, 55);
-    b.splice(ait, a); // continue
-    // cout << a.tail->prev->data << endl; 
-    // b.Print_list();
+    s21::list <int> a = {9,8,8, 8,8,8,8,8,8,8,8,9,9,9};
+    s21::list <int> b = {7,8,9};
+    s21::list <int> c{};
+    a.unique();
+    s21::list <int>::iterator sth = a.begin();
+    a.Print_list();
     return 0;
 }

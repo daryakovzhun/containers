@@ -11,12 +11,6 @@
 using namespace std;
 
 
-// #define value_type  T
-// #define reference  T&
-// #define const_reference  const T&
-// #define size_type  size_t
-// #define iterator ListIterator<T>
-// #define const_iterator ListConstIterator<T>
 namespace s21 {
     template <typename T>
     class list{
@@ -78,6 +72,7 @@ namespace s21 {
             // functions for me 
 
             void Print_list(); // for me
+            // void connection(Node<T> **first, Node<T> **second);
 
 
             T& operator[](int num); // for me
@@ -91,7 +86,7 @@ namespace s21 {
                 }
                 return (n);
             }   
-        // private:
+        private:
 
             Node<T> *head;
             Node<T> *tail;

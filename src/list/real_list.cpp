@@ -14,21 +14,21 @@ int main() {
 
 
     list <int> a = {1,2,3,4};
-    list <int> b = {7};
-   
+    list <int> b = {7,8,9};
+    list <int> c(4);
+
 
     list<int>:: const_iterator ait = a.begin();
     ++ait;
-    // ait.shift(4);
 
-    // // cout << *ait;
 
     // // b.insert(bit, 55);
-    b.splice(ait, a); // continue
+    c.splice(ait, a); // continue
     // cout << a.tail->prev->data << endl; 
     // a.splice(it,b.insert(it, 45654); b);
-    print(b);
-
+    // print(b);
+    // print(a);
+    print(c);
     // print(a);
     // 
     // print(b);
