@@ -49,7 +49,7 @@ namespace s21 {
             //size_t max_size() {return std::numeric_limits<T>::max();}; // size_type
 
             // list modifiers
-            void deleteNode(size_type pos);
+            // void deleteNode(size_type pos);
             Node<T>* addNode(const T& value, size_type pos);
             void clear();
             iterator insert(iterator pos, const_reference value);

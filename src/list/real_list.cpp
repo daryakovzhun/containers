@@ -18,17 +18,17 @@ int main() {
     list <int> c(4);
 
 
-    list<int>:: const_iterator ait = a.begin();
-    ++ait;
+    list<int>:: const_iterator ait = a.end();
+    a.erase(ait);
 
 
     // // b.insert(bit, 55);
-    c.splice(ait, a); // continue
+    // c.splice(ait, a); // continue
     // cout << a.tail->prev->data << endl; 
     // a.splice(it,b.insert(it, 45654); b);
     // print(b);
     // print(a);
-    print(c);
+    print(a);
     // print(a);
     // 
     // print(b);

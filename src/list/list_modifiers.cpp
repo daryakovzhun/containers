@@ -77,11 +77,6 @@ namespace s21 {
         return it;
     }
 
-    template <typename T>
-    void list<T>::erase(iterator pos) {
-        size_t n = distance(pos);
-        deleteNode(n);
-    }
 
     template <typename T>
     void list<T>::push_back(const_reference  value) {
@@ -90,7 +85,7 @@ namespace s21 {
 
     template <typename T>
     void list<T>::pop_back() {
-        deleteNode(this->size_ - 1);
+        erase(--this.end());
     }
 
     template <typename T> 
@@ -100,7 +95,7 @@ namespace s21 {
 
     template <typename T>
     void list<T>::pop_front() {
-        deleteNode(0);
+        erase(this->begin());
     }
 
     template <typename T>
@@ -152,16 +147,16 @@ namespace s21 {
             it.getNode()->prev = temp;
             ++it;
         }
-        Node<T> *t = head;
+        Node<T> *temp = head;
         head = tail;
-        tail = t;
+        tail = temp;
     }
 
     template <typename T>
     void list<T>::unique() {
         iterator it = this->begin(), temp = it->pnext;
-        while(it != this->end()) {
-            while (it.getNode()->data == temp.getNode()->data) {;
+        while(!this->empty() && it->pnext != tail) {
+            while (it.getNode()->data == temp.getNode()->data) {
                 ++temp;
                 erase(it->pnext);
             }
@@ -205,43 +200,37 @@ namespace s21 {
     }
 
     template<typename T>
-    void list<T>::deleteNode(size_type pos) {
+    void list<T>::erase(iterator pos) {
         if (head != tail) {
-            Node <T> *current = this->head;
-            if (pos == 0) {
-                current->pnext->prev = end_;
-                head = current->pnext;
+            if (pos == this->begin()) {
+                pos->pnext->prev = end_;
+                head = pos->pnext;
                 end_->pnext = head;
-            } else if (pos == size_ - 1) {
-                current = tail;
-                current->prev->pnext = end_;
-                tail = current->prev;
+            } else if (pos == --this->end()) {
+                pos = tail;
+                pos->prev->pnext = end_;
+                tail = pos->prev;
                 end_->prev = tail;
             } else {
-                for (size_type i = 0; i < pos; i++) {
-                    current = current->pnext;
-                } 
-                current->prev->pnext = current->pnext;
-                current->pnext->prev = current->prev;
+                pos->prev->pnext = pos->pnext;
+                pos->pnext->prev = pos->prev;
             }
             size_--;
-            delete current;
+            delete pos.getNode();
             this->end_->data = size_;
         } else {
             delete head;
             delete end_;
             this->end_ = this->head = nullptr;
         }
-        
     }
-
 
     // перегрузка с конца
     template <typename T>
     T& list<T>::operator[](const int num) {
         int size_ = 0;
         Node<T> *current = head;
-        while (current != nullptr) { // sega !!!
+        while (current != nullptr) { 
             if (size_ == num) {
                 break;
             }
@@ -272,11 +261,15 @@ namespace s21 {
 
 int main() {
 
-    s21::list <int> a = {9,8,8, 8,8,8,8,8,8,8,8,9,9,9};
+    s21::list <int> a = {};
     s21::list <int> b = {7,8,9};
     s21::list <int> c{};
     a.unique();
-    s21::list <int>::iterator sth = a.begin();
+    // a.reverse();
+    // s21::list <int>::iterator sth = --a.end();
+    // a.erase(sth);
+    // a.erase(sth);
+    // cout << *a.begin() << endl;
     a.Print_list();
     return 0;
 }
