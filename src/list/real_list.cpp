@@ -13,13 +13,15 @@ void print(list<int> const &list)
 int main() {
 
 
-    list <int> a = {1,2,3,4};
-    list <int> b = {7,8,9};
-    list <int> c(4);
+    list <int> a = {1};
+    list <int> b = {7,9,9,4,88,-3};
+    // list <int> c(4);
 
 
     list<int>:: const_iterator ait = a.end();
-    a.erase(ait);
+    // a.erase(ait);
+    a.swap(b);
+    a.sort();
 
 
     // // b.insert(bit, 55);
@@ -28,6 +30,7 @@ int main() {
     // a.splice(it,b.insert(it, 45654); b);
     // print(b);
     // print(a);
+    // cout << "**" << b.size() << "**" << endl;
     print(a);
     // print(a);
     // 

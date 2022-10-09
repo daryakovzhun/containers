@@ -34,7 +34,7 @@ namespace s21 {
 
             // List element access 
             const_reference front() {return head->data;}
-            const_reference back() {return tail->data;}
+            const_reference back() {return end_->prev->data;}
 
             // List iterators
             iterator begin() {return iterator(head);}
@@ -49,8 +49,6 @@ namespace s21 {
             //size_t max_size() {return std::numeric_limits<T>::max();}; // size_type
 
             // list modifiers
-            // Node<T>* addNode(const T& value, size_type pos);
-            Node<T>* addNode(const T& value, iterator pos);
             void clear();
             iterator insert(iterator pos, const_reference value);
             void erase(iterator pos);
@@ -89,7 +87,6 @@ namespace s21 {
         private:
 
             Node<T> *head;
-            Node<T> *tail;
             Node<T> *end_;
             size_type size_;
     };
