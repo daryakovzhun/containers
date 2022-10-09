@@ -71,16 +71,34 @@ namespace s21 {
 
     template <typename T>
     ListIterator<T> list<T>::insert(iterator pos, const_reference value) {
-        size_t n = distance(pos);
-        // cout << n << " " << value << endl;
-        auto it(addNode(value, n));
-        return it;
+        iterator res;
+        if (!size_) {
+            head->data = value;
+            res = this->begin();
+        } else if (pos == this->begin()) {
+            head = head->prev = new Node<T>(value, head, end_);       
+            end_->pnext = head;                                                                                                   
+            res = this->begin();
+        } else {
+            pos->prev->pnext = new Node<T>(value, pos.getNode(), pos->prev);
+            res = pos->prev->pnext;      
+            if (pos != this->end()) { 
+                res->pnext->prev = res.getNode();
+            } else {
+                tail = res.getNode();
+                tail->pnext = end_;
+                end_->prev = tail;
+            } 
+        }
+        size_++;
+        this->end_->data = size_;
+        return res;
     }
 
 
     template <typename T>
     void list<T>::push_back(const_reference  value) {
-        addNode(value, this->size_);
+        insert(this->end(), value);
     }
 
     template <typename T>
@@ -90,7 +108,7 @@ namespace s21 {
 
     template <typename T> 
     void list<T>::push_front(const_reference value) {
-        addNode(value, 0);
+        insert(this->begin(), value);
     }
 
     template <typename T>
@@ -170,36 +188,6 @@ namespace s21 {
     }
 
     template<typename T>
-    Node<T>* list<T>::addNode(const T& value, size_type pos) {
-        Node <T> *res;
-        if (!size_) {
-            head->data = value;
-            res = head = tail;
-        } else if (pos == 0) {
-            head = head->prev = new Node<T>(value, head, end_);       
-            end_->pnext = head;                                                                                                   
-            res = head;
-        } else {
-            Node<T> *current = head;
-            for(int i = 0; i < pos - 1; i++) {
-                current = current->pnext;
-            }                                                                        
-            current->pnext  = new Node<T>(value, current->pnext, current);
-            res = current->pnext;
-            if (pos != size_) { 
-                res->pnext->prev = res;
-            } else {
-                tail = res;
-                tail->pnext = end_;
-                end_->prev = tail;
-            } 
-        }
-        size_++;
-        this->end_->data = size_;
-        return res;
-    }
-
-    template<typename T>
     void list<T>::erase(iterator pos) {
         if (head != tail) {
             if (pos == this->begin()) {
@@ -261,15 +249,22 @@ namespace s21 {
 
 int main() {
 
-    s21::list <int> a = {};
-    s21::list <int> b = {7,8,9};
-    s21::list <int> c{};
-    a.unique();
-    // a.reverse();
-    // s21::list <int>::iterator sth = --a.end();
-    // a.erase(sth);
-    // a.erase(sth);
-    // cout << *a.begin() << endl;
+    s21::list <int> a = {-3,-2,-1};
+    // s21::list <int> b = {7,8,9};
+    // s21::list <int> c{};
+
+    a.push_back(1);
+    a.push_back(2);
+    a.push_back(3);
+    a.push_back(4);
+    a.push_back(5);
+    a.push_back(6);
+
+
+    s21::list <int>::iterator sth = a.begin();
+    sth.shift(0);
+    a.insert(sth, 666);
+    a.erase(a.begin());
     a.Print_list();
     return 0;
 }
