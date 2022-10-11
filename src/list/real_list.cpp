@@ -13,15 +13,14 @@ void print(list<int> const &list)
 int main() {
 
 
-    list <int> a = {1};
-    list <int> b = {7,9,9,4,88,-3};
+    list <int> a = {7,15,124};
+    list <int> b = {-9,-8,117,135};
     // list <int> c(4);
 
 
     list<int>:: const_iterator ait = a.end();
     // a.erase(ait);
-    a.swap(b);
-    a.sort();
+    a.merge(b);
 
 
     // // b.insert(bit, 55);

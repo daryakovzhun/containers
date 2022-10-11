@@ -112,24 +112,28 @@ namespace s21 {
 
     template <typename T>
     void list<T>::swap(list& other) {
-        Node<T> *temp = nullptr;
-        temp = this->head;
-        this->head = other.head;
-        other.head = temp;
-       
-        temp = this->end_;
-        this->end_ = other.end_;
-        other.end_ = temp;
-
-        size_type count = this->size_;
-        this->size_ = other.size_;
-        other.size_ = count;
+        std::swap(this->head, other.head);
+        std::swap(this->end_, other.end_);
+        std::swap(this->size_, other.size_);
     }
 
     template <typename T>
     void list<T>::merge(list& other) {
-        const_iterator it = this->const_end();
-        this->splice(it, other);
+        iterator this_it = this->begin(), other_it = other.begin();
+        if(!other.empty()) {
+            while(this_it != end_) {
+                while(*this_it > *other_it && other_it != other.end_) {
+                    this->insert(this_it, *other_it);
+                    ++other_it;
+                }
+                ++this_it;
+            }
+            while(other_it != other.end()) {
+                this->insert(this->end(), *other_it);
+                ++other_it;
+            }
+        }
+        other.clear();
     }
 
     template <typename T>
@@ -160,9 +164,7 @@ namespace s21 {
         iterator it = this->begin();     
         int count = size_ + 1;
         while(count--) {
-            Node<T> *temp = it.getNode()->pnext;
-            it.getNode()->pnext = it.getNode()->prev;
-            it.getNode()->prev = temp;
+            std::swap(it.getNode()->pnext, it.getNode()->prev);
             ++it;
         }
         head = end_->pnext;
@@ -262,31 +264,13 @@ namespace s21 {
 
 int main() {
 
-    s21::list <int> a = {4,3,2,5,1};
-    s21::list <int> b = {888,6,6,6,888,888,888,888,888};
+    s21::list <int> a = {-100,-50, 10,3};
+    s21::list <int> b = {-2000,-1000,-100,10000,10};
     // s21::list <int> c{};
     s21::list <int>::const_iterator sth = a.const_end();
     s21::list <int>::iterator it = a.end();
-
-    // a.merge(b);
-    // a.reverse();
-    a.sort();
-    a.Print_list();
-    // a.unique();
-    // a.swap(b);
-    // a.Print_list();
-
-    // b.Print_list();
-    // cout << b.size() << endl;
-    // cout << "-------------" << endl;
-    // a.Print_list();
-    // cout << a.size() << endl;
-    
-    // cout << a.size() << endl;
-        // a.merge(b);
-    // sth.shift(0);
-    // a.insert(sth, 666);
-    // a.erase(a.begin());
+    a.merge(b);
+    b.Print_list();
 
     return 0;
 }
