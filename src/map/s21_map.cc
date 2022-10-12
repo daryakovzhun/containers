@@ -200,9 +200,9 @@ namespace s21 {
     }
 }
 
-int main () {
-    s21::map<int, int> m;
-    std::map<int, int> check;
+// int main () {
+//     s21::map<int, int> m;
+//     std::map<int, int> check;
 
-    std::cout << "    m = " << m.max_size() << "\ncheck = " << check.max_size();
-}
+//     std::cout << "    m = " << m.max_size() << "\ncheck = " << check.max_size();
+// }
