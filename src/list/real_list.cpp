@@ -13,16 +13,14 @@ void print(list<int> const &list)
 int main() {
 
 
-    list <int> a = {7,15,124};
-    list <int> b = {-9,-8,117,135};
-    // list <int> c(4);
-
-
-    list<int>:: const_iterator ait = a.end();
-    // a.erase(ait);
-    a.merge(b);
-
-
+    list <int> a = {4,3,2,1,6,5,8,7};
+    list<string> b = {"hello", "world"};
+    list<char> c = {'y', 'l'};
+    list<float> d = {1.5, 2.8};
+    cout << a.max_size() << endl;
+    cout << b.max_size() << endl;
+    cout << c.max_size() << endl;
+    cout << d.max_size() << endl;
     // // b.insert(bit, 55);
     // c.splice(ait, a); // continue
     // cout << a.tail->prev->data << endl; 
@@ -30,7 +28,6 @@ int main() {
     // print(b);
     // print(a);
     // cout << "**" << b.size() << "**" << endl;
-    print(a);
     // print(a);
     // 
     // print(b);

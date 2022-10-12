@@ -6,10 +6,8 @@
 #include "node.h"
 #include "list_iterator.h"
 #include "list_const_iterator.h"
-#include <utility>
 
 using namespace std;
-
 
 namespace s21 {
     template <typename T>
@@ -22,7 +20,8 @@ namespace s21 {
             using size_type = size_t;
             using iterator = ListIterator<T>;
             using const_iterator = ListConstIterator<T>;
-
+            using node_allocator = typename std::allocator_traits<std::allocator<T>>::template rebind_alloc<Node<T>>;
+            node_allocator allocator;
             // List functions
             list();
             list(size_type n);
@@ -45,8 +44,8 @@ namespace s21 {
 
             // List Capacity
             bool empty() {return !this->size();}
-            size_t size() {return this->size_;}
-            //size_t max_size() {return std::numeric_limits<T>::max();}; // size_type
+            size_type size() {return this->size_;}
+            size_type max_size() {return allocator.max_size();}
 
             // list modifiers
             void clear();
@@ -63,15 +62,9 @@ namespace s21 {
             void unique();
             void sort();
 
-
-
-
-
             // functions for me 
 
             void Print_list(); // for me
-            // void connection(Node<T> **first, Node<T> **second);
-
 
             T& operator[](int num); // for me
 

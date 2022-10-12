@@ -15,7 +15,7 @@ namespace s21 {
     template <typename T>
     list<T>::list() : size_(0) {
         head = new Node<T>(value_type());
-        end_ = new Node<T>(size_, head, head);
+        end_ = new Node<T>(value_type(), head, head);
         head->prev = end_;
         head->pnext = end_;
     }
@@ -85,7 +85,7 @@ namespace s21 {
             pos->prev = res.getNode();
         }
         size_++;
-        this->end_->data = size_;
+        // this->end_->data = size_;
         return res;
     }
 
@@ -189,6 +189,7 @@ namespace s21 {
         }
         list<T> first;
         list<T> second;
+   
         int counter = 0;
         for (auto i : *this) {
             if (counter < size_ / 2) {
@@ -220,7 +221,7 @@ namespace s21 {
             }
             size_--;
             delete pos.getNode();
-            this->end_->data = size_;
+            // this->end_->data = size_;
         } else {
             delete head;
             delete end_;
@@ -264,13 +265,20 @@ namespace s21 {
 
 int main() {
 
-    s21::list <int> a = {-100,-50, 10,3};
-    s21::list <int> b = {-2000,-1000,-100,10000,10};
-    // s21::list <int> c{};
-    s21::list <int>::const_iterator sth = a.const_end();
-    s21::list <int>::iterator it = a.end();
-    a.merge(b);
-    b.Print_list();
+    s21::list <int> a = {4,3,2,1,6,5,8,7};
+    s21::list<string> b = {"hello", "world"};
+    s21::list<char> c = {'y', 'l'};
+    s21::list<float> d = {1.5, 2.8};
+    a.sort();
+    a.Print_list();
+    // cout << a.max_size() << endl;
+    // cout << b.max_size() << endl;
+
+    // cout << c.max_size() << endl;
+    // cout << d.max_size() << endl;
+
+    // cout << b.max_size() << endl;
+
 
     return 0;
 }
