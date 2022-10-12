@@ -1,7 +1,7 @@
 #include "s21_set.h"
 
 #include <limits>
-// #include <set>
+#include <set>
 #include <cmath>
 
 namespace s21 {
@@ -46,12 +46,8 @@ namespace s21 {
 
     template<typename Key>
     std::size_t set<Key>::max_size() const {
-        std::allocator<Key> alloc;
-        // std::cout << "sizeof = " << sizeof(set)<< "\n";
-        return alloc.max_size() / 5;
-        // return (powl(2, sizeof(int*) * 8 - 1) / (sizeof(int*)*3 + sizeof(T))) - 1;
-        // return std::numeric_limits<value_type>::max();
-        // return sizeof(root_) + sizeof(size_);
+        std::allocator<int> alloc;
+        return alloc.max_size() / 10;
     }
 
     template<typename Key>
@@ -153,7 +149,7 @@ namespace s21 {
     }
 }
 
-// int main () {
+int main () {
 //     s21::set <int> mst;
  
 //     std::cout << "Добавление случайных значений: " << std::endl;
@@ -170,6 +166,15 @@ namespace s21 {
 //         std::cout << *it << " ";
 //     }
 
+    s21::set<char> char_my;
+    std::set<char> char_st;
+    std::cout << " my = " << char_my.max_size() << "\nstd = " << char_st.max_size() << '\n';
 
-//     // std::cout << "    m = " << m.max_size() << "\ncheck = " << check.max_size();
-// }
+    s21::set<double> double_my;
+    std::set<double> double_st;
+    std::cout << " my = " << double_my.max_size() << "\nstd = " << double_st.max_size() << '\n';
+
+    s21::set<int> int_my;
+    std::set<int> int_st;
+    std::cout << " my = " << int_my.max_size() << "\nstd = " << int_st.max_size() << '\n';
+}
