@@ -4,6 +4,9 @@
 #include <map>
 #include <cmath>
 
+#include <string>
+#include <set>
+
 namespace s21 {
     template<typename Key, typename T>
     map<Key, T>::map() {
@@ -84,13 +87,9 @@ namespace s21 {
 
     template<typename Key, typename T>
     std::size_t map<Key, T>::max_size() const {
-        std::allocator<std::pair<const Key, T>> alloc;
-        // std::cout << "sizeof = " << sizeof(map)<< "\n";
-        return alloc.max_size() / 5;
-        // return (powl(2, sizeof(int*) * 8 - 1) / (sizeof(int*)*3 + sizeof(T))) - 1;
-        // return std::numeric_limits<value_type>::max();
-        // return sizeof(root_) + sizeof(size_);
-    }
+        std::set<std::pair<const Key, T>> s;
+        return s.max_size();
+}
 
     template<typename Key, typename T>
     void map<Key, T>::clear() {
@@ -200,9 +199,9 @@ namespace s21 {
     }
 }
 
-int main () {
-    s21::map<int, int> m;
-    std::map<int, int> check;
+// int main () {
+//     s21::map<int, std::string> m;
+//     std::map<int, std::string> check;
 
-    std::cout << "    m = " << m.max_size() << "\ncheck = " << check.max_size();
-}
+//     std::cout << "\t" << m.max_size() << "\n\t" << check.max_size();
+// }
