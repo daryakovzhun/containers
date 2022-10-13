@@ -55,19 +55,15 @@ namespace s21 {
 
     template <typename T>
     list<T>& list<T>::operator=(list &&l) noexcept {
-        // if (*this != l) {
-        //     this->clear();
+        this->clear();
         head = l.head;
         end_ = l.end_;
         size_ = l.size_;
-        // }
         l.head = nullptr;
         l.end_ = nullptr;
         l.size_ = 0;
         return *this;
     }
-
-    // List Capacity
 
     template <typename T>
     ListIterator<T> list<T>::insert(iterator pos, const_reference value) {
@@ -85,7 +81,6 @@ namespace s21 {
             pos->prev = res.getNode();
         }
         size_++;
-        // this->end_->data = size_;
         return res;
     }
 
@@ -139,7 +134,7 @@ namespace s21 {
     template <typename T>
     void list<T>::splice(const_iterator pos, list& other) {
         if (!other.empty()) {
-            const_iterator check = other.const_begin();
+            const_iterator check = other.cbegin();
             if (this->empty()) {
                 pos = end_;
                 delete begin().getNode();
@@ -189,7 +184,6 @@ namespace s21 {
         }
         list<T> first;
         list<T> second;
-   
         int counter = 0;
         for (auto i : *this) {
             if (counter < size_ / 2) {
@@ -221,7 +215,6 @@ namespace s21 {
             }
             size_--;
             delete pos.getNode();
-            // this->end_->data = size_;
         } else {
             delete head;
             delete end_;
@@ -229,26 +222,11 @@ namespace s21 {
         }
     }
 
-    // перегрузка с конца
-    template <typename T>
-    T& list<T>::operator[](const int num) {
-        int size_ = 0;
-        Node<T> *current = head;
-        while (current != nullptr) { 
-            if (size_ == num) {
-                break;
-            }
-            current = current->pnext;
-            size_++;
-        }
-        return current->data;
-    }
-
     template <typename T>
     void list<T>::Print_list() {
-            if (size_) {
-            for (iterator it = this->begin(); it != this->end(); ++it) {
-                cout << *it << endl;
+        if (size_) {
+            for (const auto &node : *this) {
+                cout << node << endl;
             }
         }
     }
@@ -264,11 +242,14 @@ namespace s21 {
 }
 
 int main() {
-
-    s21::list <int> a = {4,3,2,1,6,5,8,7};
-    s21::list<string> b = {"hello", "world"};
-    s21::list<char> c = {'y', 'l'};
-    s21::list<float> d = {1.5, 2.8};
+    s21::list <int> a = {-150,3,2,1,6,5,8,-150};
+    s21::list <int> f = {333,3,2,1,444};
+    // a = std::move(f);
+    // s21::list<string> b = {"hello", "world"};
+    // s21::list<char> c = {'y', 'l'};
+    // s21::list<float> d = {1.5, 2.8};
+    // auto it = a.begin();
+    // cout << *it << endl;
     a.sort();
     a.Print_list();
     // cout << a.max_size() << endl;

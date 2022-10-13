@@ -19,7 +19,7 @@ namespace s21 {
             _currentNode = _currentNode->pnext;
             return *this;           
         }
-        const T& operator*() {return _currentNode->data;}
+        reference operator*() {return _currentNode->data;}
         bool operator!=(const ListIterator<T>& it) {return _currentNode != it._currentNode;}
         bool operator==(const ListIterator<T>& it) {return _currentNode == it._currentNode;}
 

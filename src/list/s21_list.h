@@ -39,8 +39,8 @@ namespace s21 {
             iterator begin() {return iterator(head);}
             iterator end() {return iterator(end_);}
 
-            const_iterator const_begin() {return const_iterator(head);}
-            const_iterator const_end() {return const_iterator(end_);}
+            const_iterator cbegin() {return const_iterator(head);}
+            const_iterator cend() {return const_iterator(end_);}
 
             // List Capacity
             bool empty() {return !this->size();}
@@ -63,22 +63,9 @@ namespace s21 {
             void sort();
 
             // functions for me 
-
             void Print_list(); // for me
 
-            T& operator[](int num); // for me
-
-            size_t	distance(iterator it) {
-                ListIterator<T> start = this->begin();
-                size_t n = 0;
-                while(start != it) {
-                    n++;
-                    ++start;
-                }
-                return (n);
-            }   
         private:
-
             Node<T> *head;
             Node<T> *end_;
             size_type size_;
