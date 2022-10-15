@@ -8,7 +8,6 @@
 #include "list_const_iterator.h"
 
 using namespace std;
-
 namespace s21 {
     template <typename T>
     class list{
@@ -23,13 +22,52 @@ namespace s21 {
             using node_allocator = typename std::allocator_traits<std::allocator<T>>::template rebind_alloc<Node<T>>;
             node_allocator allocator;
             // List functions
-            list();
-            list(size_type n);
-            list(std::initializer_list<value_type> const &items);
-            list(const list &l);
-            list(list &&l);
-            ~list();
-            list<T>& operator=(list &&l) noexcept;
+            list() : size_(0) {
+                head = new Node<T>(value_type());
+                end_ = new Node<T>(value_type(), head, head);
+                head->prev = end_;
+                head->pnext = end_;
+            }
+
+            list(size_type n) : list() {
+                while(n--) {
+                    this->push_back(value_type());
+                }
+            }
+
+            list(std::initializer_list<value_type> const &items) : list() {
+                for (auto nodes : items) {
+                    this->push_back(nodes);
+                }
+            }
+
+
+            list(const list &l) :  list() {
+                for (auto nodes : l) {
+                    push_back(nodes);
+                }
+            }
+
+            list(list &&l) : head(l.head), end_(l.end_), size_(l.size_) {
+                l.head = nullptr;
+                l.end_ = nullptr;
+                l.size_ = 0;
+            }
+
+            ~list() {
+                clear();
+            }
+
+            list<T>& operator=(list &&l) noexcept {
+                this->clear();
+                head = l.head;
+                end_ = l.end_;
+                size_ = l.size_;
+                l.head = nullptr;
+                l.end_ = nullptr;
+                l.size_ = 0;
+                return *this;
+            }
 
             // List element access 
             const_reference front() {return head->data;}
@@ -43,35 +81,173 @@ namespace s21 {
             const_iterator cend() {return const_iterator(end_);}
 
             // List Capacity
-            bool empty() {return !this->size();}
+            bool empty() {return this->size() == 0;}
             size_type size() {return this->size_;}
             size_type max_size() {return allocator.max_size();}
 
             // list modifiers
-            void clear();
-            iterator insert(iterator pos, const_reference value);
-            void erase(iterator pos);
-            void push_back(const_reference  value);
-            void pop_back();
-            void push_front(const_reference  value);
-            void pop_front();
-            void swap(list& other);
-            void merge(list& other);
-            void splice(const_iterator pos, list& other);
-            void reverse();
-            void unique();
-            void sort();
+            void clear() {
+                while (head) {
+                    pop_front();
+                }
+                if (end_) delete end_;
+            }
+            iterator insert(iterator pos, const_reference value) {
+                iterator res;
+                if (!size_) {
+                    head->data = value;
+                    res = this->begin();
+                } else if (pos == this->begin()) {
+                    head = head->prev = new Node<T>(value, head, end_);       
+                    end_->pnext = head;                                                                                                   
+                    res = this->begin();
+                } else {
+                    pos->prev->pnext = new Node<T>(value, pos.getNode(), pos->prev);
+                    res = pos->prev->pnext;      
+                    pos->prev = res.getNode();
+                }
+                size_++;
+                return res;
+            }
+
+            void erase(iterator pos) {
+                if (pos == end()) {
+                    return;
+                } 
+                if (head->pnext != end_) {
+                    if (pos == this->begin()) {
+                        pos->pnext->prev = end_;
+                        head = pos->pnext;
+                        end_->pnext = head;
+                    } else {
+                        pos->prev->pnext = pos->pnext;
+                        pos->pnext->prev = pos->prev;
+                    }
+                    size_--;
+                    delete pos.getNode();
+                } else {
+                    delete head;
+                    delete end_;
+                    this->head = this->end_ = nullptr;
+                }
+            }
+
+            void push_back(const_reference  value) {
+                insert(this->end(), value);
+            }
+
+            void pop_back() {
+                erase(--this->end());
+            }
+
+            void push_front(const_reference value) {
+                insert(this->begin(), value);
+            }
+
+            void pop_front() {
+                erase(this->begin());
+            }
+
+            void swap(list& other) {
+                std::swap(this->head, other.head);
+                std::swap(this->end_, other.end_);
+                std::swap(this->size_, other.size_);
+            }
+
+            void merge(list& other) {
+                iterator this_it = this->begin(), other_it = other.begin();
+                if(!other.empty()) {
+                    while(this_it != end_) {
+                        while(*this_it > *other_it && other_it != other.end_) {
+                            this->insert(this_it, *other_it);
+                            ++other_it;
+                        }
+                        ++this_it;
+                    }
+                    while(other_it != other.end()) {
+                        this->insert(this->end(), *other_it);
+                        ++other_it;
+                    }
+                }
+                other.clear();
+            }
+
+            void splice(const_iterator pos, list& other) {
+                if (!other.empty()) {
+                    const_iterator check = other.cbegin();
+                    if (this->empty()) {
+                        pos = end_;
+                        delete begin().getNode();
+                    }
+                    if (pos.getNode() == head || this->empty() ) {
+                        head = other.head;
+                    } else {
+                        pos->prev->pnext = other.head;
+                        other.head->prev = pos->prev;
+                    }
+                    other.end_->prev->pnext = pos.getNode();
+                    pos->prev = other.end_->prev;
+
+                    other.head = nullptr;
+                    size_ += other.size_;
+                    other.size_ = 0;
+                }
+            }
+            void reverse() {
+                iterator it = this->begin();     
+                int count = size_ + 1;
+                while(count--) {
+                    std::swap(it.getNode()->pnext, it.getNode()->prev);
+                    ++it;
+                }
+                head = end_->pnext;
+            }
+            void unique() {
+                iterator it = this->begin(), temp = it->pnext;
+                while(!this->empty() && it->pnext != end_) {
+                    while (it.getNode()->data == temp.getNode()->data) {
+                        ++temp;
+                        erase(it->pnext);
+                    }
+                    ++it, ++temp;
+                }
+            }
+            void sort() {
+                if (size_ <= 1) {
+                    return;
+                }
+                list<T> first;
+                list<T> second;
+                int counter = 0;
+                for (auto i : *this) {
+                    if (counter < size_ / 2) {
+                        first.push_back(i);
+                    } else {
+                        second.push_back(i);
+                    }
+                    counter++;
+                }
+                first.sort();
+                second.sort();
+                first.merge(second);
+                this->swap(first);
+            }
 
             // functions for me 
-            void Print_list(); // for me
+            void Print_list() {
+                if (size_) {
+                    for (const auto &node : *this) {
+                        cout << node << endl;
+                    }
+                }
+            }
 
         private:
             Node<T> *head;
             Node<T> *end_;
             size_type size_;
     };
+
 }
-
-
 
 #endif // SRC_S21_LIST_H
