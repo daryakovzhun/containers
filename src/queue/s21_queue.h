@@ -3,7 +3,7 @@
 
 #include <initializer_list>
 
-#include <list>
+#include "../list/s21_list.h"
 
 namespace s21 {
     template<typename T>
@@ -14,27 +14,42 @@ namespace s21 {
             using const_reference = const T&;
             using size_type = std::size_t ;
 
-            queue() {}
-            queue(std::initializer_list<value_type> const &items);
-            queue(const queue &q);
-            queue(queue &&q);
-            ~queue() { queue_.clear(); }
-            queue& operator=(queue &&q);
+            queue() { queue_ = new s21::list<T>(); }
 
-            const_reference front() const { return queue_.front();}
-            const_reference back() const {return queue_.back();}
+            queue(std::initializer_list<T> const &items) {
+                // for (auto obj : items) {
+                //     queue_->push_back(obj);
+                // }
+                queue_ = new s21::list<T>(items);
+            }
 
-            bool empty() { return queue_.empty(); }
-            size_type size() const { return queue_.size();}
+            queue(const queue &q) { queue_ = new s21::list<T>(*q.queue_); }
+            queue(queue &&q) { *queue_ = std::move(*q.queue_); }
+            ~queue() { queue_->clear(); }
 
-            void push(const_reference value) { queue_.push_back(value); }
-            void pop() { queue_.pop_front(); }
-            void swap(queue& other) { queue_.swap(other.queue_); }
+            queue<T>& operator=(queue &&q) {
+                if (*this != q) {
+                    queue_->clear();
+                    queue_ = std::move(q->queue_);
+                }
+                return *this;
+            }
+
+            const_reference front() const { return queue_->front();}
+            const_reference back() const {return queue_->back();}
+
+            bool empty() { return queue_->empty(); }
+            size_type size() const { return queue_->size();}
+
+            void push(const_reference value) { queue_->push_back(value); }
+            void pop() { queue_->pop_front(); }
+            void swap(queue& other) { queue_->swap(*other.queue_); }
 
             bool operator!=(queue& other) const { return !(queue_ == other.queue_); }
         private:
-            std::list<T> queue_;
+            s21::list<T>* queue_;
     };
 }
 
 #endif //  SRC_S21_QUEUE_H
+

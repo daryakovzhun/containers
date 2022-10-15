@@ -1,7 +1,7 @@
 #include <gmock/gmock.h>
 #include <queue>
 
-#include "../queue/s21_queue.cc"
+#include "../queue/s21_queue.h"
 
 using namespace std;
 
