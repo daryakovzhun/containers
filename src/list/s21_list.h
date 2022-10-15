@@ -43,7 +43,7 @@ namespace s21 {
 
 
             list(const list &l) :  list() {
-                for (auto nodes : l) {
+                for (const auto nodes : l) {
                     push_back(nodes);
                 }
             }
@@ -77,8 +77,8 @@ namespace s21 {
             iterator begin() {return iterator(head);}
             iterator end() {return iterator(end_);}
 
-            const_iterator cbegin() {return const_iterator(head);}
-            const_iterator cend() {return const_iterator(end_);}
+            const_iterator cbegin() const {return const_iterator(head);}
+            const_iterator cend() const {return const_iterator(end_);}
 
             // List Capacity
             bool empty() {return this->size() == 0;}
@@ -243,9 +243,9 @@ namespace s21 {
             }
             bool operator==(const list& other) {
                 bool check = true;
-                if(size_ != other.size) return false;
-                iterator it = begin(), ot_it = other.begin();
-                for (check && it, ot_it; it != end(), ot_it != other.end(); ++it, ++ot_it) {
+                if(size_ != other.size_) return false;
+                const_iterator it = cbegin(), ot_it = other.cbegin();
+                for (it, ot_it; it != cend(), ot_it != other.cend(), check == true; ++it, ++ot_it) {
                     if (*it != *ot_it) {
                         check = false;
                     }

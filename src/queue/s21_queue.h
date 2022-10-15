@@ -14,23 +14,20 @@ namespace s21 {
             using const_reference = const T&;
             using size_type = std::size_t ;
 
-            queue() { queue_ = new s21::list<T>(); }
+            queue() { queue_ = new s21::list<T>; }
 
             queue(std::initializer_list<T> const &items) {
-                // for (auto obj : items) {
-                //     queue_->push_back(obj);
-                // }
                 queue_ = new s21::list<T>(items);
             }
 
             queue(const queue &q) { queue_ = new s21::list<T>(*q.queue_); }
-            queue(queue &&q) { *queue_ = std::move(*q.queue_); }
+            queue(queue &&q) : queue() { *queue_ = std::move(*q.queue_); }
             ~queue() { queue_->clear(); }
 
             queue<T>& operator=(queue &&q) {
                 if (*this != q) {
                     queue_->clear();
-                    queue_ = std::move(q->queue_);
+                    *queue_ = std::move(*q.queue_);
                 }
                 return *this;
             }
@@ -45,7 +42,7 @@ namespace s21 {
             void pop() { queue_->pop_front(); }
             void swap(queue& other) { queue_->swap(*other.queue_); }
 
-            bool operator!=(queue& other) const { return !(queue_ == other.queue_); }
+            bool operator!=(queue& other) const { return !(*queue_ == *other.queue_); }
         private:
             s21::list<T>* queue_;
     };

@@ -199,9 +199,3 @@ namespace s21 {
     }
 }
 
-// int main () {
-//     s21::map<int, std::string> m;
-//     std::map<int, std::string> check;
-
-//     std::cout << "\t" << m.max_size() << "\n\t" << check.max_size();
-// }
