@@ -241,7 +241,20 @@ namespace s21 {
                     }
                 }
             }
-
+            bool operator==(const list& other) {
+                bool check = true;
+                if(size_ != other.size) return false;
+                iterator it = begin(), ot_it = other.begin();
+                for (check && it, ot_it; it != end(), ot_it != other.end(); ++it, ++ot_it) {
+                    if (*it != *ot_it) {
+                        check = false;
+                    }
+                }
+                return check;
+            }
+            // bool operator!=(const list& other) {
+            //     return !*this==other;
+            // }
         private:
             Node<T> *head;
             Node<T> *end_;
