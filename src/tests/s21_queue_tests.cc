@@ -3,6 +3,8 @@
 
 #include "../queue/s21_queue.h"
 
+#include <iostream>
+
 using namespace std;
 
 TEST(TestGroupName, queue_front) {
@@ -64,7 +66,7 @@ TEST(TestGroupName, queue_swap) {
         }
     }
 
-    q.swap(buffer); 
+    q.swap(buffer);
 
     ASSERT_TRUE(q.back() == check.back());
     ASSERT_TRUE(q.size() == check.size());

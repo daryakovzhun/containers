@@ -42,8 +42,8 @@ namespace s21 {
             }
 
 
-            list(const list &l) :  list() {
-                for (const auto nodes : l) {
+            list( list &l) :  list() {  // CONST !!!!
+                for (const auto& nodes : l) {
                     push_back(nodes);
                 }
             }
@@ -94,7 +94,14 @@ namespace s21 {
             }
             iterator insert(iterator pos, const_reference value) {
                 iterator res;
-                if (!size_) {
+                if (size_ == 0) {
+                    if (!head) {
+                        head = new Node<T>(value_type());
+                        end_ = new Node<T>(value_type(), head, head);
+                        head->prev = end_;
+                        head->pnext = end_;
+                    }
+
                     head->data = value;
                     res = this->begin();
                 } else if (pos == this->begin()) {
@@ -129,6 +136,7 @@ namespace s21 {
                     delete head;
                     delete end_;
                     this->head = this->end_ = nullptr;
+                    size_ = 0;
                 }
             }
 
@@ -245,7 +253,7 @@ namespace s21 {
                 bool check = true;
                 if(size_ != other.size_) return false;
                 const_iterator it = cbegin(), ot_it = other.cbegin();
-                for (it, ot_it; it != cend(), ot_it != other.cend(), check == true; ++it, ++ot_it) {
+                for (it, ot_it; it != cend() && ot_it != other.cend() && check; ++it, ++ot_it) {
                     if (*it != *ot_it) {
                         check = false;
                     }
