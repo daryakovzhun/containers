@@ -3,7 +3,7 @@
 
 #include "../array/s21_array.cc"
 
-TEST(TestGroupName, array_init_list) {
+TEST(Array, array_init_list) {
     std::array<int, 10> a = {1, 2, 3, 4, 5};
     s21::array<int, 10> b = {1, 2, 3, 4, 5};
 
@@ -12,7 +12,7 @@ TEST(TestGroupName, array_init_list) {
     }
 }
 
-TEST(TestGroupName, array_copy_constructor) {
+TEST(Array, array_copy_constructor) {
     std::array<int, 10> a = {1, 2, 3, 4, 5};
     s21::array<int, 10> b = {1, 2, 3, 4, 5};
 
@@ -25,7 +25,7 @@ TEST(TestGroupName, array_copy_constructor) {
     }
 }
 
-TEST(TestGroupName, array_move_constructor) {
+TEST(Array, array_move_constructor) {
     std::array<int, 10> a = {1, 2, 3, 4, 5};
     s21::array<int, 10> b = {1, 2, 3, 4, 5};
 
@@ -38,7 +38,7 @@ TEST(TestGroupName, array_move_constructor) {
     }
 }
 
-TEST(TestGroupName, array_at) {
+TEST(Array, array_at) {
     std::array<int, 10> a = {1, 2, 3, 4, 5};
     s21::array<int, 10> b = {1, 2, 3, 4, 5};
 
@@ -47,7 +47,7 @@ TEST(TestGroupName, array_at) {
     }
 }
 
-TEST(TestGroupName, array_swap) {
+TEST(Array, array_swap) {
     s21::array<int, 10> a = {1, 2, 3, 4, 5};
     s21::array<int, 10> b = {11, 22, 33, 44, 55};
 
@@ -62,7 +62,7 @@ TEST(TestGroupName, array_swap) {
     }
 }
 
-TEST(TestGroupName, array_fill) {
+TEST(Array, array_fill) {
     std::array<int, 10> a = {1, 2, 3, 4, 5};
     s21::array<int, 10> b = {1, 2, 3, 4, 5};
 
@@ -74,7 +74,7 @@ TEST(TestGroupName, array_fill) {
     }
 }
 
-TEST(TestGroupName, array_operator_eq_move) {
+TEST(Array, array_operator_eq_move) {
     std::array<int, 10> a = {1, 2, 3, 4, 5};
     std::array<int, 10> a1 = {11, 22, 33, 44, 55};
     
@@ -90,63 +90,63 @@ TEST(TestGroupName, array_operator_eq_move) {
     }
 }
 
-TEST(TestGroupName, array_size) {
+TEST(Array, array_size) {
     std::array<int, 10> a = {1, 2, 3, 4, 5};
     s21::array<int, 10> b = {1, 2, 3, 4, 5};
 
     ASSERT_TRUE(a.size() == b.size());
 }
 
-TEST(TestGroupName, array_max_size) {
+TEST(Array, array_max_size) {
     std::array<int, 10> a = {1, 2, 3, 4, 5};
     s21::array<int, 10> b = {1, 2, 3, 4, 5};
 
     ASSERT_TRUE(a.max_size() == b.max_size());
 }
 
-TEST(TestGroupName, array_front) {
+TEST(Array, array_front) {
     std::array<int, 10> a = {1, 2, 3, 4, 5};
     s21::array<int, 10> b = {1, 2, 3, 4, 5};
 
     ASSERT_TRUE(a.front() == b.front());
 }
 
-TEST(TestGroupName, array_back) {
+TEST(Array, array_back) {
     std::array<int, 10> a = {1, 2, 3, 4, 5};
     s21::array<int, 10> b = {1, 2, 3, 4, 5};
 
     ASSERT_TRUE(a.back() == b.back());
 }
 
-TEST(TestGroupName, array_data) {
+TEST(Array, array_data) {
     std::array<int, 10> a = {1, 2, 3, 4, 5};
     s21::array<int, 10> b = {1, 2, 3, 4, 5};
 
     ASSERT_TRUE(*(a.data()) == *(b.data()));
 }
 
-TEST(TestGroupName, array_begin) {
+TEST(Array, array_begin) {
     std::array<int, 10> a = {1, 2, 3, 4, 5};
     s21::array<int, 10> b = {1, 2, 3, 4, 5};
 
     ASSERT_TRUE(*(a.begin()) == *(b.begin()));
 }
 
-TEST(TestGroupName, array_end) {
+TEST(Array, array_end) {
     std::array<int, 10> a = {1, 2, 3, 4, 5};
     s21::array<int, 10> b = {1, 2, 3, 4, 5};
 
     ASSERT_TRUE(*(a.end() - 1) == *(b.end() - 1));
 }
 
-TEST(TestGroupName, array_not_empty) {
+TEST(Array, array_not_empty) {
     std::array<int, 10> a = {1, 2, 3, 4, 5};
     s21::array<int, 10> b = {1, 2, 3, 4, 5};
 
     ASSERT_TRUE(a.empty() == b.empty());
 }
 
-TEST(TestGroupName, array_empty) {
+TEST(Array, array_empty) {
     std::array<int, 0> a;
     s21::array<int, 0> b;
 

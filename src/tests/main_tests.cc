@@ -1,5 +1,5 @@
-// #include "s21_array_tests.cc"
-// #include "s21_map_tests.cc"
+#include "s21_array_tests.cc"
+#include "s21_map_tests.cc"
 #include "s21_queue_tests.cc"
 
 #include <gtest/gtest.h>
