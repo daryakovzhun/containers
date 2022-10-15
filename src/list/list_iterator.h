@@ -25,7 +25,13 @@ namespace s21 {
 
         Node<T>* getNode() {return _currentNode;}
         Node<T>* operator->() {return _currentNode;}
-        ListIterator<T>& shift(int n); // for me 
+        ListIterator<T>& shift(int n) {
+            while (n > 0) {
+                ++(*this);
+                n--;
+            }
+            return *this;
+        }
         // operator ListConstIterator<T>() const { return ListConstIterator<T>(_currentNode); }
     private:
         Node<T>* _currentNode;
