@@ -5,7 +5,7 @@
 
 using namespace std;
 
-TEST(TestGroupName, map_init_list) {
+TEST(Map, map_init_list) {
     s21::map<int, char> m{{3, '3'}, {2, '2'}, {5, '5'}};
 
     ASSERT_TRUE(m[3] == '3');
@@ -19,7 +19,7 @@ TEST(TestGroupName, map_init_list) {
     ASSERT_TRUE(check.second == false);
 }
 
-TEST(TestGroupName, map_insert_or_assign) {
+TEST(Map, map_insert_or_assign) {
     s21::map<int, int> m;
     m.insert(pair<int, int>(5, 5));
     m.insert(pair<int, int>(6, 6));
@@ -48,7 +48,7 @@ TEST(TestGroupName, map_insert_or_assign) {
     }
 }
 
-TEST(TestGroupName, map_copy_constructor) {
+TEST(Map, map_copy_constructor) {
     s21::map<int, int> m;
     m.insert(pair<int, int>(5, 5));
     m.insert(pair<int, int>(6, 6));
@@ -74,7 +74,7 @@ TEST(TestGroupName, map_copy_constructor) {
     }
 }
 
-TEST(TestGroupName, map_move_constructor) {
+TEST(Map, map_move_constructor) {
     s21::map<int, int> m;
     m.insert(pair<int, int>(5, 5));
     m.insert(pair<int, int>(6, 6));
@@ -99,7 +99,7 @@ TEST(TestGroupName, map_move_constructor) {
     }
 }
 
-TEST(TestGroupName, map_operator_eq) {
+TEST(Map, map_operator_eq) {
     s21::map<int, int> m;
     m.insert(pair<int, int>(5, 5));
     m.insert(pair<int, int>(6, 6));
@@ -126,7 +126,7 @@ TEST(TestGroupName, map_operator_eq) {
     }
 }
 
-TEST(TestGroupName, map_operator_eq_move) {
+TEST(Map, map_operator_eq_move) {
     s21::map<int, int> m;
     m.insert(pair<int, int>(5, 5));
     m.insert(pair<int, int>(6, 6));
@@ -152,7 +152,7 @@ TEST(TestGroupName, map_operator_eq_move) {
     }
 }
 
-TEST(TestGroupName, map_at) {
+TEST(Map, map_at) {
     s21::map<int, char> m{{3, '3'}, {2, '2'}, {5, '5'}};
 
     m.at(2) = '9';
@@ -163,7 +163,7 @@ TEST(TestGroupName, map_at) {
     ASSERT_TRUE(m[5] == '4');
 }
 
-TEST(TestGroupName, map_swap) {
+TEST(Map, map_swap) {
     s21::map<int, int> m1{{3, 3}, {2, 2}, {5, 5}};
     s21::map<int, int> m2{{5, 5}, {7, 7}, {3, 3}, {4, 4}, {8, 8}, {6, 6}, {2, 2}, {1, 1}};
 
@@ -184,7 +184,7 @@ TEST(TestGroupName, map_swap) {
     }
 }
 
-TEST(TestGroupName, map_insert_key_obj) {
+TEST(Map, map_insert_key_obj) {
     s21::map<int, int> m{{3, 3}, {2, 2}, {5, 5}};
     m.insert(0, 0);
     m.insert(9, 9);
@@ -199,7 +199,7 @@ TEST(TestGroupName, map_insert_key_obj) {
     }
 }
 
-TEST(TestGroupName, map_merge) {
+TEST(Map, map_merge) {
     s21::map<int, int> m{{3, 3}, {2, 2}, {5, 5}};
     s21::map<int, int> m2{{0, 0}, {9, 9}, {5, 55}, {7, 7}, {3, 33}};
 
@@ -210,7 +210,7 @@ TEST(TestGroupName, map_merge) {
     }
 }
 
-TEST(TestGroupName, map_contains) {
+TEST(Map, map_contains) {
     s21::map<int, int> m{{0, 0}, {9, 9}, {5, 55}, {7, 7}, {3, 33}};
 
     ASSERT_TRUE(m.size() == 5);
@@ -222,7 +222,7 @@ TEST(TestGroupName, map_contains) {
     }
 }
 
-TEST(TestGroupName, map_erase_1) {
+TEST(Map, map_erase_1) {
     s21::map<int, int> m{{5, 5}, {3, 3}, {6, 6}, {4, 4}, {1, 1}, {2, 2}, {18, 18}, {7, 7}, {19, 19}, {10, 10}, {9, 9}, {12, 12}};
     ASSERT_TRUE(m.size() == 12);
 
@@ -241,7 +241,7 @@ TEST(TestGroupName, map_erase_1) {
     }
 }
 
-TEST(TestGroupName, map_erase_2) {
+TEST(Map, map_erase_2) {
     s21::map<int, int> m{{5, 5}, {3, 3}, {6, 6}, {4, 4}, {1, 1}, {2, 2}, {18, 18}, {7, 7}, {19, 19}, {10, 10}, {9, 9}, {12, 12}};
     ASSERT_TRUE(m.size() == 12);
 
@@ -260,7 +260,7 @@ TEST(TestGroupName, map_erase_2) {
     }
 }
 
-TEST(TestGroupName, map_erase_3) {
+TEST(Map, map_erase_3) {
     s21::map<int, int> m{{5, 5}, {3, 3}, {6, 6}, {4, 4}, {1, 1}, {2, 2}, {18, 18}, {7, 7}, {19, 19}, {10, 10}, {9, 9}, {12, 12}};
     ASSERT_TRUE(m.size() == 12);
 
@@ -279,7 +279,7 @@ TEST(TestGroupName, map_erase_3) {
     }
 }
 
-TEST(TestGroupName, map_erase_4) {
+TEST(Map, map_erase_4) {
     s21::map<int, int> m{{5, 5}, {3, 3}, {6, 6}, {4, 4}, {1, 1}, {2, 2}, {18, 18}, {7, 7}, {20, 20}, {10, 10}, {9, 9}, {12, 12}, {21, 21}};
     ASSERT_TRUE(m.size() == 13);
 

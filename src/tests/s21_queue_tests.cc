@@ -3,11 +3,9 @@
 
 #include "../queue/s21_queue.h"
 
-#include <iostream>
-
 using namespace std;
 
-TEST(TestGroupName, queue_front) {
+TEST(Queue, queue_front) {
     queue<int> check;
     s21::queue<int> q;
 
@@ -25,7 +23,7 @@ TEST(TestGroupName, queue_front) {
     ASSERT_TRUE(q.size() == check.size());
 }
 
-TEST(TestGroupName, queue_back) {
+TEST(Queue, queue_back) {
     queue<int> check;
     s21::queue<int> q;
 
@@ -43,7 +41,7 @@ TEST(TestGroupName, queue_back) {
     ASSERT_TRUE(q.size() == check.size());
 }
 
-TEST(TestGroupName, queue_swap) {
+TEST(Queue, queue_swap) {
     s21::queue<int> check;
     s21::queue<int> buffer;
     s21::queue<int> q;
@@ -74,7 +72,7 @@ TEST(TestGroupName, queue_swap) {
     ASSERT_TRUE((q != check) == false);
 }
 
-TEST(TestGroupName, queue_not_empty) {
+TEST(Queue, queue_not_empty) {
     s21::queue<int> q;
 
     for (int i = 0; i < 50; i++) {
@@ -87,12 +85,12 @@ TEST(TestGroupName, queue_not_empty) {
     ASSERT_TRUE(q.empty() == false);
 }
 
-TEST(TestGroupName, queue_empty) {
+TEST(Queue, queue_empty) {
     s21::queue<int> q;
     ASSERT_TRUE(q.empty() == true);
 }
 
-TEST(TestGroupName, queue_operator_not_eq) {
+TEST(Queue, queue_operator_not_eq) {
     s21::queue<int> buffer;
     s21::queue<int> q;
     s21::queue<int> q2;
@@ -119,7 +117,7 @@ TEST(TestGroupName, queue_operator_not_eq) {
     ASSERT_TRUE( (q2 != buffer) == false);
 }
 
-TEST(TestGroupName, queue_operator_eq) {
+TEST(Queue, queue_operator_eq) {
     s21::queue<int> q;
     s21::queue<int> buffer;
 
@@ -141,7 +139,7 @@ TEST(TestGroupName, queue_operator_eq) {
     ASSERT_TRUE((q != check) == false);
 }
 
-TEST(TestGroupName, queue_constructor_init_list) {
+TEST(Queue, queue_constructor_init_list) {
     s21::queue<int> q{3, 5, 2, 1, 6};
     s21::queue<int> check;
     check.push(3);
@@ -153,7 +151,7 @@ TEST(TestGroupName, queue_constructor_init_list) {
     ASSERT_TRUE((q != check) == false);
 }
 
-TEST(TestGroupName, queue_constructor_move) {
+TEST(Queue, queue_constructor_move) {
     s21::queue<int> q{3, 5, 2, 1, 6};
     s21::queue<int> check(move(q));
 
