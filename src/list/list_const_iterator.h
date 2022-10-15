@@ -23,11 +23,16 @@ namespace s21 {
         bool operator!=(const ListConstIterator<T>& it) const {return _currentNode != it._currentNode;}
         bool operator==(const ListConstIterator<T>& it) const {return _currentNode == it._currentNode;}
 
-        ListConstIterator<T>& shift(int n); // for me 
         Node<T>* getNode() {return _currentNode;}
         Node<T>* operator->() {return _currentNode;}
-        // operator ListIterator<T>() const { return ListIterator<T>(_currentNode); }    
-        private:
+        ListConstIterator<T>& shift(int n) {
+            while (n > 0) {
+                ++(*this);
+                n--;
+            }
+            return *this;
+        }
+    private:
         Node<T>* _currentNode;
     };
 }

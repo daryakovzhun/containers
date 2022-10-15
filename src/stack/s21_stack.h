@@ -35,8 +35,8 @@ namespace s21 {
             void push(const_reference value) {stack_->push_back(value);}
             void pop() {stack_->pop_back();}
             void swap(stack& other) {stack_->swap(*other.stack_);}
-            bool operator!=(stack& other) const { return !(stack_ == other.stack_); }
-            bool operator==(stack& other) const { return stack_ == other.stack_;}
+            bool operator!=(stack& other) const { return *stack_ != *other.stack_; }
+            bool operator==(stack& other) const { return *stack_ == *other.stack_;}
         private:
             list<T> *stack_;
             // size_type size_;

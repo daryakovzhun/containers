@@ -10,8 +10,7 @@
 using namespace std;
 namespace s21 {
     template <typename T>
-    class list{
-        
+    class list {
         public:
             using value_type = T;
             using reference = T&;
@@ -22,12 +21,7 @@ namespace s21 {
             using node_allocator = typename std::allocator_traits<std::allocator<T>>::template rebind_alloc<Node<T>>;
             node_allocator allocator;
             // List functions
-            list() : size_(0) {
-                head = new Node<T>(value_type());
-                end_ = new Node<T>(value_type(), head, head);
-                head->prev = end_;
-                head->pnext = end_;
-            }
+            list() : size_(0) {init();}
 
             list(size_type n) : list() {
                 while(n--) {
@@ -48,11 +42,7 @@ namespace s21 {
                 }
             }
 
-            list(list &&l) : head(l.head), end_(l.end_), size_(l.size_) {
-                l.head = nullptr;
-                l.end_ = nullptr;
-                l.size_ = 0;
-            }
+            list(list &&l) : list(0) {*this = move(l);}
 
             ~list() {
                 clear();
@@ -96,12 +86,8 @@ namespace s21 {
                 iterator res;
                 if (size_ == 0) {
                     if (!head) {
-                        head = new Node<T>(value_type());
-                        end_ = new Node<T>(value_type(), head, head);
-                        head->prev = end_;
-                        head->pnext = end_;
+                        init();
                     }
-
                     head->data = value;
                     res = this->begin();
                 } else if (pos == this->begin()) {
@@ -201,6 +187,7 @@ namespace s21 {
                     other.size_ = 0;
                 }
             }
+
             void reverse() {
                 iterator it = this->begin();     
                 int count = size_ + 1;
@@ -210,6 +197,7 @@ namespace s21 {
                 }
                 head = end_->pnext;
             }
+
             void unique() {
                 iterator it = this->begin(), temp = it->pnext;
                 while(!this->empty() && it->pnext != end_) {
@@ -242,13 +230,13 @@ namespace s21 {
             }
 
             // functions for me 
-            void Print_list() {
-                if (size_) {
-                    for (const auto &node : *this) {
-                        cout << node << endl;
-                    }
-                }
-            }
+            // void Print_list() {
+            //     if (size_) {
+            //         for (const auto &node : *this) {
+            //             cout << node << endl;
+            //         }
+            //     }
+            // }
             bool operator==(const list& other) {
                 bool check = true;
                 if(size_ != other.size_) return false;
@@ -260,9 +248,18 @@ namespace s21 {
                 }
                 return check;
             }
-            // bool operator!=(const list& other) {
-            //     return !*this==other;
-            // }
+
+            bool operator!=(const list& other) {
+                return !(*this == other);
+            }
+
+            void init() {
+                head = new Node<T>(value_type());
+                end_ = new Node<T>(value_type(), head, head);
+                head->prev = end_;
+                head->pnext = end_;
+            }
+
         private:
             Node<T> *head;
             Node<T> *end_;
