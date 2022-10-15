@@ -22,7 +22,7 @@ namespace s21 {
 
             queue(const queue &q) { queue_ = new s21::list<T>(*q.queue_); }
             queue(queue &&q) : queue() { *queue_ = std::move(*q.queue_); }
-            ~queue() { queue_->clear(); }
+            ~queue() { delete queue_;}
 
             queue<T>& operator=(queue &&q) {
                 if (*this != q) {
