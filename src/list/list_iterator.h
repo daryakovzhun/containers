@@ -32,7 +32,6 @@ namespace s21 {
             }
             return *this;
         }
-        // operator ListConstIterator<T>() const { return ListConstIterator<T>(_currentNode); }
     private:
         Node<T>* _currentNode;
     };

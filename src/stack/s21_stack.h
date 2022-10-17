@@ -39,7 +39,6 @@ namespace s21 {
             bool operator==(stack& other) const { return *stack_ == *other.stack_;}
         private:
             list<T> *stack_;
-            // size_type size_;
     };
 }
 

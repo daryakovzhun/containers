@@ -81,7 +81,9 @@ TEST(List, erase) {
     --it;
     a.erase(it);
     s21::list<int> check = {1, 2, 4, 5};
+    s21::list<int> check_1 = {1, 2, 3, 5};
     ASSERT_TRUE((a == check) == true);
+    ASSERT_TRUE((a == check_1) == false);
 }
 
 TEST(List, init) {
@@ -96,12 +98,13 @@ TEST(List, init) {
 }
 
 TEST(List, merge_list) {
-    s21::list<int> a = {1, 2, 4};
+    s21::list<int> a = {1, 2, 4,300};
     s21::list<int> b = move(a);
     s21::list<int> c = {-7, -5, 3, 125};
-    s21::list<int> check = {-7, -5, 1, 2, 3, 4, 125};
-    c.merge(a);
+    s21::list<int> check = {-7, -5, 1, 2, 3, 4, 125, 300};
+    c.merge(b);
     ASSERT_TRUE(a.size() == 0);
     ASSERT_TRUE(b.size() == 0);
     ASSERT_TRUE((c == check) == true);
+    ASSERT_TRUE(c.max_size() == check.max_size());
 }
