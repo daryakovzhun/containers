@@ -36,8 +36,8 @@ namespace s21 {
             }
 
 
-            list( list &l) :  list() {  // CONST !!!!
-                for (const auto& nodes : l) {
+            list(const list &l) :  list() {
+                for (auto& nodes : l) {
                     push_back(nodes);
                 }
             }
@@ -64,8 +64,8 @@ namespace s21 {
             const_reference back() {return end_->prev->data;}
 
             // List iterators
-            iterator begin() {return iterator(head);}
-            iterator end() {return iterator(end_);}
+            iterator begin() const {return iterator(head);}
+            iterator end() const {return iterator(end_);}
 
             const_iterator cbegin() const {return const_iterator(head);}
             const_iterator cend() const {return const_iterator(end_);}
