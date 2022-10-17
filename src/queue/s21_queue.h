@@ -2,7 +2,6 @@
 #define SRC_S21_QUEUE_H
 
 #include <initializer_list>
-
 #include "../list/s21_list.h"
 
 namespace s21 {
@@ -22,7 +21,7 @@ namespace s21 {
 
             queue(const queue &q) { queue_ = new s21::list<T>(*q.queue_); }
             queue(queue &&q) : queue() { *queue_ = std::move(*q.queue_); }
-            ~queue() { delete queue_;}
+            ~queue() { delete queue_; }
 
             queue<T>& operator=(queue &&q) {
                 if (*this != q) {
@@ -32,11 +31,11 @@ namespace s21 {
                 return *this;
             }
 
-            const_reference front() const { return queue_->front();}
-            const_reference back() const {return queue_->back();}
+            const_reference front() const { return queue_->front(); }
+            const_reference back() const { return queue_->back(); }
 
             bool empty() { return queue_->empty(); }
-            size_type size() const { return queue_->size();}
+            size_type size() const { return queue_->size(); }
 
             void push(const_reference value) { queue_->push_back(value); }
             void pop() { queue_->pop_front(); }

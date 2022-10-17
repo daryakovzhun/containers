@@ -4,8 +4,6 @@
 #include "s21_list_tests.cc"
 #include "s21_queue_tests.cc"
 
-
-
 #include <gtest/gtest.h>
 
 int main(int argc, char **argv) {

@@ -1,7 +1,7 @@
 #include <gmock/gmock.h>
 #include <map>
 
-#include "../map/s21_map.cc"
+#include "../map/s21_map.h"
 
 using namespace std;
 

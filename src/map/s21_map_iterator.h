@@ -12,11 +12,9 @@ class Node {
         Node* parent;
         Node* left;
         Node* right;
-        std::pair< Key, T> data; // const
+        std::pair<Key, T> data;
 
         Node(const std::pair<const Key, T>& value = std::pair<const Key, T>(), Node* p = NULL, Node* l = NULL, Node* r = NULL) {
-            // data.first = value.first;
-            // data.second = value.second;
             data = value;
             parent = p;
             left = l;
@@ -160,11 +158,6 @@ class MapConstIterator {
             *this = other;
         }
         ~MapConstIterator() {}
-
-        // MapConstIterator& operator=(const MapConstIterator& other) {
-        //     it = other.it;
-        //     return *this;
-        // }
 
         const_reference operator*() const {
             return it->data;
