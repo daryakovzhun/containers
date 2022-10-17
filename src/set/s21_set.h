@@ -1,10 +1,9 @@
 #ifndef S21_SET_H
 #define S21_SET_H
 
-// #include <cmath>
+#include <cmath>
 #include <iostream>
 #include <utility>
-// #include <initializer_list>
 #include "./s21_set_iterator.h"
 
 
@@ -26,9 +25,10 @@ namespace s21 {
             set(set &&m) : set() { *this = std::move(m); }
             ~set();
             set& operator=(set &&m);
+            set& operator=(const set &m);
 
-            iterator begin() const { return SetIterator<Key>(head_->parent); }////////
-            iterator end() const { return SetIterator<Key>(tail_); }//////////////////
+            iterator begin() const { return SetIterator<Key>(head_->parent); }
+            iterator end() const { return SetIterator<Key>(tail_); }
 
             bool empty() const { return size_ == 0; }
             size_type size() const { return size_; }
@@ -40,13 +40,16 @@ namespace s21 {
             void swap(set& other);
             void merge(set& other);
 
+            iterator find(const Key& key) const { return find_by_key(key).first;  }
+            bool contains(const Key& key) const { return find_by_key(key).second; }
+
         private:
-            Node<Key>* root_;
-            Node<Key>* head_;
-            Node<Key>* tail_;
+            NodeSet<Key>* root_;
+            NodeSet<Key>* head_;
+            NodeSet<Key>* tail_;
             size_type size_;
 
-            void connect_node (Node<Key>* parent, Node<Key>** childptr, Node<Key>* child) {
+            void connect_node (NodeSet<Key>* parent, NodeSet<Key>** childptr, NodeSet<Key>* child) {
                 if (child) {
                     child->parent = parent;
                 }
@@ -60,7 +63,7 @@ namespace s21 {
                 if (empty()) {
                     return std::pair<iterator, bool>(end(), false);
                 }
-                Node<Key>* it = root_;
+                NodeSet<Key>* it = root_;
                 while (it && it != head_ && it != tail_) {
                     if (key < it->data) {
                         it = it->left;
@@ -73,7 +76,7 @@ namespace s21 {
                 return std::pair<iterator, bool>(end(), false);
             }
 
-            void rebuild_node(iterator pos, Node<Key>* child) {
+            void rebuild_node(iterator pos, NodeSet<Key>* child) {
                 if (pos.it->parent->left == pos.it) {
                     pos.it->parent->left = child;
                 } else {

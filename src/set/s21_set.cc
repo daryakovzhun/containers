@@ -1,18 +1,22 @@
 #include "s21_set.h"
-
-#include <limits>
 #include <set>
-#include <cmath>
 
 namespace s21 {
     template<typename Key>
     set<Key>::set() {
         root_ = NULL;
-        head_ = new Node<Key>();
-        tail_ = new Node<Key>();
+        head_ = new NodeSet<Key>();
+        tail_ = new NodeSet<Key>();
         head_->parent = tail_;
         tail_->parent = head_;
         size_ = 0;
+    }
+
+    template<typename Key>
+    set<Key>::set(std::initializer_list<const Key> const &items) : set() {
+        for (auto key : items) {
+            insert(key);
+        }
     }
 
     template<typename Key>
@@ -45,6 +49,16 @@ namespace s21 {
     }
 
     template<typename Key>
+    set<Key>& set<Key>::operator=(const set &m) {
+        clear();
+        root_ = root_->copy_node(m.root_);
+        head_ = m.head_;
+        tail_ = m.tail_;
+        size_ = m.size_;
+    return *this;
+    }
+
+    template<typename Key>
     std::size_t set<Key>::max_size() const {
         std::allocator<int> alloc;
         return alloc.max_size() / 10;
@@ -72,15 +86,15 @@ namespace s21 {
     template<typename Key>
     std::pair<SetIterator<Key>, bool> set<Key>::insert(const Key& value) {
         if (empty()) {
-            root_ = new Node<Key>(value);
+            root_ = new NodeSet<Key>(value);
             connect_node(root_, &root_->left, head_);
             connect_node(root_, &root_->right, tail_);
             size_++;
             return std::pair<SetIterator<Key>, bool>(SetIterator<Key>(root_), true);
         }
 
-        Node<Key>* it = root_;
-        Node<Key>* parent = NULL;
+        NodeSet<Key>* it = root_;
+        NodeSet<Key>* parent = NULL;
         while (it && it != head_ && it != tail_) {
             parent = it;
             if (value < it->data) {
@@ -92,7 +106,7 @@ namespace s21 {
             }
         }
 
-        Node<Key>* result = new Node<Key>(value, parent);
+        NodeSet<Key>* result = new NodeSet<Key>(value, parent);
     
         if (value < parent->data) {
             connect_node(parent, &parent->left, result);
@@ -147,34 +161,16 @@ namespace s21 {
             insert(it.it->data);
         }
     }
-}
+}  //  namespace s21
 
-int main () {
-//     s21::set <int> mst;
- 
-//     std::cout << "Добавление случайных значений: " << std::endl;
-//     for (int i = 0; i < 10; i++) {
-//         int random = rand() % 10 + 1;
-//         mst.insert(random);
-//         std::cout << i + 1 << ") " << random << std::endl;
+// int main () {
+//     s21::set <int> mst {1,3,2};
+//     // std::cout << mst(1) << std::endl;
+//     // std::set <int> mst {1,3,2};
+
+//     for (s21::set<int>::iterator it = mst.begin(); it != mst.end(); ++it)
+//     {
+//         std::cout << *it << ' ';
 //     }
- 
-//     s21::set <int> :: iterator it = mst.begin();
- 
-//     std::cout << "Отсортированный вариант: " << std::endl;
-//     for (int i = 1; it != mst.end(); i++, it++) {
-//         std::cout << *it << " ";
-//     }
-
-    s21::set<char> char_my;
-    std::set<char> char_st;
-    std::cout << " my = " << char_my.max_size() << "\nstd = " << char_st.max_size() << '\n';
-
-    s21::set<double> double_my;
-    std::set<double> double_st;
-    std::cout << " my = " << double_my.max_size() << "\nstd = " << double_st.max_size() << '\n';
-
-    s21::set<int> int_my;
-    std::set<int> int_st;
-    std::cout << " my = " << int_my.max_size() << "\nstd = " << int_st.max_size() << '\n';
-}
+//     std::cout << std::endl;
+// }

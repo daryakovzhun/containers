@@ -5,15 +5,16 @@
 #include <cstddef>
 #include <iostream>
 
+namespace s21 {
 template<typename Key>
-class Node {
+class NodeSet {
     public:
-        Node* parent;
-        Node* left;
-        Node* right;
+        NodeSet* parent;
+        NodeSet* left;
+        NodeSet* right;
         Key data; // const
 
-        Node(const Key& value = Key(), Node* p = NULL, Node* l = NULL, Node* r = NULL) {
+        NodeSet(const Key& value = Key(), NodeSet* p = NULL, NodeSet* l = NULL, NodeSet* r = NULL) {
             // data.first = value.first;
             // data.second = value.second;
             data = value;
@@ -21,11 +22,11 @@ class Node {
             left = l;
             right = r;
         }
-        Node(const Node& other) {
+        NodeSet(const NodeSet& other) {
             *this = other;
         }
 
-        Node& operator=(const Node& other) {
+        NodeSet& operator=(const NodeSet& other) {
             if (*this != &other) {
                 parent = other.parent;
                 left = other.left;
@@ -35,10 +36,10 @@ class Node {
             return *this;
         }
 
-        ~Node() {}
+        ~NodeSet() {}
 
-        Node* next() {
-            Node* next = this;
+        NodeSet* next() {
+            NodeSet* next = this;
             if (next->right) {
                 next = next->right;
                 while (next->left) {
@@ -53,8 +54,8 @@ class Node {
             return next;
         }
 
-        Node* prev() {
-            Node* prev = this;
+        NodeSet* prev() {
+            NodeSet* prev = this;
             if (prev->left) {
                 prev = prev->left;
                 while (prev->right) {
@@ -69,16 +70,16 @@ class Node {
             return prev;
         }
 
-        void free_node(Node* tree) {
+        void free_node(NodeSet* tree) {
             if (tree->left) free_node(tree->left); 
             if (tree->right) free_node(tree->right); 
             delete tree;
         }
 
-        Node* copy_node(Node* root){
-            Node* node = root;
+        NodeSet* copy_node(NodeSet* root){
+            NodeSet* node = root;
             if (node) {
-                node = new Node(root->data);
+                node = new NodeSet(root->data);
                 node->left = copy_node(root->left);
                 node->right = copy_node(root->right);
             }
@@ -93,9 +94,9 @@ class SetIterator {
         using value_type = const key_type;
         using reference = value_type&;
 
-        Node<Key>* it;
+        NodeSet<Key>* it;
 
-        SetIterator(Node<Key>* root = NULL) : it(root) {}
+        SetIterator(NodeSet<Key>* root = NULL) : it(root) {}
         SetIterator(const SetIterator& other) {
             *this = other;
         }
@@ -150,9 +151,9 @@ class SetConstIterator {
         using value_type = const key_type;
         using const_reference = const value_type&;
 
-        const Node<Key>* it;
+        const NodeSet<Key>* it;
 
-        SetConstIterator(Node<Key>* root = NULL) : it(root) {}
+        SetConstIterator(NodeSet<Key>* root = NULL) : it(root) {}
         SetConstIterator(const SetConstIterator& other) {
             *this = other;
         }
@@ -198,4 +199,5 @@ class SetConstIterator {
         }
 };
 
+}  //  namespace s21
 #endif //  SRC_S21_SET_ITERATOR_H
