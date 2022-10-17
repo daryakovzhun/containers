@@ -41,7 +41,7 @@ namespace s21 {
             void push(const_reference value) { queue_->push_back(value); }
             void pop() { queue_->pop_front(); }
             void swap(queue& other) { queue_->swap(*other.queue_); }
-
+            
             bool operator!=(queue& other) const { return !(*queue_ == *other.queue_); }
         private:
             s21::list<T>* queue_;
