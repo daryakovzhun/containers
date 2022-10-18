@@ -47,6 +47,7 @@ class vector
 
         ~vector()                           { if (arr) delete[] arr; }
         vector& operator=(vector &&v);
+        vector& operator=(const vector &v);
 
         // some method examples
         iterator begin()                    { return arr;            }
@@ -117,6 +118,13 @@ vector<T>& vector<T>::operator=(vector<T> &&v)
     return *this;
 }
 
+template <typename T>
+vector<T>& vector<T>::operator=(const vector<T> &v)
+{
+    vector<T> tmp(v);
+    this->swap(tmp);
+    return *this;
+}
 
 // size getter__________________________________________________________________
 
