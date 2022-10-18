@@ -1,7 +1,7 @@
 #include <gmock/gmock.h>
 #include <set>
 
-#include "../set/s21_set.cc"
+#include "../set/s21_set.h"
 
 using namespace std;
 

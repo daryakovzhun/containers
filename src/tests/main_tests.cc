@@ -2,6 +2,7 @@
 #include "s21_map_tests.cc"
 #include "s21_queue_tests.cc"
 #include "s21_set_tests.cc"
+#include "s21_vector_tests.cc"
 
 #include <gtest/gtest.h>
 

@@ -1,3 +1,5 @@
+UNAME := $(shell uname)
+
 all: test
 
 test:
@@ -8,3 +10,11 @@ test:
 
 clean:
 	rm -rf *.gcda *.gcno report.info a.out finish
+
+html:
+ifeq ($(UNAME), Linux)
+	firefox finish/index.html
+endif
+ifeq ($(UNAME), Darwin)
+	open finish/index.html
+endif
