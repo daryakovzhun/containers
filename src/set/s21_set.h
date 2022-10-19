@@ -29,7 +29,7 @@ namespace s21 {
             set& operator=(const set &m);
 
             iterator begin() const { return SetIterator<Key>(head_->parent); }
-            iterator end() const { return SetIterator<Key>(tail_); }
+            iterator end  () const { return SetIterator<Key>(tail_);         }
 
             bool empty() const { return size_ == 0; }
             size_type size() const { return size_; }
