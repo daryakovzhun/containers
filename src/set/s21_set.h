@@ -44,44 +44,15 @@ namespace s21 {
             iterator find(const Key& key) const { return find_by_key(key).first;  }
             bool contains(const Key& key) const { return find_by_key(key).second; }
 
-        private:
+        protected:
             NodeSet<Key>* root_;
             NodeSet<Key>* head_;
             NodeSet<Key>* tail_;
             size_type size_;
 
-            void connect_node (NodeSet<Key>* parent, NodeSet<Key>** childptr, NodeSet<Key>* child) {
-                if (child) {
-                    child->parent = parent;
-                }
-
-                *childptr = child;
-            }
-
-            std::pair<iterator, bool> find_by_key(const key_type& key) const {
-                if (empty()) {
-                    return std::pair<iterator, bool>(end(), false);
-                }
-                NodeSet<Key>* it = root_;
-                while (it && it != head_ && it != tail_) {
-                    if (key < it->data) {
-                        it = it->left;
-                    } else if (key > it->data) {
-                        it = it->right;
-                    } else {
-                        return std::pair<iterator, bool>(it, true);
-                    }
-                }
-                return std::pair<iterator, bool>(end(), false);
-            }
-
-            void rebuild_node(iterator pos, NodeSet<Key>* child) {
-                if (pos.it->parent->left == pos.it) {
-                    pos.it->parent->left = child;
-                } else {
-                    pos.it->parent->right = child;
-                }
-            }
+            void connect_node (NodeSet<Key>* parent, NodeSet<Key>** childptr, NodeSet<Key>* child);
+            std::pair<iterator, bool> find_by_key(const key_type& key) const;
+            void rebuild_node(iterator pos, NodeSet<Key>* child);
     };  //  class set
 
 
@@ -246,6 +217,42 @@ namespace s21 {
         }
     }
 
+// PROTECTED_METHODS
+    template<typename Key>
+    void set<Key>::connect_node (NodeSet<Key>* parent, NodeSet<Key>** childptr, NodeSet<Key>* child) {
+        if (child) {
+            child->parent = parent;
+        }
+
+        *childptr = child;
+    }
+
+    template<typename Key>
+    std::pair<SetIterator<Key>, bool> set<Key>::find_by_key(const key_type& key) const {
+        if (empty()) {
+            return std::pair<iterator, bool>(end(), false);
+        }
+        NodeSet<Key>* it = root_;
+        while (it && it != head_ && it != tail_) {
+            if (key < it->data) {
+                it = it->left;
+            } else if (key > it->data) {
+                it = it->right;
+            } else {
+                return std::pair<iterator, bool>(it, true);
+            }
+        }
+        return std::pair<iterator, bool>(end(), false);
+    }
+
+    template<typename Key>
+    void set<Key>::rebuild_node(iterator pos, NodeSet<Key>* child) {
+        if (pos.it->parent->left == pos.it) {
+            pos.it->parent->left = child;
+        } else {
+            pos.it->parent->right = child;
+        }
+    }
 };  // namespace s21
 
 #endif
