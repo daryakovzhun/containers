@@ -181,17 +181,16 @@ namespace s21 {
                         rebuild_node(next, (next.it->right) ? next.it->right : next.it->left);   //  самый левый из правого поддерева имеет одного ребенка
                     }
                     pos.it->data = next.it->data;
-                    // pos.it->data.first = next.it->data.first;
-                    // pos.it->data.second = next.it->data.second;
                     delete next.it;
                 }
                 size_--;               
             }
 
             void swap(map& other) {
-                map<Key, T> buffer(other);
-                other = *this;
-                *this = buffer;                
+                std::swap(this->root_, other.root_);
+                std::swap(this->head_, other.head_);
+                std::swap(this->tail_, other.tail_);
+                std::swap(this->size_, other.size_);           
             }
 
             void merge(map& other) {
