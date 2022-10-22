@@ -36,7 +36,7 @@ namespace s21 {
             size_type max_size() const;
 
             void clear();
-            std::pair<iterator, bool> insert(const value_type& value);
+            virtual std::pair<iterator, bool> insert(const value_type& value);
             void erase(iterator pos);
             void swap(set& other);
             void merge(set& other);

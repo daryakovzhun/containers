@@ -16,10 +16,9 @@ namespace s21 {
             using set<Key>::set;
 
             multiset(std::initializer_list<value_type> const &items);
-            std::pair<iterator, bool> insert(const value_type& value);
-            void merge(multiset& other);
+            virtual std::pair<iterator, bool> insert(const value_type& value);
 
-    };  // set
+    };  // multiset
 
 
 //  _______________________MULTISET_METHODS_____________________________________
@@ -67,14 +66,6 @@ namespace s21 {
             this->size_++;
             return std::pair<SetIterator<Key>, bool>(SetIterator<Key>(result), true);
         }
-
-    template<typename Key>
-    void multiset<Key>::merge(multiset<Key>& other) {
-        auto it = other.begin();
-        for (; it != other.end(); it++) {
-            insert(it.it->data);
-        }
-    }
 
 
 }  //  namespace s21
