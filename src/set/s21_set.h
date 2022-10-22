@@ -53,6 +53,7 @@ namespace s21 {
             void connect_node (NodeSet<Key>* parent, NodeSet<Key>** childptr, NodeSet<Key>* child);
             std::pair<iterator, bool> find_by_key(const key_type& key) const;
             void rebuild_node(iterator pos, NodeSet<Key>* child);
+            virtual bool insertCompare(const Key& value, NodeSet<Key>* parent) { return value < parent->data; }
     };  //  class set
 
 
@@ -152,7 +153,7 @@ namespace s21 {
         NodeSet<Key>* parent = NULL;
         while (it && it != head_ && it != tail_) {
             parent = it;
-            if (value < it->data) {
+            if (this->insertCompare(value, parent)) {
                 it = it->left;
             } else if (value > it->data) {
                 it = it->right;
@@ -163,7 +164,7 @@ namespace s21 {
 
         NodeSet<Key>* result = new NodeSet<Key>(value, parent);
     
-        if (value < parent->data) {
+        if (this->insertCompare(value, parent)) {
             connect_node(parent, &parent->left, result);
             connect_node(result, &result->left, it);
 
