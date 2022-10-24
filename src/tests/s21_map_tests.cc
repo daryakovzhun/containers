@@ -176,6 +176,7 @@ TEST(Map, map_swap) {
     ASSERT_TRUE(m2.size() == buffer_m1.size());
 
     for(int x: {1, 2, 3, 4, 5, 6, 7, 8}) {
+        std::cout << "m1 = " << m1[x] << " x = " << x << "\n";
         ASSERT_TRUE(m1[x] == x);
     }
 
