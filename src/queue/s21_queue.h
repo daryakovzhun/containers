@@ -42,6 +42,11 @@ namespace s21 {
             void swap(queue& other) { queue_->swap(*other.queue_); }
             
             bool operator!=(queue& other) const { return !(*queue_ == *other.queue_); }
+
+            template <typename... Args>
+            void emplace_back(Args &&...args) {
+                queue_->emplace_back(std::forward<Args>(args)...);
+            }
         private:
             s21::list<T>* queue_;
     };

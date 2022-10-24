@@ -202,6 +202,16 @@ namespace s21 {
 
             bool contains(const Key& key) const { return find_by_key(key).second; }
 
+            template <class... Args>
+            std::vector<std::pair<iterator, bool>> emplace(Args&&... args) {
+                std::vector<std::pair<iterator, bool>> result;
+                std::vector<typename map<Key, T>::value_type> argsVector = {args...};
+                for (auto& i : argsVector) {
+                    result.push_back(insert(i));
+                }
+                return result;
+            }
+
         private:
             Node<Key, T>* root_;
             Node<Key, T>* head_;
