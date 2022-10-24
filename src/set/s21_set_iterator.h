@@ -1,7 +1,6 @@
 #ifndef SRC_S21_SET_ITERATOR_H
 #define SRC_S21_SET_ITERATOR_H
 
-#include <utility>
 #include <cstddef>
 #include <iostream>
 

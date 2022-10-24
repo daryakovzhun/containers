@@ -37,6 +37,9 @@ namespace s21 {
             void swap(stack& other) {stack_->swap(*other.stack_);}
             bool operator!=(stack& other) const { return *stack_ != *other.stack_; }
             bool operator==(stack& other) const { return *stack_ == *other.stack_;}
+            template <typename... Args> void emplace_front(Args &&...args) {
+                this->stack_->emplace_back(std::forward<Args>(args)...);
+            }
         private:
             list<T> *stack_;
     };

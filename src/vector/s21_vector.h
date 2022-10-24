@@ -77,6 +77,18 @@ class vector
         void pop_back()                     { (this->m_size)--;       }
         void swap(vector& other);
         iterator insert(iterator pos, const_reference value);
+
+        template <typename... Args>
+        iterator emplace(const_iterator pos, Args&&... args) {
+            iterator it(pos);
+            it = this->insert(it, value_type(std::forward<Args>(args)...));
+            return it;
+        }
+
+        template <typename... Args>
+        void emplace_back(Args&&... args) {
+            this->push_back(value_type(std::forward<Args>(args)...));
+        }
 };
 
 

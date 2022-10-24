@@ -44,6 +44,8 @@ namespace s21 {
             iterator find(const Key& key) const { return find_by_key(key).first;  }
             bool contains(const Key& key) const { return find_by_key(key).second; }
 
+            template <class... Args>
+            vector<std::pair<SetIterator<Key>,bool>> emplace(Args&&... args);
         protected:
             NodeSet<Key>* root_;
             NodeSet<Key>* head_;
@@ -254,6 +256,19 @@ namespace s21 {
             pos.it->parent->right = child;
         }
     }
+
+    template<typename Key>
+    template <class... Args>
+    vector<std::pair<SetIterator<Key>, bool>> set<Key>::emplace(Args&&... args) {
+        vector<std::pair<iterator, bool>> result;
+        vector<typename set<key_type>::value_type> argsVector = {
+            args...};
+        for (auto &i : argsVector) {
+            result.push_back(insert(i));
+        }
+        return result;
+    }
+
 };  // namespace s21
 
 #endif

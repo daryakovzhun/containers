@@ -260,6 +260,21 @@ namespace s21 {
                 head->pnext = end_;
             }
 
+            template <typename... Args>
+            iterator emplace(const_iterator pos, Args&&... args) {
+                return this->insert(pos, std::forward<Args>(args)...);
+            }
+
+            template <typename... Args>
+            void emplace_back(Args&&... args) {
+                this->push_back(value_type(std::forward<Args>(args)...));
+            }
+
+            template <typename... Args>
+            void emplace_front(Args&&... args) {
+                this->push_front(value_type(std::forward<Args>(args)...));
+            }
+
         private:
             Node<T> *head;
             Node<T> *end_;
