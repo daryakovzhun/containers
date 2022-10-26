@@ -303,9 +303,9 @@ TEST(Map, map_emplace) {
     s21::map<int, int> m{{0, 0}, {9, 9}, {5, 5}, {7, 7}, {3, 3}};
 
     ASSERT_TRUE(m.size() == 5);
-    m.emplace(4, 4);
+    auto check = m.emplace(std::pair<int, int>(4, 4));
 
     for(auto x: {0, 3, 5, 7, 9, 4}) {
-        ASSERT_TRUE(m[x] == true);
+        ASSERT_TRUE(m[x] == x);
     }
 }
