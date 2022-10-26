@@ -159,3 +159,9 @@ TEST(Queue, queue_constructor_move) {
     ASSERT_TRUE(q.size() == 0);
 }
 
+TEST(Queue, queue_emplace) {
+    s21::queue<int> q{3, 5, 2, 1, 6};
+    q.emplace_back(7);
+
+    ASSERT_TRUE(q.back() == 7);
+}
