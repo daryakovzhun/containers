@@ -108,3 +108,26 @@ TEST(List, merge_list) {
     ASSERT_TRUE((c == check) == true);
     ASSERT_TRUE(c.max_size() == check.max_size());
 }
+
+TEST(List, emplace_back) {
+    s21::list<int> a = {1, 2, 3, 4, 5};
+    s21::list<int> b = {1, 2, 3, 4, 5, 6};
+    a.emplace_back(6);
+    ASSERT_TRUE(a == b); 
+}
+
+TEST(List, emplace_front) {
+    s21::list<int> a = {1, 2, 3, 4, 5};
+    s21::list<int> b = {0, 1, 2, 3, 4, 5};
+    a.emplace_front(0);
+    ASSERT_TRUE(a == b); 
+}
+
+TEST(List, emplace) {
+    s21::list<int> a = {1, 2, 3, 4, 5};
+    auto it = a.cbegin();
+    ++it;
+    s21::list<int> b = {1, 101, 2, 3, 4, 5};
+    a.emplace(it, 101);
+    ASSERT_TRUE(a == b); 
+}

@@ -82,3 +82,10 @@ TEST(Stack, stack_constructors) {
     ASSERT_TRUE((check == d) == true);
     ASSERT_TRUE((q == d) == true);
 }
+
+TEST(Stack, stack_emplace) {
+    s21::stack<int> a = {1, 2, 3, 4, 5};
+    s21::stack<int> b = {1, 2, 3, 4, 5, 6};
+    a.emplace_front(6);
+    ASSERT_TRUE(a == b);    
+}
