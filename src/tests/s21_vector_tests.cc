@@ -308,3 +308,28 @@ TEST(TestsVector, vector_iterator) {
         ASSERT_TRUE(v_s21[i] == v_std[i]);
     }
 }
+
+TEST(TestsVector, vector_emplace) {
+    s21::vector<int> v_s21 {3,5,1,2};
+    std::vector<int> v_std {3,5,1,2};
+    const int *a = &v_s21[1];
+    v_s21.emplace(a, 69);
+    v_std.emplace(++v_std.begin(), 69);
+    ASSERT_TRUE(v_s21.size() == v_std.size());
+    ASSERT_TRUE(v_s21.capacity() == v_std.capacity());
+    for (int i = 0; i < v_s21.size(); i++) {
+        ASSERT_TRUE(v_s21[i] == v_std[i]);
+    }
+}
+
+TEST(TestsVector, vector_emplace_back) {
+    s21::vector<int> v_s21 {3,5,1,2};
+    std::vector<int> v_std {3,5,1,2};
+    v_s21.emplace_back(69);
+    v_std.emplace_back(69);
+    ASSERT_TRUE(v_s21.size() == v_std.size());
+    ASSERT_TRUE(v_s21.capacity() == v_std.capacity());
+    for (int i = 0; i < v_s21.size(); i++) {
+        ASSERT_TRUE(v_s21[i] == v_std[i]);
+    }
+}
