@@ -91,9 +91,9 @@ namespace s21 {
             bool empty() const { return size_ == 0; }
             size_type size() const { return size_; }
             
-            size_type max_size() const {  // !!!!!
-                std::set<value_type> s;
-                return s.max_size();
+            size_type max_size() const {
+                std::allocator<std::pair<const Key, T>> alloc;
+                return alloc.max_size() / 5;
             }
 
             void clear() {

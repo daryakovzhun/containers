@@ -176,7 +176,6 @@ TEST(Map, map_swap) {
     ASSERT_TRUE(m2.size() == buffer_m1.size());
 
     for(int x: {1, 2, 3, 4, 5, 6, 7, 8}) {
-        std::cout << "m1 = " << m1[x] << " x = " << x << "\n";
         ASSERT_TRUE(m1[x] == x);
     }
 
@@ -308,4 +307,10 @@ TEST(Map, map_emplace) {
     for(auto x: {0, 3, 5, 7, 9, 4}) {
         ASSERT_TRUE(m[x] == x);
     }
+}
+
+TEST(Map, map_max_size) {
+    s21::map<int, int> m;
+    std::map<int, int> check;
+    ASSERT_TRUE(m.max_size() == check.max_size());
 }
