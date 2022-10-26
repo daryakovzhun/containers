@@ -195,3 +195,20 @@ TEST(TestsSet, max_size) {
     std::set<int> std_set {3,2,5};
     ASSERT_TRUE(s21_set.max_size() == std_set.max_size());
 }
+
+TEST(Map, emplace) {
+    s21::set<int> m{0, 3, 5, 7, 9};
+
+    ASSERT_TRUE(m.size() == 5);
+    m.emplace(4);
+
+    const int x[] = {0, 3, 4, 5, 7, 9};
+    int i = 0;
+    for (s21::set<int>::iterator it = m.begin(); it != m.end(); ++it) {
+        // std::cout << "it = " << *it << " ";
+        // std::cout << "x = "<< x[i] << "\n";
+
+        ASSERT_TRUE(*it == x[i]);
+        i++;
+    }
+}
