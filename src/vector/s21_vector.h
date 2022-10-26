@@ -80,9 +80,8 @@ class vector
 
         template <typename... Args>
         iterator emplace(const_iterator pos, Args&&... args) {
-            iterator it(pos);
-            it = this->insert(it, value_type(std::forward<Args>(args)...));
-            return it;
+            iterator it = const_cast<iterator>(pos);
+            return insert(it, value_type(std::forward<Args>(args)...));
         }
 
         template <typename... Args>
