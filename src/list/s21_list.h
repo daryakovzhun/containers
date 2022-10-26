@@ -262,7 +262,8 @@ namespace s21 {
 
             template <typename... Args>
             iterator emplace(const_iterator pos, Args&&... args) {
-                return this->insert(pos, std::forward<Args>(args)...);
+                iterator it(pos.getNode());
+                return this->insert(it, std::forward<Args>(args)...);
             }
 
             template <typename... Args>
