@@ -261,7 +261,7 @@ namespace s21 {
     template <class... Args>
     std::vector<std::pair<SetIterator<Key>, bool>> set<Key>::emplace(Args&&... args) {
         std::vector<std::pair<iterator, bool>> result;
-        std::vector<value_type> argsVector = {args...};
+        std::vector<key_type> argsVector{args...};
         for (auto &i : argsVector) {
             result.push_back(insert(i));
         }
