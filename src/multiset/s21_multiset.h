@@ -7,26 +7,28 @@ namespace s21 {
 
 //  ________________________MULTISET_CLASS______________________________________
 
-    template<typename Key>
-    class multiset : public set<Key> {
-        public:
-            using key_type = Key;
-            using value_type = const key_type;
-            using set<Key>::set;
+template <typename Key>
+class multiset : public set<Key> {
+ public:
+  using key_type = Key;
+  using value_type = const key_type;
+  using set<Key>::set;
 
-            multiset(std::initializer_list<value_type> const &items);
-            bool insertCompare(const Key& value, NodeSet<Key>* parent) { return value <= parent->data; }
+  multiset(std::initializer_list<value_type> const &items);
+  bool insertCompare(const Key &value, NodeSet<Key> *parent) {
+    return value <= parent->data;
+  }
 
-    };  // multiset
-
+};  // multiset
 
 //  _______________________MULTISET_METHODS_____________________________________
-    template<typename Key>
-    multiset<Key>::multiset(std::initializer_list<const Key> const &items) : multiset() {
-        for (auto key : items) {
-            this->insert(key);
-        }
-    }
+template <typename Key>
+multiset<Key>::multiset(std::initializer_list<const Key> const &items)
+    : multiset() {
+  for (auto key : items) {
+    this->insert(key);
+  }
+}
 
 }  //  namespace s21
 
